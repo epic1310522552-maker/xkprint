@@ -99,7 +99,7 @@
       </button>
 
       <!-- Material summary card -->
-      <button class="card material-summary-card" data-nav="materials" aria-label="查看全部耗材">
+      <button class="card material-summary-card" data-nav="materials" aria-label="查看全部耗材" >
         <div class="material-summary-top">
           <div class="material-swatch" style="background: #2B78E4"></div>
           <div class="material-summary-info">
@@ -128,7 +128,7 @@
     <section data-page="materials" class="page">
       <header class="page-header">
         <div class="header-left">
-          <button class="icon-btn" data-nav="device" aria-label="返回">
+          <button class="icon-btn" data-nav="device" aria-label="返回" >
             <i data-lucide="chevron-left"></i>
           </button>
           <h1>耗材库存</h1>
@@ -683,5 +683,61 @@
 
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.js"></script>
   <script src="app.js"></script>
+  <script>
+  // Bootstrap navigation if app.js init didn't run
+  (function() {
+    if (document.querySelectorAll('svg[data-lucide]').length > 0) return; // already initialized
+    
+    if (typeof lucide !== 'undefined' && lucide.createIcons) {
+      lucide.createIcons();
+    }
+
+    function initNav() {
+      var navBtns = document.querySelectorAll('[data-nav]');
+      var pages = document.querySelectorAll('[data-page]');
+      navBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var target = btn.getAttribute('data-nav');
+          navBtns.forEach(function(b) { b.classList.remove('active'); });
+          pages.forEach(function(p) { p.classList.remove('active'); });
+          btn.classList.add('active');
+          var page = document.querySelector('[data-page="' + target + '"]');
+          if (page) page.classList.add('active');
+        });
+      });
+    }
+    initNav();
+
+    // Theme toggle
+    var doc = document.documentElement;
+    var metaTheme = document.getElementById('theme-color');
+    var saved = localStorage.getItem('xkprint-theme');
+    if (saved === 'dark' || saved === 'light') {
+      doc.setAttribute('data-theme', saved);
+    }
+    document.querySelectorAll('[data-theme-toggle]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var current = doc.getAttribute('data-theme') || 'light';
+        var next = current === 'dark' ? 'light' : 'dark';
+        doc.setAttribute('data-theme', next);
+        localStorage.setItem('xkprint-theme', next);
+        if (metaTheme) {
+          metaTheme.setAttribute('content', next === 'dark' ? '#1A1A1E' : '#F5F0EB');
+        }
+        var sun = btn.querySelector('[data-lucide="sun"]');
+        var moon = btn.querySelector('[data-lucide="moon"]');
+        if (sun && moon) {
+          if (next === 'dark') {
+            sun.classList.add('hidden');
+            moon.classList.remove('hidden');
+          } else {
+            sun.classList.remove('hidden');
+            moon.classList.add('hidden');
+          }
+        }
+      });
+    });
+  })();
+  </script>
 </body>
 </html>

@@ -236,6 +236,14 @@
 
   /* ----- Init ----- */
   document.addEventListener('DOMContentLoaded', function () {
+    runInit();
+  });
+  // Also run immediately in case DOMContentLoaded already fired
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    runInit();
+  }
+
+  function runInit() {
     // Lucide first
     if (typeof lucide !== 'undefined' && lucide.createIcons) {
       lucide.createIcons();
@@ -245,5 +253,5 @@
     initControlTabs();
     initTheme();
     initModelScene();
-  });
+  }
 });
