@@ -1236,6 +1236,70 @@ button.card {
 .toggle.active::after {
   left: 22px;
 }
+/* ============ Toolhead Panel ============ */
+.toolhead-card {
+  display: flex;
+  flex-direction: column;
+}
+.toolhead-section + .toolhead-section {
+  border-top: 1px solid var(--border);
+  margin-top: 16px;
+  padding-top: 16px;
+}
+.toolhead-section__title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+.toolhead-material {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+}
+.toolhead-material__swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.toolhead-material__info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+.toolhead-material__name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.toolhead-material__status {
+  font-size: 0.8rem;
+  color: var(--accent);
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.toolhead-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 8px 0 0;
+}
+.toolhead-actions .btn {
+  width: 100%;
+}
+.toolhead-home {
+  width: 100%;
+}
+
 .dpad-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

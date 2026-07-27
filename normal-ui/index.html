@@ -351,18 +351,44 @@
 
       <!-- Tab 2: 执行头 -->
       <div class="tab-panel" data-tab-panel="toolhead">
-        <div class="card">
-          <div class="control-row">
-            <span class="param-label">喷嘴温度</span>
-            <span class="param-value hot">218°C / 220°C</span>
+        <div class="card toolhead-card">
+          <!-- Section 1: 执行头状态 -->
+          <div class="toolhead-section">
+            <div class="toolhead-section__title">执行头状态</div>
+            <div class="control-row">
+              <span class="param-label">喷嘴温度</span>
+              <span class="param-value hot">218°C / 220°C</span>
+            </div>
+            <div class="control-row">
+              <span class="param-label">散热</span>
+              <span class="param-value">80%</span>
+            </div>
           </div>
-          <button class="btn btn-primary" style="margin-top: 4px;">加载耗材</button>
-          <button class="btn btn-secondary">卸载耗材</button>
-          <div class="control-row" style="margin-top: 8px;">
-            <span class="param-label">散热</span>
-            <span class="param-value">80%</span>
+
+          <!-- Section 2: 当前耗材 -->
+          <div class="toolhead-section">
+            <div class="toolhead-section__title">当前耗材</div>
+            <div class="toolhead-material">
+              <div class="toolhead-material__swatch" style="background: #2B78E4"></div>
+              <div class="toolhead-material__info">
+                <span class="toolhead-material__name">PLA Matte · 星空蓝</span>
+                <span class="toolhead-material__status">已加载</span>
+              </div>
+            </div>
+            <div class="control-row">
+              <span class="param-label">建议喷嘴</span>
+              <span class="param-value">200–220°C</span>
+            </div>
+            <div class="toolhead-actions">
+              <button class="btn btn-primary" type="button">加载耗材</button>
+              <button class="btn btn-secondary" type="button">卸载耗材</button>
+            </div>
           </div>
-          <button class="btn btn-primary" style="margin-top: 4px;">归零</button>
+
+          <!-- Section 3: 设备操作 -->
+          <div class="toolhead-section">
+            <button class="btn btn-primary toolhead-home" type="button">归零</button>
+          </div>
         </div>
       </div>
 

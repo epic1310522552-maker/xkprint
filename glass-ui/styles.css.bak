@@ -143,9 +143,6 @@ button {
 
 @media (prefers-reduced-motion: reduce) {
   .page.active { animation: none; }
-  .ams-wheel { transition: none; }
-  .ams-slot { transition: none; }
-  .ams-slot-inner { transition: none; }
 }
 
 /* ----- Page Header ----- */
@@ -450,7 +447,7 @@ button {
   background: rgba(255, 255, 255, 0.9);
 }
 
-/* ----- AMS 耗材轮盘 (rotating wheel) ----- */
+/* ----- AMS 弧形八色槽 ----- */
 .ams-module {
   padding: 12px 16px 8px;
 }
@@ -475,34 +472,72 @@ button {
   border-radius: 12px;
 }
 
-/* ----- Stage (viewport) ----- */
 .ams-stage {
   position: relative;
-  height: 238px;
+  height: 224px;
   width: 100%;
   overflow: hidden;
-  touch-action: pan-y;
-  outline: none;
 }
 
-/* ----- Wheel (rotating ring) ----- */
-.ams-wheel {
+.ams-rail {
   position: absolute;
-  left: 50%;
-  top: 176px;
-  width: 300px;
-  height: 300px;
-  transform: translate(-50%, -50%) rotate(var(--wheel-rotation, 0deg));
-  transition: transform 420ms cubic-bezier(.22, 1, .36, 1);
-  will-change: transform;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
-/* ----- Slots on the wheel ----- */
-.ams-slot {
+.ams-current {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 58px;
+  transform: translate(-50%, -50%);
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  background: var(--surface-raised);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2px solid var(--accent-dim);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  z-index: 2;
+  cursor: default;
+}
+
+.ams-current-label {
+  font-size: 0.58rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.ams-current-name {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.ams-current-pct {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.ams-slot {
+  position: absolute;
+  left: var(--slot-x);
+  top: var(--slot-y);
+  transform: translate(-50%, -50%);
+  width: 54px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
   padding: 6px 4px;
   border-radius: var(--radius-sm);
   background: var(--surface);
@@ -510,28 +545,17 @@ button {
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--border);
   cursor: pointer;
-  transform: rotate(var(--slot-angle)) translateY(calc(-1 * var(--slot-radius, 132px))) scale(var(--slot-scale, 1));
-  transition: transform 420ms cubic-bezier(.22, 1, .36, 1), opacity 420ms cubic-bezier(.22, 1, .36, 1);
-  will-change: transform, opacity;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
+  transition: transform 0.15s, box-shadow 0.2s;
   z-index: 3;
 }
 
 .ams-slot:active {
-  filter: brightness(0.92);
+  transform: translate(-50%, -50%) scale(0.92);
 }
 
-.ams-slot-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  transform: rotate(var(--slot-counter-rotation, 0deg));
-  transition: transform 420ms cubic-bezier(.22, 1, .36, 1);
-  will-change: transform;
+.ams-slot--active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-dim), var(--shadow-sm);
 }
 
 .ams-slot-dot {
@@ -563,158 +587,6 @@ button {
 
 .ams-slot-pct--low {
   color: var(--warning);
-}
-
-/* ----- Slot visibility states ----- */
-.ams-slot[data-ams-visible="near"] {
-  opacity: 1;
-  --slot-scale: 1;
-  pointer-events: auto;
-}
-
-.ams-slot[data-ams-visible="far"] {
-  opacity: 0.72;
-  --slot-scale: 0.86;
-  pointer-events: auto;
-}
-
-.ams-slot[data-ams-visible="hidden"] {
-  opacity: 0;
-  --slot-scale: 1;
-  pointer-events: none;
-}
-
-/* ----- Center current display (detail entry) ----- */
-.ams-current {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 5;
-  transform: translate(-50%, -50%);
-  width: 104px;
-  height: 104px;
-  border-radius: 50%;
-  background: var(--surface-raised);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 2px solid var(--accent-dim);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.ams-current:active {
-  filter: brightness(0.95);
-}
-
-.ams-current:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.ams-current-ring {
-  position: absolute;
-  inset: -8px;
-  width: calc(100% + 16px);
-  height: calc(100% + 16px);
-  pointer-events: none;
-}
-
-.ams-current-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1px;
-  z-index: 1;
-}
-
-.ams-current-name {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  line-height: 1.1;
-}
-
-.ams-current-pct {
-  font-size: 0.85rem;
-  font-weight: 800;
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
-}
-
-.ams-current-hint {
-  font-size: 0.52rem;
-  color: var(--text-muted);
-  font-weight: 500;
-  z-index: 1;
-  margin-top: 1px;
-}
-
-/* ----- Arrow buttons ----- */
-.ams-arrow {
-  position: absolute;
-  top: 50%;
-  z-index: 6;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--surface);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--border);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.15s;
-  color: var(--text-secondary);
-}
-
-.ams-arrow:active {
-  background: var(--surface-raised);
-}
-
-.ams-arrow:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.ams-arrow svg {
-  width: 20px;
-  height: 20px;
-}
-
-.ams-arrow--prev {
-  left: 4px;
-  transform: translateY(-50%);
-}
-
-.ams-arrow--next {
-  right: 4px;
-  transform: translateY(-50%);
-}
-
-/* ----- Position indicator ----- */
-.ams-position {
-  position: absolute;
-  bottom: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.6rem;
-  color: var(--text-muted);
-  font-weight: 500;
-  z-index: 4;
-}
-
-.ams-live-status {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
 }
 
 /* ----- Telemetry 2×3 Grid ----- */
@@ -1934,10 +1806,9 @@ button {
   .telemetry-grid { gap: 6px; padding: 8px; }
   .tele-item { padding: 8px 2px; }
   .tele-icon { width: 14px; height: 14px; }
-  .ams-stage { height: 220px; }
-  .ams-wheel { width: 276px; height: 276px; top: 162px; }
-  .ams-slot { width: 52px; --slot-radius: 120px; }
-  .ams-current { width: 96px; height: 96px; }
+  .ams-stage { height: 200px; }
+  .ams-slot { width: 48px; }
+  .ams-current { width: 90px; height: 90px; }
   .materials-grid { gap: 8px; }
   .material-card--compact { padding: 10px; }
 }

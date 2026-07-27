@@ -76,103 +76,62 @@
         </div>
       </div>
 
-      <!-- AMS 耗材轮盘 -->
+      <!-- AMS 弧形八色槽 -->
       <div class="glass-card ams-module">
         <div class="ams-header">
           <span class="ams-title">AMS 耗材</span>
           <span class="ams-count">8 卷</span>
         </div>
-        <div class="ams-stage" data-ams-stage>
-          <div class="ams-wheel" data-ams-wheel style="--wheel-rotation:0deg">
-            <!-- Slot 0: PLA Matte (center) -->
-            <button class="ams-slot" data-ams-slot data-material-index="0" data-material-name="PLA Matte" data-material-pct="42" style="--slot-angle:0deg;--material-color:#2B78E4" data-ams-visible="hidden" tabindex="-1" aria-hidden="true">
-              <span class="ams-slot-inner" style="--slot-counter-rotation:0deg">
-                <span class="ams-slot-dot" style="background:var(--material-color)"></span>
-                <span class="ams-slot-name">PLA Matte</span>
-                <span class="ams-slot-pct">42%</span>
-              </span>
-            </button>
-            <!-- Slot 1: PLA Basic -->
-            <button class="ams-slot" data-ams-slot data-material-index="1" data-material-name="PLA Basic" data-material-pct="76" style="--slot-angle:45deg;--material-color:#757B84" data-ams-visible="near" tabindex="0" aria-hidden="false">
-              <span class="ams-slot-inner" style="--slot-counter-rotation:-45deg">
-                <span class="ams-slot-dot" style="background:var(--material-color)"></span>
-                <span class="ams-slot-name">PLA Basic</span>
-                <span class="ams-slot-pct">76%</span>
-              </span>
-            </button>
-            <!-- Slot 2: PETG -->
-            <button class="ams-slot" data-ams-slot data-material-index="2" data-material-name="PETG" data-material-pct="64" style="--slot-angle:90deg;--material-color:#D8892B" data-ams-visible="far" tabindex="0" aria-hidden="false">
-              <span class="ams-slot-inner" style="--slot-counter-rotation:-90deg">
-                <span class="ams-slot-dot" style="background:var(--material-color)"></span>
-                <span class="ams-slot-name">PETG</span>
-                <span class="ams-slot-pct">64%</span>
-              </span>
-            </button>
-            <!-- Slot 3: ABS -->
-            <button class="ams-slot" data-ams-slot data-material-index="3" data-material-name="ABS" data-material-pct="31" style="--slot-angle:135deg;--material-color:#303236" data-ams-visible="hidden" tabindex="-1" aria-hidden="true">
-              <span class="ams-slot-inner" style="--slot-counter-rotation:-135deg">
-                <span class="ams-slot-dot" style="background:var(--material-color)"></span>
-                <span class="ams-slot-name">ABS</span>
-                <span class="ams-slot-pct">31%</span>
-              </span>
-            </button>
-            <!-- Slot 4: TPU 95A -->
-            <button class="ams-slot" data-ams-slot data-material-index="4" data-material-name="TPU 95A" data-material-pct="58" style="--slot-angle:180deg;--material-color:#D74C46" data-ams-visible="hidden" tabindex="-1" aria-hidden="true">
-              <span class="ams-slot-inner" style="--slot-counter-rotation:-180deg">
-                <span class="ams-slot-dot" style="background:var(--material-color)"></span>
-                <span class="ams-slot-name">TPU 95A</span>
-                <span class="ams-slot-pct">58%</span>
-              </span>
-            </button>
-            <!-- Slot 5: PLA Silk -->
-            <button class="ams-slot" data-ams-slot data-material-index="5" data-material-name="PLA Silk" data-material-pct="88" style="--slot-angle:225deg;--material-color:#C98291" data-ams-visible="hidden" tabindex="-1" aria-hidden="true">
-              <span class="ams-slot-inner" style="--slot-counter-rotation:-225deg">
-                <span class="ams-slot-dot" style="background:var(--material-color)"></span>
-                <span class="ams-slot-name">PLA Silk</span>
-                <span class="ams-slot-pct">88%</span>
-              </span>
-            </button>
-            <!-- Slot 6: ASA -->
-            <button class="ams-slot" data-ams-slot data-material-index="6" data-material-name="ASA" data-material-pct="47" style="--slot-angle:270deg;--material-color:#D9D6CF" data-ams-visible="far" tabindex="0" aria-hidden="false">
-              <span class="ams-slot-inner" style="--slot-counter-rotation:-270deg">
-                <span class="ams-slot-dot" style="background:var(--material-color)"></span>
-                <span class="ams-slot-name">ASA</span>
-                <span class="ams-slot-pct">47%</span>
-              </span>
-            </button>
-            <!-- Slot 7: PA-CF -->
-            <button class="ams-slot" data-ams-slot data-material-index="7" data-material-name="PA-CF" data-material-pct="19" style="--slot-angle:315deg;--material-color:#25282B" data-ams-visible="near" tabindex="0" aria-hidden="false">
-              <span class="ams-slot-inner" style="--slot-counter-rotation:-315deg">
-                <span class="ams-slot-dot" style="background:var(--material-color)"></span>
-                <span class="ams-slot-name">PA-CF</span>
-                <span class="ams-slot-pct ams-slot-pct--low">19%</span>
-              </span>
-            </button>
-          </div>
-
-          <!-- Center current display -->
-          <div class="ams-current" data-nav="materials" role="button" tabindex="0" aria-label="查看 PLA Matte 耗材详情" style="--active-material-color:#2B78E4">
-            <svg class="ams-current-ring" viewBox="0 0 100 100" aria-hidden="true">
-              <circle cx="50" cy="50" r="44" fill="none" stroke="var(--active-material-color)" stroke-width="4" stroke-linecap="round" stroke-dasharray="276.46" stroke-dashoffset="160.35" transform="rotate(-90 50 50)"/>
-            </svg>
-            <div class="ams-current-body">
-              <span class="ams-current-name">PLA Matte</span>
-              <span class="ams-current-pct">42%</span>
-            </div>
-            <span class="ams-current-hint">点击查看详情</span>
-          </div>
-
-          <!-- Arrow buttons -->
-          <button class="ams-arrow ams-arrow--prev" data-ams-prev aria-label="上一卷耗材">
-            <i data-lucide="chevron-left"></i>
+        <div class="ams-stage">
+          <svg class="ams-rail" aria-hidden="true" viewBox="0 0 360 180" preserveAspectRatio="none">
+            <path d="M24 150 C80 20 280 20 336 150" fill="none" stroke="rgba(108,99,255,0.08)" stroke-width="3"/>
+            <path d="M56 154 C104 58 256 58 304 154" fill="none" stroke="rgba(108,99,255,0.06)" stroke-width="2"/>
+          </svg>
+          <button class="ams-current" tabindex="-1">
+            <span class="ams-current-label">当前</span>
+            <span class="ams-current-name">PLA Matte</span>
+            <span class="ams-current-pct">42%</span>
           </button>
-          <button class="ams-arrow ams-arrow--next" data-ams-next aria-label="下一卷耗材">
-            <i data-lucide="chevron-right"></i>
+          <button class="ams-slot ams-slot--active" style="--material-color:#2B78E4;--slot-x:10%;--slot-y:72%" data-nav="materials" aria-label="耗材：PLA Matte 星空蓝 42% 当前">
+            <span class="ams-slot-dot" style="background:var(--material-color)"></span>
+            <span class="ams-slot-name">PLA Matte</span>
+            <span class="ams-slot-pct">42%</span>
           </button>
-
-          <!-- Position indicator -->
-          <div class="ams-position">1 / 8</div>
-          <div class="ams-live-status" aria-live="polite" aria-atomic="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap"></div>
+          <button class="ams-slot" style="--material-color:#757B84;--slot-x:20%;--slot-y:42%" data-nav="materials" aria-label="耗材：PLA Basic 月岩灰 76%">
+            <span class="ams-slot-dot" style="background:var(--material-color)"></span>
+            <span class="ams-slot-name">PLA Basic</span>
+            <span class="ams-slot-pct">76%</span>
+          </button>
+          <button class="ams-slot" style="--material-color:#D8892B;--slot-x:33%;--slot-y:22%" data-nav="materials" aria-label="耗材：PETG 透明琥珀 64%">
+            <span class="ams-slot-dot" style="background:var(--material-color)"></span>
+            <span class="ams-slot-name">PETG</span>
+            <span class="ams-slot-pct">64%</span>
+          </button>
+          <button class="ams-slot" style="--material-color:#303236;--slot-x:43%;--slot-y:12%" data-nav="materials" aria-label="耗材：ABS 工业黑 31%">
+            <span class="ams-slot-dot" style="background:var(--material-color)"></span>
+            <span class="ams-slot-name">ABS</span>
+            <span class="ams-slot-pct">31%</span>
+          </button>
+          <button class="ams-slot" style="--material-color:#D74C46;--slot-x:57%;--slot-y:12%" data-nav="materials" aria-label="耗材：TPU 95A 熔岩红 58%">
+            <span class="ams-slot-dot" style="background:var(--material-color)"></span>
+            <span class="ams-slot-name">TPU 95A</span>
+            <span class="ams-slot-pct">58%</span>
+          </button>
+          <button class="ams-slot" style="--material-color:#C98291;--slot-x:67%;--slot-y:22%" data-nav="materials" aria-label="耗材：PLA Silk 玫瑰金 88%">
+            <span class="ams-slot-dot" style="background:var(--material-color)"></span>
+            <span class="ams-slot-name">PLA Silk</span>
+            <span class="ams-slot-pct">88%</span>
+          </button>
+          <button class="ams-slot" style="--material-color:#D9D6CF;--slot-x:80%;--slot-y:42%" data-nav="materials" aria-label="耗材：ASA 高光白 47%">
+            <span class="ams-slot-dot" style="background:var(--material-color)"></span>
+            <span class="ams-slot-name">ASA</span>
+            <span class="ams-slot-pct">47%</span>
+          </button>
+          <button class="ams-slot" style="--material-color:#25282B;--slot-x:90%;--slot-y:72%" data-nav="materials" aria-label="耗材：PA-CF 碳黑 19% 库存偏低">
+            <span class="ams-slot-dot" style="background:var(--material-color)"></span>
+            <span class="ams-slot-name">PA-CF</span>
+            <span class="ams-slot-pct ams-slot-pct--low">19%</span>
+          </button>
         </div>
       </div>
 
@@ -226,7 +185,7 @@
       </header>
 
       <div class="materials-grid">
-        <article class="material-card--compact" style="--material-color:#2B78E4" data-material-card data-material-index="0" role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PLA Matte 星空蓝 42%">
+        <article class="material-card--compact" style="--material-color:#2B78E4" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PLA Matte 星空蓝 42%">
           <div class="material-swatch" style="background:var(--material-color)"></div>
           <div class="material-card-body">
             <span class="material-pct">42%</span>
@@ -242,7 +201,7 @@
           </div>
         </article>
 
-        <article class="material-card--compact" style="--material-color:#757B84" data-material-card data-material-index="1" role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PLA Basic 月岩灰 76%">
+        <article class="material-card--compact" style="--material-color:#757B84" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PLA Basic 月岩灰 76%">
           <div class="material-swatch" style="background:var(--material-color)"></div>
           <div class="material-card-body">
             <span class="material-pct">76%</span>
@@ -258,7 +217,7 @@
           </div>
         </article>
 
-        <article class="material-card--compact" style="--material-color:#D8892B" data-material-card data-material-index="2" role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PETG 透明琥珀 64%">
+        <article class="material-card--compact" style="--material-color:#D8892B" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PETG 透明琥珀 64%">
           <div class="material-swatch" style="background:var(--material-color)"></div>
           <div class="material-card-body">
             <span class="material-pct">64%</span>
@@ -274,7 +233,7 @@
           </div>
         </article>
 
-        <article class="material-card--compact" style="--material-color:#303236" data-material-card data-material-index="3" role="button" tabindex="0" aria-pressed="false" aria-label="耗材：ABS 工业黑 31%">
+        <article class="material-card--compact" style="--material-color:#303236" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：ABS 工业黑 31%">
           <div class="material-swatch" style="background:var(--material-color)"></div>
           <div class="material-card-body">
             <span class="material-pct">31%</span>
@@ -290,7 +249,7 @@
           </div>
         </article>
 
-        <article class="material-card--compact" style="--material-color:#D74C46" data-material-card data-material-index="4" role="button" tabindex="0" aria-pressed="false" aria-label="耗材：TPU 95A 熔岩红 58%">
+        <article class="material-card--compact" style="--material-color:#D74C46" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：TPU 95A 熔岩红 58%">
           <div class="material-swatch" style="background:var(--material-color)"></div>
           <div class="material-card-body">
             <span class="material-pct">58%</span>
@@ -306,7 +265,7 @@
           </div>
         </article>
 
-        <article class="material-card--compact" style="--material-color:#C98291" data-material-card data-material-index="5" role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PLA Silk 玫瑰金 88%">
+        <article class="material-card--compact" style="--material-color:#C98291" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PLA Silk 玫瑰金 88%">
           <div class="material-swatch" style="background:var(--material-color)"></div>
           <div class="material-card-body">
             <span class="material-pct">88%</span>
@@ -322,7 +281,7 @@
           </div>
         </article>
 
-        <article class="material-card--compact" style="--material-color:#D9D6CF" data-material-card data-material-index="6" role="button" tabindex="0" aria-pressed="false" aria-label="耗材：ASA 高光白 47%">
+        <article class="material-card--compact" style="--material-color:#D9D6CF" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：ASA 高光白 47%">
           <div class="material-swatch" style="background:var(--material-color)"></div>
           <div class="material-card-body">
             <span class="material-pct">47%</span>
@@ -338,7 +297,7 @@
           </div>
         </article>
 
-        <article class="material-card--compact" style="--material-color:#25282B" data-material-card data-material-index="7" role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PA-CF 碳黑 19% 库存偏低">
+        <article class="material-card--compact" style="--material-color:#25282B" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PA-CF 碳黑 19% 库存偏低">
           <div class="material-swatch" style="background:var(--material-color)"></div>
           <div class="material-card-body">
             <span class="material-pct">19%</span>
