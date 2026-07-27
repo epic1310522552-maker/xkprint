@@ -69,7 +69,7 @@
       </div>
 
       <!-- Parameters -->
-      <button class="card params-card" data-nav="control">
+      <button class="card params-card card--interactive" data-nav="control" aria-label="查看控制面板">
         <div class="params-grid">
           <div class="param-item">
             <span class="param-label">喷嘴</span>
@@ -99,26 +99,58 @@
       </button>
 
       <!-- Material summary card -->
-      <button class="card material-summary-card" data-nav="materials" aria-label="查看全部耗材" >
-        <div class="material-summary-top">
-          <div class="material-swatch" style="background: #2B78E4"></div>
-          <div class="material-summary-info">
-            <span class="material-summary-name">PLA Matte · 星空蓝</span>
-            <span class="material-summary-pct">42%</span>
+      <button class="card material-summary-card card--interactive" data-nav="materials" aria-label="查看全部 8 卷耗材">
+        <div class="material-summary-heading">
+          <div>
+            <span class="material-summary-title">耗材</span>
+            <span class="material-summary-count">8 卷</span>
           </div>
           <i data-lucide="chevron-right" class="material-summary-arrow"></i>
         </div>
-        <div class="material-level" role="progressbar" aria-label="库存 42%" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100">
-          <div class="material-level__fill" style="width: 42%"></div>
+        <div class="material-thumbnails">
+          <div class="material-thumbnail material-thumbnail--active" style="--material-color: #2B78E4">
+            <span class="material-thumbnail-swatch"></span>
+            <span class="material-thumbnail-name">PLA Matte</span>
+            <span class="material-thumbnail-pct">42%</span>
+          </div>
+          <div class="material-thumbnail" style="--material-color: #757B84">
+            <span class="material-thumbnail-swatch"></span>
+            <span class="material-thumbnail-name">PLA Basic</span>
+            <span class="material-thumbnail-pct">76%</span>
+          </div>
+          <div class="material-thumbnail" style="--material-color: #D8892B">
+            <span class="material-thumbnail-swatch"></span>
+            <span class="material-thumbnail-name">PETG</span>
+            <span class="material-thumbnail-pct">64%</span>
+          </div>
+          <div class="material-thumbnail" style="--material-color: #303236">
+            <span class="material-thumbnail-swatch"></span>
+            <span class="material-thumbnail-name">ABS</span>
+            <span class="material-thumbnail-pct">31%</span>
+          </div>
+          <div class="material-thumbnail" style="--material-color: #D74C46">
+            <span class="material-thumbnail-swatch"></span>
+            <span class="material-thumbnail-name">TPU 95A</span>
+            <span class="material-thumbnail-pct">58%</span>
+          </div>
+          <div class="material-thumbnail" style="--material-color: #C98291">
+            <span class="material-thumbnail-swatch"></span>
+            <span class="material-thumbnail-name">PLA Silk</span>
+            <span class="material-thumbnail-pct">88%</span>
+          </div>
+          <div class="material-thumbnail" style="--material-color: #D9D6CF">
+            <span class="material-thumbnail-swatch"></span>
+            <span class="material-thumbnail-name">ASA</span>
+            <span class="material-thumbnail-pct">47%</span>
+          </div>
+          <div class="material-thumbnail" style="--material-color: #25282B">
+            <span class="material-thumbnail-swatch"></span>
+            <span class="material-thumbnail-name">PA-CF</span>
+            <span class="material-thumbnail-pct material-thumbnail-pct--low">19%</span>
+          </div>
         </div>
-        <div class="material-summary-stats">
-          <span class="material-summary-weight">412 g <small>剩余</small></span>
-          <span class="material-summary-est">128 g <small>预计</small></span>
-          <span class="material-summary-temp">200–220°C <small>建议喷嘴</small></span>
-        </div>
-        <div class="material-summary-status material-summary-status--active">当前打印 · 耗材充足</div>
         <div class="material-summary-footer">
-          <span>查看全部 8 卷耗材</span>
+          <span><strong>星空蓝</strong>正在打印 · 查看全部耗材</span>
           <i data-lucide="chevron-right"></i>
         </div>
       </button>
@@ -140,7 +172,7 @@
 
       <div class="materials-grid">
 
-        <article class="card material-card--compact" style="--material-color: #2B78E4" aria-label="耗材：PLA Matte 星空蓝 42%">
+        <article class="card material-card--compact card--interactive" style="--material-color: #2B78E4" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PLA Matte 星空蓝 42%">
           <div class="material-swatch" style="background: var(--material-color)"></div>
           <div class="material-info">
             <span class="material-name">PLA Matte · 星空蓝</span>
@@ -156,7 +188,7 @@
           <div class="material-status material-status--active">当前打印 · 耗材充足</div>
         </article>
 
-        <article class="card material-card--compact" style="--material-color: #757B84" aria-label="耗材：PLA Basic 月岩灰 76%">
+        <article class="card material-card--compact card--interactive" style="--material-color: #757B84" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PLA Basic 月岩灰 76%">
           <div class="material-swatch" style="background: var(--material-color)"></div>
           <div class="material-info">
             <span class="material-name">PLA Basic · 月岩灰</span>
@@ -172,7 +204,7 @@
           <div class="material-status material-status--pending">待用</div>
         </article>
 
-        <article class="card material-card--compact" style="--material-color: #D8892B" aria-label="耗材：PETG 透明琥珀 64%">
+        <article class="card material-card--compact card--interactive" style="--material-color: #D8892B" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PETG 透明琥珀 64%">
           <div class="material-swatch" style="background: var(--material-color)"></div>
           <div class="material-info">
             <span class="material-name">PETG · 透明琥珀</span>
@@ -188,7 +220,7 @@
           <div class="material-status material-status--pending">待用</div>
         </article>
 
-        <article class="card material-card--compact" style="--material-color: #303236" aria-label="耗材：ABS 工业黑 31%">
+        <article class="card material-card--compact card--interactive" style="--material-color: #303236" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：ABS 工业黑 31%">
           <div class="material-swatch" style="background: var(--material-color)"></div>
           <div class="material-info">
             <span class="material-name">ABS · 工业黑</span>
@@ -204,7 +236,7 @@
           <div class="material-status material-status--pending">待用</div>
         </article>
 
-        <article class="card material-card--compact" style="--material-color: #D74C46" aria-label="耗材：TPU 95A 熔岩红 58%">
+        <article class="card material-card--compact card--interactive" style="--material-color: #D74C46" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：TPU 95A 熔岩红 58%">
           <div class="material-swatch" style="background: var(--material-color)"></div>
           <div class="material-info">
             <span class="material-name">TPU 95A · 熔岩红</span>
@@ -220,7 +252,7 @@
           <div class="material-status material-status--pending">待用</div>
         </article>
 
-        <article class="card material-card--compact" style="--material-color: #C98291" aria-label="耗材：PLA Silk 玫瑰金 88%">
+        <article class="card material-card--compact card--interactive" style="--material-color: #C98291" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PLA Silk 玫瑰金 88%">
           <div class="material-swatch" style="background: var(--material-color)"></div>
           <div class="material-info">
             <span class="material-name">PLA Silk · 玫瑰金</span>
@@ -236,7 +268,7 @@
           <div class="material-status material-status--pending">待用</div>
         </article>
 
-        <article class="card material-card--compact" style="--material-color: #D9D6CF" aria-label="耗材：ASA 高光白 47%">
+        <article class="card material-card--compact card--interactive" style="--material-color: #D9D6CF" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：ASA 高光白 47%">
           <div class="material-swatch" style="background: var(--material-color)"></div>
           <div class="material-info">
             <span class="material-name">ASA · 高光白</span>
@@ -252,7 +284,7 @@
           <div class="material-status material-status--pending">待用</div>
         </article>
 
-        <article class="card material-card--compact" style="--material-color: #25282B" aria-label="耗材：PA-CF 碳黑 19%">
+        <article class="card material-card--compact card--interactive" style="--material-color: #25282B" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PA-CF 碳黑 19%">
           <div class="material-swatch" style="background: var(--material-color)"></div>
           <div class="material-info">
             <span class="material-name">PA-CF · 碳黑</span>

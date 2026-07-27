@@ -234,6 +234,31 @@
     });
   }
 
+  /* ----- Material Card Selection ----- */
+  function initMaterialCards() {
+    var cards = document.querySelectorAll('[data-material-card]');
+
+    function selectCard(card) {
+      cards.forEach(function (item) {
+        var selected = item === card;
+        item.classList.toggle('material-card--selected', selected);
+        item.setAttribute('aria-pressed', String(selected));
+      });
+    }
+
+    cards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        selectCard(card);
+      });
+      card.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          selectCard(card);
+        }
+      });
+    });
+  }
+
   /* ----- Init ----- */
   document.addEventListener('DOMContentLoaded', function () {
     runInit();
@@ -251,7 +276,8 @@
 
     initNavigation();
     initControlTabs();
+    initMaterialCards();
     initTheme();
     initModelScene();
   }
-});
+})();
