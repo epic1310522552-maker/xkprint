@@ -71,10 +71,10 @@
       <!-- Parameters -->
       <div class="card params-card">
         <div class="params-grid">
-          <div class="param-item">
+          <button class="param-item" data-nav="control">
             <span class="param-label">喷嘴</span>
             <span class="param-value hot">218°C / 220°C</span>
-          </div>
+          </button>
           <div class="param-item">
             <span class="param-label">热床</span>
             <span class="param-value warm">59°C / 60°C</span>
@@ -117,6 +117,109 @@
           <span>412 g <small>剩余</small></span>
           <span>128 g <small>预计</small></span>
           <span class="status-ok">本次打印耗材充足</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 控制面板 Panel ============ -->
+    <section data-page="control" class="page">
+      <header class="page-header">
+        <div class="header-left">
+          <button class="icon-btn" data-nav="device" aria-label="返回">
+            <i data-lucide="chevron-left"></i>
+          </button>
+          <h1>控制面板</h1>
+        </div>
+        <div class="header-actions">
+          <button class="icon-btn" data-theme-toggle aria-label="切换主题">
+            <i data-lucide="sun"></i>
+            <i data-lucide="moon" class="hidden"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Tab chips -->
+      <div class="filter-row">
+        <button class="chip active" data-tab="control">控制</button>
+        <button class="chip" data-tab="toolhead">执行头</button>
+        <button class="chip" data-tab="move">移动</button>
+      </div>
+
+      <!-- Tab 1: 控制 -->
+      <div class="tab-panel active" data-tab-panel="control">
+        <div class="card">
+          <div class="control-row">
+            <span class="param-label">温度</span>
+            <span class="param-value hot">218°C / 220°C</span>
+          </div>
+          <div class="control-row">
+            <span class="param-label">打印速度</span>
+            <span class="param-value">100%</span>
+          </div>
+          <div class="control-row">
+            <span class="param-label">风扇</span>
+            <span class="toggle active"></span>
+          </div>
+          <div class="control-row">
+            <span class="param-label">LED</span>
+            <span class="toggle"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: 执行头 -->
+      <div class="tab-panel" data-tab-panel="toolhead">
+        <div class="card">
+          <div class="control-row">
+            <span class="param-label">喷嘴温度</span>
+            <span class="param-value hot">218°C / 220°C</span>
+          </div>
+          <button class="btn btn-primary" style="margin-top: 4px;">加载耗材</button>
+          <button class="btn btn-secondary">卸载耗材</button>
+          <div class="control-row" style="margin-top: 8px;">
+            <span class="param-label">散热</span>
+            <span class="param-value">80%</span>
+          </div>
+          <button class="btn btn-primary" style="margin-top: 4px;">归零</button>
+        </div>
+      </div>
+
+      <!-- Tab 3: 移动 -->
+      <div class="tab-panel" data-tab-panel="move">
+        <div class="card">
+          <!-- Step size selector -->
+          <div class="filter-row" style="justify-content: center; margin-bottom: 12px;">
+            <button class="chip active">10mm</button>
+            <button class="chip">1mm</button>
+            <button class="chip">0.1mm</button>
+          </div>
+
+          <!-- Cross D-pad -->
+          <div class="dpad-grid">
+            <div></div>
+            <button class="dpad-btn" aria-label="上">
+              <i data-lucide="chevron-up"></i>
+            </button>
+            <div></div>
+            <button class="dpad-btn" aria-label="左">
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <div class="dpad-center"></div>
+            <button class="dpad-btn" aria-label="右">
+              <i data-lucide="chevron-right"></i>
+            </button>
+            <div></div>
+            <button class="dpad-btn" aria-label="下">
+              <i data-lucide="chevron-down"></i>
+            </button>
+            <div></div>
+          </div>
+
+          <!-- Bed height controls -->
+          <div class="bed-controls" style="margin-top: 12px;">
+            <button class="btn btn-primary">热床 ↑</button>
+            <button class="btn btn-secondary">热床 ↓</button>
+          </div>
         </div>
       </div>
     </section>

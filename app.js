@@ -218,6 +218,22 @@
       });
   }
 
+  /* ----- Control Panel Tabs ----- */
+  function initControlTabs() {
+    var tabs = document.querySelectorAll('[data-tab]');
+    var panels = document.querySelectorAll('.tab-panel');
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var target = tab.getAttribute('data-tab');
+        tabs.forEach(function (t) { t.classList.remove('active'); });
+        panels.forEach(function (p) { p.classList.remove('active'); });
+        tab.classList.add('active');
+        var panel = document.querySelector('.tab-panel[data-tab-panel="' + target + '"]');
+        if (panel) panel.classList.add('active');
+      });
+    });
+  }
+
   /* ----- Init ----- */
   document.addEventListener('DOMContentLoaded', function () {
     // Lucide first
@@ -226,7 +242,8 @@
     }
 
     initNavigation();
+    initControlTabs();
     initTheme();
     initModelScene();
   });
-})();
+});

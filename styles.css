@@ -344,6 +344,19 @@ button {
   flex-direction: column;
   gap: 2px;
 }
+button.param-item {
+  cursor: pointer;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  border-radius: 0;
+}
+button.param-item:active {
+  opacity: 0.7;
+}
 .param-label {
   font-size: 0.7rem;
   color: var(--text-muted);
@@ -994,6 +1007,83 @@ button {
 .nav-item span {
   font-size: 0.65rem;
   font-weight: 500;
+}
+
+/* ============ Control Panel ============ */
+.tab-panel {
+  display: none;
+}
+.tab-panel.active {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.control-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+.control-row + .control-row {
+  border-top: 1px solid var(--border);
+}
+.toggle {
+  display: inline-flex;
+  width: 44px;
+  height: 24px;
+  background: var(--border);
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+}
+.toggle::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  transition: left 0.2s;
+}
+.toggle.active {
+  background: var(--accent);
+}
+.toggle.active::after {
+  left: 22px;
+}
+.dpad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  max-width: 180px;
+  margin: 0 auto;
+}
+.dpad-btn {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--text-primary);
+}
+.dpad-btn:active {
+  background: var(--border-strong);
+}
+.dpad-center {
+  /* empty cell */
+}
+.bed-controls {
+  display: flex;
+  gap: 10px;
+}
+.bed-controls .btn {
+  flex: 1;
 }
 
 /* ============ Responsive / Edge Cases ============ */
