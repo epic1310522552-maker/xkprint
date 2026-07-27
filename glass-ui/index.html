@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>XKPrint Glass</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="app-shell">
+
+    <!-- ============ 设备 Panel (device) ============ -->
+    <section data-page="device" class="page active">
+      <header class="page-header">
+        <div class="header-left">
+          <span class="status-pill online">
+            <i data-lucide="check-circle" class="icon-sm"></i>
+            XK1 Carbon · 在线
+          </span>
+        </div>
+        <div class="header-actions">
+          <button class="icon-btn" aria-label="通知">
+            <i data-lucide="bell"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Print Dashboard: 3D preview + ring progress + controls -->
+      <div class="glass-card print-dashboard">
+        <div class="dashboard-preview">
+          <div id="model-canvas">
+            <div class="css-fallback-vase"></div>
+          </div>
+        </div>
+        <div class="dashboard-info">
+          <span class="file-badge">3MF</span>
+          <span class="filename">螺旋花器_v4.3mf</span>
+          <button class="status-tag" data-nav="control">正在打印</button>
+          <div class="dashboard-progress">
+            <svg viewBox="0 0 120 120" class="progress-ring">
+              <defs>
+                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#6C63FF"/>
+                  <stop offset="100%" stop-color="#00D4AA"/>
+                </linearGradient>
+              </defs>
+              <circle cx="60" cy="60" r="44" fill="none" stroke="rgba(108,99,255,0.08)" stroke-width="8"/>
+              <circle cx="60" cy="60" r="44" fill="none" stroke="url(#ringGrad)" stroke-width="8"
+                pathLength="100" stroke-dasharray="68 32" stroke-dashoffset="25" stroke-linecap="round"/>
+              <text x="60" y="60" text-anchor="middle" dominant-baseline="central"
+                font-size="24" font-weight="700" fill="#6C63FF" font-family="'Inter','Noto Sans SC',sans-serif">
+                68%
+              </text>
+            </svg>
+          </div>
+          <div class="dashboard-meta">
+            <span class="layer-info">第 842 / 1,238 层</span>
+            <span class="progress-time">3h 42m / 1h 46m</span>
+          </div>
+          <div class="dashboard-controls">
+            <button class="btn btn-primary">暂停</button>
+            <button class="btn btn-danger">停止</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- AMS 弧形八色槽 -->
+      <div class="glass-card ams-module">
+        <div class="ams-header">
+          <span class="ams-title">AMS 耗材</span>
+          <span class="ams-count">8 卷</span>
+        </div>
+        <div class="ams-stage">
+          <svg class="ams-rail" aria-hidden="true" viewBox="0 0 360 180" preserveAspectRatio="none">
+            <path d="M24 150 C80 20 280 20 336 150" fill="none" stroke="rgba(108,99,255,0.08)" stroke-width="3"/>
+            <path d="M56 154 C104 58 256 58 304 154" fill="none" stroke="rgba(108,99,255,0.06)" stroke-width="2"/>
+          </svg>
+          <button class="ams-current" tabindex="-1">
+            <span class="ams-current-label">当前</span>
+            <span class="ams-current-name">PLA Matte</span>
+            <span class="ams-current-pct">42%</span>
+          </button>
+          <button class="ams-slot ams-slot--active" style="--material-color:#2B78E4;--slot-x:10%;--slot-y:72%" data-nav="materials" aria-label="耗材：PLA Matte 星空蓝 42% 当前">
+            <span class="ams-slot-dot" style="background:var(--material-color)"></span>
+            <span class="ams-slot-name">PLA Matte</span>
+            <span class="ams-slot-pct">42%</span>
+          </button>
+          <button class="ams-slot" style="--material-color:#757B84;--slot-x:20%;--slot-y:42%" data-nav="materials" aria-label="耗材：PLA Basic 月岩灰 76%">
+            <span class="ams-slot-dot" style="background:var(--material-color)"></span>
+            <span class="ams-slot-name">PLA Basic</span>
+            <span class="ams-slot-pct">76%</span>
+          </button>
+          <button class="ams-slot" style="--material-color:#D8892B;--slot-x:33%;--slot-y:22%" data-nav="materials" aria-label="耗材：PETG 透明琥珀 64%">
+            <span class="ams-slot-dot" style="background:var(--material-color)"></span>
+            <span class="ams-slot-name">PETG</span>
+            <span class="ams-slot-pct">64%</span>
+          </button>
+          <button class="ams-slot" style="--material-color:#303236;--slot-x:43%;--slot-y:12%" data-nav="materials" aria-label="耗材：ABS 工业黑 31%">
+            <span class="ams-slot-dot" style="background:var(--material-color)"></span>
+            <span class="ams-slot-name">ABS</span>
+            <span class="ams-slot-pct">31%</span>
+          </button>
+          <button class="ams-slot" style="--material-color:#D74C46;--slot-x:57%;--slot-y:12%" data-nav="materials" aria-label="耗材：TPU 95A 熔岩红 58%">
+            <span class="ams-slot-dot" style="background:var(--material-color)"></span>
+            <span class="ams-slot-name">TPU 95A</span>
+            <span class="ams-slot-pct">58%</span>
+          </button>
+          <button class="ams-slot" style="--material-color:#C98291;--slot-x:67%;--slot-y:22%" data-nav="materials" aria-label="耗材：PLA Silk 玫瑰金 88%">
+            <span class="ams-slot-dot" style="background:var(--material-color)"></span>
+            <span class="ams-slot-name">PLA Silk</span>
+            <span class="ams-slot-pct">88%</span>
+          </button>
+          <button class="ams-slot" style="--material-color:#D9D6CF;--slot-x:80%;--slot-y:42%" data-nav="materials" aria-label="耗材：ASA 高光白 47%">
+            <span class="ams-slot-dot" style="background:var(--material-color)"></span>
+            <span class="ams-slot-name">ASA</span>
+            <span class="ams-slot-pct">47%</span>
+          </button>
+          <button class="ams-slot" style="--material-color:#25282B;--slot-x:90%;--slot-y:72%" data-nav="materials" aria-label="耗材：PA-CF 碳黑 19% 库存偏低">
+            <span class="ams-slot-dot" style="background:var(--material-color)"></span>
+            <span class="ams-slot-name">PA-CF</span>
+            <span class="ams-slot-pct ams-slot-pct--low">19%</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 遥测 2×3 Grid -->
+      <button class="glass-card telemetry-grid" data-nav="control" aria-label="查看控制面板">
+        <div class="tele-item">
+          <i data-lucide="thermometer" class="tele-icon"></i>
+          <span class="param-label">喷嘴</span>
+          <span class="param-value hot">218°C / 220°C</span>
+        </div>
+        <div class="tele-item">
+          <i data-lucide="cpu" class="tele-icon"></i>
+          <span class="param-label">热床</span>
+          <span class="param-value warm">59°C / 60°C</span>
+        </div>
+        <div class="tele-item">
+          <i data-lucide="gauge" class="tele-icon"></i>
+          <span class="param-label">速度</span>
+          <span class="param-value">100%</span>
+        </div>
+        <div class="tele-item">
+          <i data-lucide="wind" class="tele-icon"></i>
+          <span class="param-label">风扇</span>
+          <span class="param-value">80%</span>
+        </div>
+        <div class="tele-item">
+          <i data-lucide="ruler" class="tele-icon"></i>
+          <span class="param-label">层高</span>
+          <span class="param-value">0.20 mm</span>
+        </div>
+        <div class="tele-item">
+          <i data-lucide="circle-dot" class="tele-icon"></i>
+          <span class="param-label">耗材</span>
+          <span class="param-value">86.4 g</span>
+        </div>
+      </button>
+    </section>
+
+    <!-- ============ 耗材库存 Materials ============ -->
+    <section data-page="materials" class="page">
+      <header class="page-header">
+        <div class="header-left">
+          <button class="icon-btn" data-nav="device" aria-label="返回">
+            <i data-lucide="chevron-left"></i>
+          </button>
+          <h1>耗材库存</h1>
+        </div>
+        <div class="header-actions">
+          <span class="materials-header-count">8 卷</span>
+        </div>
+      </header>
+
+      <div class="materials-grid">
+        <article class="material-card--compact" style="--material-color:#2B78E4" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PLA Matte 星空蓝 42%">
+          <div class="material-swatch" style="background:var(--material-color)"></div>
+          <div class="material-card-body">
+            <span class="material-pct">42%</span>
+            <span class="material-name">PLA Matte · 星空蓝</span>
+            <div class="material-level" role="progressbar" aria-label="库存 42%" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100">
+              <div class="material-level__fill" style="width:42%"></div>
+            </div>
+            <div class="material-stats">
+              <span class="material-weight">412 g</span>
+              <span class="material-temp">200–220°C</span>
+            </div>
+            <span class="material-status material-status--active">当前打印 · 充足</span>
+          </div>
+        </article>
+
+        <article class="material-card--compact" style="--material-color:#757B84" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PLA Basic 月岩灰 76%">
+          <div class="material-swatch" style="background:var(--material-color)"></div>
+          <div class="material-card-body">
+            <span class="material-pct">76%</span>
+            <span class="material-name">PLA Basic · 月岩灰</span>
+            <div class="material-level" role="progressbar" aria-label="库存 76%" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100">
+              <div class="material-level__fill" style="width:76%"></div>
+            </div>
+            <div class="material-stats">
+              <span class="material-weight">758 g</span>
+              <span class="material-temp">205–220°C</span>
+            </div>
+            <span class="material-status material-status--pending">待用</span>
+          </div>
+        </article>
+
+        <article class="material-card--compact" style="--material-color:#D8892B" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PETG 透明琥珀 64%">
+          <div class="material-swatch" style="background:var(--material-color)"></div>
+          <div class="material-card-body">
+            <span class="material-pct">64%</span>
+            <span class="material-name">PETG · 透明琥珀</span>
+            <div class="material-level" role="progressbar" aria-label="库存 64%" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100">
+              <div class="material-level__fill" style="width:64%"></div>
+            </div>
+            <div class="material-stats">
+              <span class="material-weight">635 g</span>
+              <span class="material-temp">230–245°C</span>
+            </div>
+            <span class="material-status material-status--pending">待用</span>
+          </div>
+        </article>
+
+        <article class="material-card--compact" style="--material-color:#303236" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：ABS 工业黑 31%">
+          <div class="material-swatch" style="background:var(--material-color)"></div>
+          <div class="material-card-body">
+            <span class="material-pct">31%</span>
+            <span class="material-name">ABS · 工业黑</span>
+            <div class="material-level" role="progressbar" aria-label="库存 31%" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100">
+              <div class="material-level__fill" style="width:31%"></div>
+            </div>
+            <div class="material-stats">
+              <span class="material-weight">304 g</span>
+              <span class="material-temp">245–260°C</span>
+            </div>
+            <span class="material-status material-status--pending">待用</span>
+          </div>
+        </article>
+
+        <article class="material-card--compact" style="--material-color:#D74C46" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：TPU 95A 熔岩红 58%">
+          <div class="material-swatch" style="background:var(--material-color)"></div>
+          <div class="material-card-body">
+            <span class="material-pct">58%</span>
+            <span class="material-name">TPU 95A · 熔岩红</span>
+            <div class="material-level" role="progressbar" aria-label="库存 58%" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">
+              <div class="material-level__fill" style="width:58%"></div>
+            </div>
+            <div class="material-stats">
+              <span class="material-weight">571 g</span>
+              <span class="material-temp">210–225°C</span>
+            </div>
+            <span class="material-status material-status--pending">待用</span>
+          </div>
+        </article>
+
+        <article class="material-card--compact" style="--material-color:#C98291" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PLA Silk 玫瑰金 88%">
+          <div class="material-swatch" style="background:var(--material-color)"></div>
+          <div class="material-card-body">
+            <span class="material-pct">88%</span>
+            <span class="material-name">PLA Silk · 玫瑰金</span>
+            <div class="material-level" role="progressbar" aria-label="库存 88%" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100">
+              <div class="material-level__fill" style="width:88%"></div>
+            </div>
+            <div class="material-stats">
+              <span class="material-weight">874 g</span>
+              <span class="material-temp">200–215°C</span>
+            </div>
+            <span class="material-status material-status--pending">待用</span>
+          </div>
+        </article>
+
+        <article class="material-card--compact" style="--material-color:#D9D6CF" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：ASA 高光白 47%">
+          <div class="material-swatch" style="background:var(--material-color)"></div>
+          <div class="material-card-body">
+            <span class="material-pct">47%</span>
+            <span class="material-name">ASA · 高光白</span>
+            <div class="material-level" role="progressbar" aria-label="库存 47%" aria-valuenow="47" aria-valuemin="0" aria-valuemax="100">
+              <div class="material-level__fill" style="width:47%"></div>
+            </div>
+            <div class="material-stats">
+              <span class="material-weight">465 g</span>
+              <span class="material-temp">250–265°C</span>
+            </div>
+            <span class="material-status material-status--pending">待用</span>
+          </div>
+        </article>
+
+        <article class="material-card--compact" style="--material-color:#25282B" data-material-card role="button" tabindex="0" aria-pressed="false" aria-label="耗材：PA-CF 碳黑 19% 库存偏低">
+          <div class="material-swatch" style="background:var(--material-color)"></div>
+          <div class="material-card-body">
+            <span class="material-pct">19%</span>
+            <span class="material-name">PA-CF · 碳黑</span>
+            <div class="material-level" role="progressbar" aria-label="库存 19%" aria-valuenow="19" aria-valuemin="0" aria-valuemax="100">
+              <div class="material-level__fill" style="width:19%"></div>
+            </div>
+            <div class="material-stats">
+              <span class="material-weight">188 g</span>
+              <span class="material-temp">270–290°C</span>
+            </div>
+            <span class="material-status material-status--low">库存偏低</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 控制面板 Control ============ -->
+    <section data-page="control" class="page">
+      <header class="page-header">
+        <div class="header-left">
+          <button class="icon-btn" data-nav="device" aria-label="返回">
+            <i data-lucide="chevron-left"></i>
+          </button>
+          <h1>控制面板</h1>
+        </div>
+      </header>
+
+      <!-- Temperature overview (always visible) -->
+      <div class="control-overview">
+        <div class="overview-card">
+          <i data-lucide="thermometer" class="overview-icon"></i>
+          <div>
+            <span class="param-label">喷嘴</span>
+            <span class="param-value hot">218°C / 220°C</span>
+          </div>
+        </div>
+        <div class="overview-card">
+          <i data-lucide="cpu" class="overview-icon"></i>
+          <div>
+            <span class="param-label">热床</span>
+            <span class="param-value warm">59°C / 60°C</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab chips -->
+      <div class="filter-row">
+        <button class="chip active" data-tab="control">控制</button>
+        <button class="chip" data-tab="toolhead">执行头</button>
+        <button class="chip" data-tab="move">移动</button>
+      </div>
+
+      <!-- Tab 1: 控制 -->
+      <div class="tab-panel active" data-tab-panel="control">
+        <div class="glass-card control-tile-grid">
+          <div class="control-tile">
+            <span class="param-label">温度</span>
+            <span class="param-value hot">218°C</span>
+          </div>
+          <div class="control-tile">
+            <span class="param-label">打印速度</span>
+            <span class="param-value">100%</span>
+          </div>
+          <div class="control-tile">
+            <span class="param-label">风扇</span>
+            <span class="toggle active"></span>
+          </div>
+          <div class="control-tile">
+            <span class="param-label">LED</span>
+            <span class="toggle"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: 执行头 -->
+      <div class="tab-panel" data-tab-panel="toolhead">
+        <div class="glass-card" style="padding:16px">
+          <div class="toolhead-actions">
+            <button class="btn btn-primary">加载耗材</button>
+            <button class="btn btn-secondary">卸载耗材</button>
+          </div>
+          <div class="control-row" style="margin-top:12px">
+            <span class="param-label">散热</span>
+            <span class="param-value">80%</span>
+          </div>
+          <div class="control-row">
+            <span class="param-label">喷嘴温度</span>
+            <span class="param-value hot">218°C / 220°C</span>
+          </div>
+          <button class="btn btn-primary" style="margin-top:4px;width:100%">归零</button>
+        </div>
+      </div>
+
+      <!-- Tab 3: 移动 -->
+      <div class="tab-panel" data-tab-panel="move">
+        <div class="glass-card" style="padding:16px">
+          <div class="move-section">
+            <span class="param-label" style="margin-bottom:6px;display:block;text-align:center">步长</span>
+            <div class="filter-row" style="justify-content:center">
+              <button class="chip active">10mm</button>
+              <button class="chip">1mm</button>
+              <button class="chip">0.1mm</button>
+            </div>
+          </div>
+
+          <div class="move-section">
+            <span class="param-label" style="margin-bottom:8px;display:block;text-align:center">方向</span>
+            <div class="dpad-grid">
+              <div></div>
+              <button class="dpad-btn" aria-label="上">
+                <i data-lucide="chevron-up"></i>
+              </button>
+              <div></div>
+              <button class="dpad-btn" aria-label="左">
+                <i data-lucide="chevron-left"></i>
+              </button>
+              <div class="dpad-center"></div>
+              <button class="dpad-btn" aria-label="右">
+                <i data-lucide="chevron-right"></i>
+              </button>
+              <div></div>
+              <button class="dpad-btn" aria-label="下">
+                <i data-lucide="chevron-down"></i>
+              </button>
+              <div></div>
+            </div>
+          </div>
+
+          <div class="move-section bed-controls" style="margin-top:8px">
+            <button class="btn btn-primary" style="flex:1">热床 ↑</button>
+            <button class="btn btn-secondary" style="flex:1">热床 ↓</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 模型 Panel ============ -->
+    <section data-page="models" class="page">
+      <header class="page-header">
+        <h2>我的模型</h2>
+      </header>
+
+      <!-- Add model card -->
+      <div class="add-model-card">
+        <i data-lucide="plus" class="add-icon"></i>
+        <span class="add-label">添加模型</span>
+        <span class="add-hint">支持 STL、OBJ、3MF</span>
+      </div>
+
+      <!-- Filter chips -->
+      <div class="filter-row">
+        <button class="chip active">全部</button>
+        <button class="chip">已切片</button>
+        <button class="chip">收藏</button>
+      </div>
+
+      <!-- Model grid -->
+      <div class="model-grid">
+        <div class="model-card" tabindex="0">
+          <div class="model-thumb spiral-vase"></div>
+          <div class="model-meta">
+            <span class="model-name">螺旋花器</span>
+            <div class="model-tags">
+              <span class="tag">3MF</span>
+              <span class="tag">98 × 98 × 180 mm</span>
+            </div>
+            <div class="model-est">
+              <span>~5h 28m</span>
+              <span>~128 g</span>
+            </div>
+            <span class="model-status printing">正在打印</span>
+            <span class="share-badge">来自 Kai 的分享</span>
+          </div>
+        </div>
+
+        <div class="model-card" tabindex="0">
+          <div class="model-thumb tray"></div>
+          <div class="model-meta">
+            <span class="model-name">桌面收纳托盘</span>
+            <div class="model-tags">
+              <span class="tag">STL</span>
+              <span class="tag">220 × 150 × 40 mm</span>
+            </div>
+            <div class="model-est">
+              <span>~3h 12m</span>
+              <span>~72 g</span>
+            </div>
+            <span class="model-status ready">可打印</span>
+            <span class="share-badge">来自 Kai 的分享</span>
+          </div>
+        </div>
+
+        <div class="model-card" tabindex="0">
+          <div class="model-thumb dragon"></div>
+          <div class="model-meta">
+            <span class="model-name">机械龙</span>
+            <div class="model-tags">
+              <span class="tag">STL</span>
+              <span class="tag">140 × 80 × 220 mm</span>
+            </div>
+            <div class="model-est">
+              <span>~12h 45m</span>
+              <span>~310 g</span>
+            </div>
+            <span class="model-status slicing">待切片</span>
+          </div>
+        </div>
+
+        <div class="model-card" tabindex="0">
+          <div class="model-thumb lamp-shade"></div>
+          <div class="model-meta">
+            <span class="model-name">参数化灯罩</span>
+            <div class="model-tags">
+              <span class="tag">3MF</span>
+              <span class="tag">ø120 × 160 mm</span>
+            </div>
+            <div class="model-est">
+              <span>~8h 05m</span>
+              <span>~195 g</span>
+            </div>
+            <span class="model-status ready">可打印</span>
+            <span class="share-badge">来自 Kai 的分享</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 商城 Panel ============ -->
+    <section data-page="market" class="page">
+      <header class="page-header">
+        <h2>模型商城</h2>
+      </header>
+
+      <div class="search-field">
+        <i data-lucide="search" class="search-icon"></i>
+        <span class="search-placeholder">搜索模型...</span>
+      </div>
+
+      <div class="category-row">
+        <button class="chip active">精选</button>
+        <button class="chip">家居</button>
+        <button class="chip">玩具</button>
+        <button class="chip">工具</button>
+      </div>
+
+      <div class="featured-card">
+        <div class="featured-thumb"></div>
+        <div class="featured-info">
+          <span class="featured-label">本周编辑精选</span>
+          <span class="featured-title">折纸氛围灯</span>
+          <span class="featured-desc">几何切面设计，光影层次丰富</span>
+          <div class="featured-meta">
+            <span class="price">¥12</span>
+            <span class="downloads">2.4k 下载</span>
+          </div>
+          <div class="creator verified">
+            <i data-lucide="badge-check"></i>
+            XK Official
+          </div>
+        </div>
+      </div>
+
+      <div class="market-grid">
+        <div class="market-item" tabindex="0">
+          <div class="item-thumb origami-lamp"></div>
+          <div class="item-info">
+            <span class="item-name">折纸氛围灯</span>
+            <span class="item-price">¥12</span>
+            <span class="item-downloads">2.4k 下载</span>
+          </div>
+        </div>
+
+        <div class="market-item" tabindex="0">
+          <div class="item-thumb modular-holder"></div>
+          <div class="item-info">
+            <span class="item-name">模块化笔筒</span>
+            <span class="item-price free">免费</span>
+            <span class="item-downloads">8.7k 下载</span>
+          </div>
+        </div>
+
+        <div class="market-item" tabindex="0">
+          <div class="item-thumb mini-moon"></div>
+          <div class="item-info">
+            <span class="item-name">迷你月球灯</span>
+            <span class="item-price">¥18</span>
+            <span class="item-downloads">5.1k 下载</span>
+          </div>
+        </div>
+
+        <div class="market-item" tabindex="0">
+          <div class="item-thumb gear-box"></div>
+          <div class="item-info">
+            <span class="item-name">齿轮收纳盒</span>
+            <span class="item-price">¥9</span>
+            <span class="item-downloads">3.2k 下载</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 我的 Panel ============ -->
+    <section data-page="profile" class="page">
+      <header class="page-header">
+        <h2>我的</h2>
+      </header>
+
+      <!-- Profile card -->
+      <div class="profile-card">
+        <div class="avatar">AX</div>
+        <div class="profile-info">
+          <span class="profile-name">Alex Chen</span>
+          <span class="profile-badge">Maker Pro</span>
+          <span class="profile-id">XK-2048-7731</span>
+        </div>
+      </div>
+
+      <!-- Metrics -->
+      <div class="metrics-row">
+        <div class="metric">
+          <span class="metric-value">128</span>
+          <span class="metric-label">打印</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value">486h</span>
+          <span class="metric-label">打印时长</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value">23</span>
+          <span class="metric-label">模型</span>
+        </div>
+      </div>
+
+      <!-- Active Printer -->
+      <div class="printer-row" tabindex="0">
+        <i data-lucide="printer" class="printer-icon"></i>
+        <div class="printer-info">
+          <span class="printer-name">XK1 Carbon</span>
+          <span class="printer-status online">在线</span>
+        </div>
+        <i data-lucide="chevron-right" class="chevron"></i>
+      </div>
+
+      <!-- Material summary -->
+      <div class="material-summary">
+        <div class="mat-summary-head">
+          <span class="mat-summary-label">本月耗材</span>
+          <span class="mat-summary-value">2.8 kg</span>
+        </div>
+        <div class="weekly-chart">
+          <div class="bar" style="height:60%"><span>W1</span></div>
+          <div class="bar" style="height:85%"><span>W2</span></div>
+          <div class="bar" style="height:45%"><span>W3</span></div>
+          <div class="bar" style="height:25%"><span>W4</span></div>
+        </div>
+      </div>
+
+      <!-- Menu rows -->
+      <div class="menu-group">
+        <button class="menu-row">
+          <i data-lucide="heart"></i>
+          <span>我的收藏</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="menu-row">
+          <i data-lucide="clock"></i>
+          <span>打印历史</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="menu-row">
+          <i data-lucide="map-pin"></i>
+          <span>地址管理</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="menu-row">
+          <i data-lucide="life-buoy"></i>
+          <span>帮助与反馈</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="menu-row">
+          <i data-lucide="settings"></i>
+          <span>设置</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============ Bottom Navigation ============ -->
+    <nav class="bottom-nav">
+      <button data-nav="device" class="nav-item active" aria-current="page">
+        <i data-lucide="printer"></i>
+        <span>设备</span>
+      </button>
+      <button data-nav="models" class="nav-item">
+        <i data-lucide="package"></i>
+        <span>模型</span>
+      </button>
+      <button data-nav="market" class="nav-item">
+        <i data-lucide="store"></i>
+        <span>商城</span>
+      </button>
+      <button data-nav="profile" class="nav-item">
+        <i data-lucide="user"></i>
+        <span>我的</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
