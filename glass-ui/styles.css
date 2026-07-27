@@ -143,9 +143,7 @@ button {
 
 @media (prefers-reduced-motion: reduce) {
   .page.active { animation: none; }
-  .ams-wheel { transition: none; }
   .ams-slot { transition: none; }
-  .ams-slot-inner { transition: none; }
 }
 
 /* ----- Page Header ----- */
@@ -450,9 +448,9 @@ button {
   background: rgba(255, 255, 255, 0.9);
 }
 
-/* ----- AMS 耗材轮盘 (rotating wheel) ----- */
+/* ----- AMS 耗材 (static semicircle) ----- */
 .ams-module {
-  padding: 12px 16px 8px;
+  padding: 12px 8px 8px;
 }
 
 .ams-header {
@@ -475,159 +473,47 @@ button {
   border-radius: 12px;
 }
 
-/* ----- Stage (viewport) ----- */
 .ams-stage {
   position: relative;
-  height: 238px;
+  height: 210px;
   width: 100%;
   overflow: hidden;
-  touch-action: pan-y;
-  outline: none;
 }
 
-/* ----- Wheel (rotating ring) ----- */
-.ams-wheel {
+.ams-rail {
   position: absolute;
-  left: 50%;
-  top: 176px;
-  width: 300px;
-  height: 300px;
-  transform: translate(-50%, -50%) rotate(var(--wheel-rotation, 0deg));
-  transition: transform 420ms cubic-bezier(.22, 1, .36, 1);
-  will-change: transform;
-}
-
-/* ----- Slots on the wheel ----- */
-.ams-slot {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 58px;
-  padding: 6px 4px;
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--border);
-  cursor: pointer;
-  transform: rotate(var(--slot-angle)) translateY(calc(-1 * var(--slot-radius, 132px))) scale(var(--slot-scale, 1));
-  transition: transform 420ms cubic-bezier(.22, 1, .36, 1), opacity 420ms cubic-bezier(.22, 1, .36, 1);
-  will-change: transform, opacity;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  z-index: 3;
-}
-
-.ams-slot:active {
-  filter: brightness(0.92);
-}
-
-.ams-slot-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  transform: rotate(var(--slot-counter-rotation, 0deg));
-  transition: transform 420ms cubic-bezier(.22, 1, .36, 1);
-  will-change: transform;
-}
-
-.ams-slot-dot {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  box-shadow: inset 0 -1px 3px rgba(0,0,0,0.1);
-  flex-shrink: 0;
-}
-
-.ams-slot-name {
-  font-size: 0.52rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-align: center;
-  line-height: 1.1;
-  max-width: 50px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.ams-slot-pct {
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  font-variant-numeric: tabular-nums;
-}
-
-.ams-slot-pct--low {
-  color: var(--warning);
-}
-
-/* ----- Slot visibility states ----- */
-.ams-slot[data-ams-visible="near"] {
-  opacity: 1;
-  --slot-scale: 1;
-  pointer-events: auto;
-}
-
-.ams-slot[data-ams-visible="far"] {
-  opacity: 0.72;
-  --slot-scale: 0.86;
-  pointer-events: auto;
-}
-
-.ams-slot[data-ams-visible="hidden"] {
-  opacity: 0;
-  --slot-scale: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
 }
 
-/* ----- Center current display (detail entry) ----- */
 .ams-current {
   position: absolute;
   left: 50%;
-  top: 50%;
-  z-index: 5;
+  top: 62%;
+  z-index: 2;
+  width: 90px;
+  height: 90px;
   transform: translate(-50%, -50%);
-  width: 104px;
-  height: 104px;
   border-radius: 50%;
   background: var(--surface-raised);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 2px solid var(--accent-dim);
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.ams-current:active {
-  filter: brightness(0.95);
-}
-
-.ams-current:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.ams-current-ring {
-  position: absolute;
-  inset: -8px;
-  width: calc(100% + 16px);
-  height: calc(100% + 16px);
+  gap: 1px;
   pointer-events: none;
 }
 
-.ams-current-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1px;
-  z-index: 1;
+.ams-current-label {
+  font-size: 0.55rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  line-height: 1.1;
 }
 
 .ams-current-name {
@@ -642,79 +528,72 @@ button {
   font-weight: 800;
   color: var(--accent);
   font-variant-numeric: tabular-nums;
+  line-height: 1.1;
 }
 
-.ams-current-hint {
-  font-size: 0.52rem;
-  color: var(--text-muted);
-  font-weight: 500;
-  z-index: 1;
-  margin-top: 1px;
-}
-
-/* ----- Arrow buttons ----- */
-.ams-arrow {
+.ams-slot {
   position: absolute;
+  left: 50%;
   top: 50%;
-  z-index: 6;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--surface);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--border);
-  cursor: pointer;
+  z-index: 3;
+  width: 46px;
+  padding: 0;
+  transform: translate(-50%, -50%);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  transition: background 0.15s;
-  color: var(--text-secondary);
+  gap: 1px;
+  cursor: pointer;
+  text-align: center;
 }
 
-.ams-arrow:active {
-  background: var(--surface-raised);
+.ams-slot:nth-of-type(1) { left: 10.85%; top: 65.05%; }
+.ams-slot:nth-of-type(2) { left: 17.88%; top: 38.43%; }
+.ams-slot:nth-of-type(3) { left: 30.14%; top: 20.52%; }
+.ams-slot:nth-of-type(4) { left: 50%;    top: 11.90%; }
+.ams-slot:nth-of-type(5) { left: 69.86%; top: 20.52%; }
+.ams-slot:nth-of-type(6) { left: 82.12%; top: 38.43%; }
+.ams-slot:nth-of-type(7) { left: 89.15%; top: 65.05%; }
+
+.ams-slot:active {
+  transform: translate(-50%, -50%) scale(0.92);
 }
 
-.ams-arrow:focus-visible {
+.ams-slot:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-.ams-arrow svg {
-  width: 20px;
-  height: 20px;
+.ams-slot-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  box-shadow: inset 0 -1px 3px rgba(0,0,0,0.1);
+  flex-shrink: 0;
 }
 
-.ams-arrow--prev {
-  left: 4px;
-  transform: translateY(-50%);
-}
-
-.ams-arrow--next {
-  right: 4px;
-  transform: translateY(-50%);
-}
-
-/* ----- Position indicator ----- */
-.ams-position {
-  position: absolute;
-  bottom: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.6rem;
-  color: var(--text-muted);
+.ams-slot-name {
+  font-size: 0.46rem;
   font-weight: 500;
-  z-index: 4;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.1;
+  max-width: 46px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.ams-live-status {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
+.ams-slot-pct {
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.ams-slot-pct--low {
+  color: var(--warning);
 }
 
 /* ----- Telemetry 2×3 Grid ----- */
@@ -1934,10 +1813,6 @@ button {
   .telemetry-grid { gap: 6px; padding: 8px; }
   .tele-item { padding: 8px 2px; }
   .tele-icon { width: 14px; height: 14px; }
-  .ams-stage { height: 220px; }
-  .ams-wheel { width: 276px; height: 276px; top: 162px; }
-  .ams-slot { width: 52px; --slot-radius: 120px; }
-  .ams-current { width: 96px; height: 96px; }
   .materials-grid { gap: 8px; }
   .material-card--compact { padding: 10px; }
 }
