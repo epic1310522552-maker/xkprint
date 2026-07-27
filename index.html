@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" id="theme-color" content="#F5F0EB">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>XKPrint</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="app-shell">
+
+    <!-- ============ 设备 Panel ============ -->
+    <section data-page="device" class="page active">
+      <header class="page-header">
+        <div class="header-left">
+          <h1 class="greeting">下午好，Alex</h1>
+          <span class="status-pill online">
+            <i data-lucide="check-circle" class="icon-sm"></i>
+            XK1 Carbon · 在线
+          </span>
+        </div>
+        <div class="header-actions">
+          <button class="icon-btn" aria-label="通知">
+            <i data-lucide="bell"></i>
+          </button>
+          <button class="icon-btn" data-theme-toggle aria-label="切换主题">
+            <i data-lucide="sun"></i>
+            <i data-lucide="moon" class="hidden"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Hero job card -->
+      <div class="card hero-card">
+        <div class="hero-canvas-wrap">
+          <div id="model-canvas"></div>
+          <div class="hero-overlay">
+            <div class="hero-info">
+              <span class="file-badge">3MF</span>
+              <span class="filename">螺旋花器_v4.3mf</span>
+            </div>
+            <div class="status-tag printing">正在打印</div>
+          </div>
+        </div>
+        <div class="progress-section">
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 68%"></div>
+          </div>
+          <div class="progress-meta">
+            <span class="progress-pct">68%</span>
+            <span class="progress-time">3h 42m / 1h 46m</span>
+          </div>
+          <div class="layer-info">第 842 / 1,238 层</div>
+        </div>
+        <div class="hero-controls">
+          <button class="btn btn-primary" aria-label="暂停打印">暂停</button>
+          <button class="btn btn-secondary" aria-label="停止打印">停止</button>
+        </div>
+      </div>
+
+      <!-- Parameters -->
+      <div class="card params-card">
+        <div class="params-grid">
+          <div class="param-item">
+            <span class="param-label">喷嘴</span>
+            <span class="param-value hot">218°C / 220°C</span>
+          </div>
+          <div class="param-item">
+            <span class="param-label">热床</span>
+            <span class="param-value warm">59°C / 60°C</span>
+          </div>
+          <div class="param-item">
+            <span class="param-label">速度</span>
+            <span class="param-value">100%</span>
+          </div>
+          <div class="param-item">
+            <span class="param-label">风扇</span>
+            <span class="param-value">80%</span>
+          </div>
+          <div class="param-item">
+            <span class="param-label">层高</span>
+            <span class="param-value">0.20 mm</span>
+          </div>
+          <div class="param-item">
+            <span class="param-label">耗材</span>
+            <span class="param-value">86.4 g</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Material card -->
+      <div class="card material-card">
+        <div class="material-head">
+          <div class="material-swatch" style="background: #2B78E4"></div>
+          <div class="material-detail">
+            <span class="material-name">PLA Matte · 星空蓝</span>
+            <span class="material-remaining">剩余 42%</span>
+          </div>
+        </div>
+        <div class="material-gauge-wrap">
+          <svg class="spool-gauge" viewBox="0 0 120 40" aria-hidden="true">
+            <rect x="10" y="10" width="100" height="20" rx="10" class="gauge-track"/>
+            <rect x="10" y="10" width="42" height="20" rx="10" class="gauge-fill"/>
+          </svg>
+        </div>
+        <div class="material-stats">
+          <span>412 g <small>剩余</small></span>
+          <span>128 g <small>预计</small></span>
+          <span class="status-ok">本次打印耗材充足</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 模型 Panel ============ -->
+    <section data-page="models" class="page">
+      <header class="page-header">
+        <h2>我的模型</h2>
+        <div class="header-actions">
+          <button class="icon-btn" data-theme-toggle aria-label="切换主题">
+            <i data-lucide="sun"></i>
+            <i data-lucide="moon" class="hidden"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Add model card -->
+      <div class="add-model-card">
+        <i data-lucide="plus" class="add-icon"></i>
+        <span class="add-label">添加模型</span>
+        <span class="add-hint">支持 STL、OBJ、3MF</span>
+      </div>
+
+      <!-- Filter chips -->
+      <div class="filter-row">
+        <button class="chip active">全部</button>
+        <button class="chip">已切片</button>
+        <button class="chip">收藏</button>
+      </div>
+
+      <!-- Model grid -->
+      <div class="model-grid">
+        <div class="model-card">
+          <div class="model-thumb spiral-vase"></div>
+          <div class="model-meta">
+            <span class="model-name">螺旋花器</span>
+            <div class="model-tags">
+              <span class="tag">3MF</span>
+              <span class="tag">98 × 98 × 180 mm</span>
+            </div>
+            <div class="model-est">
+              <span>~5h 28m</span>
+              <span>~128 g</span>
+            </div>
+            <span class="model-status printing">正在打印</span>
+            <span class="share-badge">来自 Kai 的分享</span>
+          </div>
+        </div>
+
+        <div class="model-card">
+          <div class="model-thumb tray"></div>
+          <div class="model-meta">
+            <span class="model-name">桌面收纳托盘</span>
+            <div class="model-tags">
+              <span class="tag">STL</span>
+              <span class="tag">220 × 150 × 40 mm</span>
+            </div>
+            <div class="model-est">
+              <span>~3h 12m</span>
+              <span>~72 g</span>
+            </div>
+            <span class="model-status ready">可打印</span>
+            <span class="share-badge">来自 Kai 的分享</span>
+          </div>
+        </div>
+
+        <div class="model-card">
+          <div class="model-thumb dragon"></div>
+          <div class="model-meta">
+            <span class="model-name">机械龙</span>
+            <div class="model-tags">
+              <span class="tag">STL</span>
+              <span class="tag">140 × 80 × 220 mm</span>
+            </div>
+            <div class="model-est">
+              <span>~12h 45m</span>
+              <span>~310 g</span>
+            </div>
+            <span class="model-status slicing">待切片</span>
+          </div>
+        </div>
+
+        <div class="model-card">
+          <div class="model-thumb lamp-shade"></div>
+          <div class="model-meta">
+            <span class="model-name">参数化灯罩</span>
+            <div class="model-tags">
+              <span class="tag">3MF</span>
+              <span class="tag">ø120 × 160 mm</span>
+            </div>
+            <div class="model-est">
+              <span>~8h 05m</span>
+              <span>~195 g</span>
+            </div>
+            <span class="model-status ready">可打印</span>
+            <span class="share-badge">来自 Kai 的分享</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 商城 Panel ============ -->
+    <section data-page="market" class="page">
+      <header class="page-header">
+        <h2>模型商城</h2>
+        <div class="header-actions">
+          <button class="icon-btn" data-theme-toggle aria-label="切换主题">
+            <i data-lucide="sun"></i>
+            <i data-lucide="moon" class="hidden"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="search-field">
+        <i data-lucide="search" class="search-icon"></i>
+        <span class="search-placeholder">搜索模型...</span>
+      </div>
+
+      <div class="category-row">
+        <button class="chip active">精选</button>
+        <button class="chip">家居</button>
+        <button class="chip">玩具</button>
+        <button class="chip">工具</button>
+      </div>
+
+      <div class="featured-card">
+        <div class="featured-thumb"></div>
+        <div class="featured-info">
+          <span class="featured-label">本周编辑精选</span>
+          <span class="featured-title">折纸氛围灯</span>
+          <span class="featured-desc">几何切面设计，光影层次丰富</span>
+          <div class="featured-meta">
+            <span class="price">¥12</span>
+            <span class="downloads">2.4k 下载</span>
+          </div>
+          <div class="creator verified">
+            <i data-lucide="badge-check"></i>
+            XK Official
+          </div>
+        </div>
+      </div>
+
+      <div class="market-grid">
+        <div class="market-item">
+          <div class="item-thumb origami-lamp"></div>
+          <div class="item-info">
+            <span class="item-name">折纸氛围灯</span>
+            <span class="item-price">¥12</span>
+            <span class="item-downloads">2.4k 下载</span>
+            <div class="creator verified">
+              <i data-lucide="badge-check"></i>
+              XK Official
+            </div>
+          </div>
+        </div>
+
+        <div class="market-item">
+          <div class="item-thumb modular-holder"></div>
+          <div class="item-info">
+            <span class="item-name">模块化笔筒</span>
+            <span class="item-price free">免费</span>
+            <span class="item-downloads">8.7k 下载</span>
+            <div class="creator verified">
+              <i data-lucide="badge-check"></i>
+              XK Official
+            </div>
+          </div>
+        </div>
+
+        <div class="market-item">
+          <div class="item-thumb mini-moon"></div>
+          <div class="item-info">
+            <span class="item-name">迷你月球灯</span>
+            <span class="item-price">¥18</span>
+            <span class="item-downloads">5.1k 下载</span>
+            <div class="creator verified">
+              <i data-lucide="badge-check"></i>
+              XK Official
+            </div>
+          </div>
+        </div>
+
+        <div class="market-item">
+          <div class="item-thumb gear-box"></div>
+          <div class="item-info">
+            <span class="item-name">齿轮收纳盒</span>
+            <span class="item-price">¥9</span>
+            <span class="item-downloads">3.2k 下载</span>
+            <div class="creator verified">
+              <i data-lucide="badge-check"></i>
+              XK Official
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 我的 Panel ============ -->
+    <section data-page="profile" class="page">
+      <header class="page-header">
+        <h2>我的</h2>
+        <div class="header-actions">
+          <button class="icon-btn" data-theme-toggle aria-label="切换主题">
+            <i data-lucide="sun"></i>
+            <i data-lucide="moon" class="hidden"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Profile card -->
+      <div class="profile-card">
+        <div class="avatar">AX</div>
+        <div class="profile-info">
+          <span class="profile-name">Alex Chen</span>
+          <span class="profile-badge">Maker Pro</span>
+          <span class="profile-id">XK-2048-7731</span>
+        </div>
+      </div>
+
+      <!-- Metrics -->
+      <div class="metrics-row">
+        <div class="metric">
+          <span class="metric-value">128</span>
+          <span class="metric-label">打印</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value">486h</span>
+          <span class="metric-label">打印时长</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value">23</span>
+          <span class="metric-label">模型</span>
+        </div>
+      </div>
+
+      <!-- Active Printer -->
+      <div class="card printer-row">
+        <i data-lucide="printer" class="printer-icon"></i>
+        <div class="printer-info">
+          <span class="printer-name">XK1 Carbon</span>
+          <span class="printer-status online">在线</span>
+        </div>
+        <i data-lucide="chevron-right" class="chevron"></i>
+      </div>
+
+      <!-- Material summary -->
+      <div class="card material-summary">
+        <div class="mat-summary-head">
+          <span class="mat-summary-label">本月耗材</span>
+          <span class="mat-summary-value">2.8 kg</span>
+        </div>
+        <div class="weekly-chart">
+          <div class="bar" style="height: 60%"><span>W1</span></div>
+          <div class="bar" style="height: 85%"><span>W2</span></div>
+          <div class="bar" style="height: 45%"><span>W3</span></div>
+          <div class="bar" style="height: 25%"><span>W4</span></div>
+        </div>
+      </div>
+
+      <!-- Menu rows -->
+      <div class="menu-group">
+        <button class="menu-row">
+          <i data-lucide="heart"></i>
+          <span>我的收藏</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="menu-row">
+          <i data-lucide="clock"></i>
+          <span>打印历史</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="menu-row">
+          <i data-lucide="map-pin"></i>
+          <span>地址管理</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="menu-row">
+          <i data-lucide="life-buoy"></i>
+          <span>帮助与反馈</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="menu-row">
+          <i data-lucide="settings"></i>
+          <span>设置</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============ Bottom Navigation ============ -->
+    <nav class="bottom-nav">
+      <button data-nav="device" class="nav-item active">
+        <i data-lucide="printer"></i>
+        <span>设备</span>
+      </button>
+      <button data-nav="models" class="nav-item">
+        <i data-lucide="package"></i>
+        <span>模型</span>
+      </button>
+      <button data-nav="market" class="nav-item">
+        <i data-lucide="store"></i>
+        <span>商城</span>
+      </button>
+      <button data-nav="profile" class="nav-item">
+        <i data-lucide="user"></i>
+        <span>我的</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
