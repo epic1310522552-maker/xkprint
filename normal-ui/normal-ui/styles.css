@@ -1438,6 +1438,18 @@ button.card {
 .calibration-option__icon--blue { color: var(--accent); background: var(--accent-dim); }
 .calibration-option__icon--violet { color: #8957C7; background: rgba(137, 87, 199, 0.12); }
 .calibration-option__icon--amber { color: var(--warm); background: rgba(230, 126, 34, 0.12); }
+[data-page="device-calibration"] .calibration-option__icon {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  color: var(--text-muted);
+  background: transparent;
+  border-radius: 0;
+}
+[data-page="device-calibration"] .calibration-option__icon svg {
+  width: 20px;
+  height: 20px;
+}
 .calibration-option__copy { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 3px; }
 .calibration-option__copy strong { font-size: 0.84rem; font-weight: 650; }
 .calibration-option__copy small { color: var(--text-muted); font-size: 0.66rem; line-height: 1.45; }
@@ -1495,6 +1507,19 @@ button.card {
 .about-app-hero > small { margin-top: 8px; color: var(--text-muted); font: 0.68rem/1.4 var(--font-mono); }
 .about-app-menu { box-shadow: var(--shadow-md); }
 .about-app-copyright { margin-top: auto; padding: 20px 0 2px; color: var(--text-muted); font-size: 0.62rem; text-align: center; }
+[data-page="about-app"] .settings-row__icon {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  color: var(--text-muted);
+  background: transparent;
+  border-radius: 0;
+}
+[data-page="about-app"] .settings-row__icon svg {
+  width: 20px;
+  height: 20px;
+}
 .legal-document { padding: 20px 18px 26px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
 .legal-document__meta { display: flex; margin-bottom: 18px; flex-direction: column; gap: 3px; padding-bottom: 15px; border-bottom: 1px solid var(--border); }
 .legal-document__meta span { font-size: 1rem; font-weight: 700; }
@@ -1613,21 +1638,20 @@ button.card {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 20px;
+  height: 20px;
   flex: 0 0 auto;
-  color: var(--accent);
-  background: var(--accent-soft);
-  border-radius: 10px;
+  color: var(--text-muted);
 }
-.account-row-icon svg { width: 19px; height: 19px; }
+.account-row-icon svg { width: 20px; height: 20px; }
 .account-info-row > div { display: flex; flex: 1; flex-direction: column; gap: 4px; }
 .account-info-row span,
 .account-action-row { font-size: 0.86rem; font-weight: 600; }
 .account-info-row strong { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.76rem; }
 .account-action-row > span:nth-child(2) { flex: 1; text-align: left; }
 .account-action-row--danger { color: var(--hot); }
-.account-action-row--danger .account-row-icon { color: var(--hot); background: rgba(224, 82, 82, 0.1); }
+.account-action-row--danger .account-row-icon { color: var(--text-muted); background: transparent; }
+.account-menu-group .chevron { color: var(--text-muted); }
 .account-form { display: flex; flex-direction: column; gap: 18px; padding: 20px 16px; }
 .account-field { display: flex; flex-direction: column; gap: 8px; color: var(--text-secondary); font-size: 0.8rem; font-weight: 600; }
 .account-field small { color: var(--text-muted); font-size: 0.68rem; font-weight: 400; }
