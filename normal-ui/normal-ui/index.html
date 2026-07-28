@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" id="theme-color" content="#F5F0EB">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>XKPrint</title>
+  <link rel="stylesheet" href="styles.css?v=20260728-device-scan">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="app-shell">
+
+    <!-- ============ 设备 Panel ============ -->
+    <section data-page="device" class="page no-device">
+      <div class="device-empty-state">
+        <div class="device-empty-icon">
+          <i data-lucide="scan-line"></i>
+        </div>
+        <h2>添加你的打印机</h2>
+        <p>扫描设备二维码，开始管理打印任务</p>
+        <button class="btn btn-primary device-scan-btn" type="button" data-scan-device>
+          <i data-lucide="qr-code"></i>
+          <span>扫码添加设备</span>
+        </button>
+      </div>
+
+      <header class="page-header" data-device-content>
+        <div class="header-left">
+          <h1 class="greeting">下午好，Alex</h1>
+          <span class="status-pill online">
+            <i data-lucide="check-circle" class="icon-sm"></i>
+            XK1 Carbon · 在线
+          </span>
+        </div>
+        <div class="header-actions">
+          <button class="icon-btn notification-trigger notification-trigger--unread" type="button" data-nav="notifications" aria-label="通知，3 条未读">
+            <i data-lucide="bell"></i>
+          </button>
+          <button class="icon-btn" type="button" data-nav="settings" aria-label="打开设置">
+            <i data-lucide="settings"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Hero job card -->
+      <div class="card hero-card" data-device-content>
+        <div class="hero-canvas-wrap">
+          <div id="model-canvas"></div>
+          <div class="cam-placeholder" hidden>
+            <div class="cam-placeholder-viewfinder">
+              <div class="cam-placeholder-icon">
+                <i data-lucide="camera"></i>
+              </div>
+              <span class="cam-placeholder-label">摄像头实时画面</span>
+            </div>
+          </div>
+          <div class="hero-overlay">
+            <div class="device-status-heading">
+              <span>设备状态</span>
+              <span class="status-tag printing">正在打印</span>
+            </div>
+            <div class="preview-float-actions" aria-label="设备快捷操作">
+              <button class="preview-float-action" type="button" data-float-cam aria-label="拍摄" title="拍摄">
+                <i data-lucide="camera"></i>
+              </button>
+              <button class="preview-float-action" type="button" data-float-file aria-label="本地文件" title="本地文件">
+                <i data-lucide="folder-open"></i>
+              </button>
+              <button class="preview-float-action" type="button" data-float-screenshot aria-label="截图" title="截图" hidden>
+                <i data-lucide="camera"></i>
+              </button>
+              <button class="preview-float-action" type="button" data-float-fullscreen aria-label="全屏" title="全屏" hidden>
+                <i data-lucide="maximize"></i>
+              </button>
+              <button class="preview-float-action" type="button" data-float-light aria-label="开灯" title="开灯" aria-pressed="false" hidden>
+                <i data-lucide="lightbulb"></i>
+              </button>
+              <button class="preview-float-action" type="button" data-float-exit aria-label="退出" title="退出" hidden>
+                <i data-lucide="x"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-section">
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 68%"></div>
+          </div>
+          <div class="progress-meta">
+            <span class="progress-pct">68%</span>
+            <span class="progress-time">3h 42m / 1h 46m</span>
+          </div>
+          <div class="layer-info">第 842 / 1,238 层</div>
+        </div>
+
+      </div>
+
+      <section class="card device-control-panel" data-device-content aria-label="设备控制">
+        <div class="filter-row" role="tablist" aria-label="设备控制选项">
+          <button class="chip active" type="button" id="device-control-tab" data-tab="control" role="tab" aria-selected="true" aria-controls="device-control-panel">控制</button>
+          <button class="chip" type="button" id="device-toolhead-tab" data-tab="toolhead" role="tab" aria-selected="false" aria-controls="device-toolhead-panel">执行头</button>
+          <button class="chip" type="button" id="device-move-tab" data-tab="move" role="tab" aria-selected="false" aria-controls="device-move-panel">移动</button>
+        </div>
+
+        <div class="tab-panel active" id="device-control-panel" data-tab-panel="control" role="tabpanel" aria-labelledby="device-control-tab">
+          <div class="control-card-grid">
+            <button class="control-card control-card--metric" type="button" data-control-dialog="bed" aria-haspopup="dialog" aria-label="热床温度">
+              <span class="control-card__header"><i data-lucide="heater"></i><span class="param-label">热床温度</span></span>
+              <span class="metric-display metric-display--bed" data-control-summary="bed"><span class="metric-display__primary">59°C</span><span class="metric-display__divider" aria-hidden="true"></span><span class="metric-display__secondary">60°C</span></span>
+            </button>
+            <button class="control-card control-card--metric" type="button" data-control-dialog="speed" aria-haspopup="dialog" aria-label="打印速度">
+              <span class="control-card__header"><i data-lucide="gauge"></i><span class="param-label">打印速度</span></span>
+              <span class="metric-display metric-display--speed" data-control-summary="speed"><span class="metric-display__primary">100%</span></span>
+            </button>
+            <button class="control-card control-card--fan" type="button" data-control-dialog="fan" aria-haspopup="dialog" aria-label="风扇">
+              <span class="control-card__header"><i data-lucide="fan"></i><span class="param-label">风扇</span></span>
+              <span class="fan-levels" data-control-summary="fan" role="img" aria-label="部件风扇 80%，辅助风扇已关闭，机箱风扇已关闭" style="--fan-part: 80%; --fan-auxiliary: 0%; --fan-chamber: 0%"><span class="fan-levels__item is-on" data-fan-state="part"><span class="fan-levels__bar"><span style="height: var(--fan-part)"></span></span><span class="fan-levels__label">部件</span></span><span class="fan-levels__item is-off" data-fan-state="auxiliary"><span class="fan-levels__bar"><span style="height: var(--fan-auxiliary)"></span></span><span class="fan-levels__label">辅助</span></span><span class="fan-levels__item is-off" data-fan-state="chamber"><span class="fan-levels__bar"><span style="height: var(--fan-chamber)"></span></span><span class="fan-levels__label">机箱</span></span></span>
+            </button>
+            <button class="control-card control-card--lighting" type="button" data-control-dialog="lighting" aria-haspopup="dialog" aria-label="照明和 RGB 灯">
+              <span class="control-card__header"><i data-lucide="lightbulb"></i><span class="param-label">照明和 RGB 灯</span></span>
+              <span class="lighting-states" data-control-summary="lighting" role="img" aria-label="照明灯已关闭，RGB 灯已关闭"><span class="lighting-states__item" data-light-state="main"><span class="lighting-states__indicator"></span><span class="lighting-states__label">照明</span></span><span class="lighting-states__item" data-light-state="rgb"><span class="lighting-states__indicator lighting-states__indicator--rgb"></span><span class="lighting-states__label">RGB</span></span></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="device-toolhead-panel" data-tab-panel="toolhead" role="tabpanel" aria-labelledby="device-toolhead-tab" hidden>
+          <div class="toolhead-selector" data-toolhead-selector aria-label="选择执行头">
+            <button class="toolhead-card toolhead-card--selected" type="button" data-toolhead="1" data-toolhead-card aria-pressed="true" aria-label="执行头 1，已安装 PLA Matte 星空蓝"><span class="toolhead-card__number">1</span></button>
+            <button class="toolhead-card" type="button" data-toolhead="2" data-toolhead-card aria-pressed="false" aria-label="执行头 2，已安装 PLA Basic 雾灰"><span class="toolhead-card__number">2</span></button>
+            <button class="toolhead-card" type="button" data-toolhead="3" data-toolhead-card aria-pressed="false" aria-label="执行头 3，已安装 PETG 琥珀橙"><span class="toolhead-card__number">3</span></button>
+            <button class="toolhead-card" type="button" data-toolhead="4" data-toolhead-card aria-pressed="false" aria-label="执行头 4，已安装 ABS 石墨黑"><span class="toolhead-card__number">4</span></button>
+            <button class="toolhead-card" type="button" data-toolhead="5" data-toolhead-card aria-pressed="false" aria-label="执行头 5，空闲 TPU 95A 赤红"><span class="toolhead-card__number">5</span></button>
+            <button class="toolhead-card" type="button" data-toolhead="6" data-toolhead-card aria-pressed="false" aria-label="执行头 6，已安装 PLA Silk 樱粉"><span class="toolhead-card__number">6</span></button>
+            <button class="toolhead-card" type="button" data-toolhead="7" data-toolhead-card aria-pressed="false" aria-label="执行头 7，空闲 ASA 雪白"><span class="toolhead-card__number">7</span></button>
+            <button class="toolhead-card" type="button" data-toolhead="8" data-toolhead-card aria-pressed="false" aria-label="执行头 8，已安装 PA-CF 碳纤黑"><span class="toolhead-card__number">8</span></button>
+          </div>
+          <section class="toolhead-detail" data-toolhead-detail aria-live="polite">
+            <header class="toolhead-detail__header"><span class="toolhead-detail__icon" data-toolhead-detail-icon><i data-lucide="printer"></i></span><div><h3 data-toolhead-title>执行头 1</h3><p data-toolhead-status>已加载</p></div></header>
+            <div class="toolhead-detail__material"><span class="toolhead-detail__swatch" data-toolhead-swatch></span><div><span class="toolhead-detail__label">当前耗材</span><strong data-toolhead-material>PLA Matte · 星空蓝</strong><span data-toolhead-material-status>已加载</span></div></div>
+            <div class="toolhead-detail__temperature"><span>执行头温度设置</span><strong data-toolhead-target-temperature>220°C</strong><small>目标温度 · 当前 <span data-toolhead-current-temperature>218°C</span></small></div>
+            <div class="toolhead-actions"><button class="btn btn-primary" type="button" data-toolhead-action="temperature">设置温度</button><button class="btn btn-secondary" type="button" data-toolhead-action="unload" data-toolhead-unload>放回执行头</button></div>
+            <p class="toolhead-feedback" data-toolhead-feedback aria-live="polite"></p>
+            <button class="btn btn-primary toolhead-home" type="button" data-toolhead-action="home" aria-label="执行头 1 归零">归零</button>
+          </section>
+        </div>
+
+        <div class="tab-panel" id="device-move-panel" data-tab-panel="move" role="tabpanel" aria-labelledby="device-move-tab" hidden>
+          <div class="filter-row" style="justify-content: center; margin-bottom: 12px;"><button class="chip active" type="button">10mm</button><button class="chip" type="button">1mm</button><button class="chip" type="button">0.1mm</button></div>
+          <div class="move-controls">
+            <div class="dpad-grid" aria-label="X/Y 轴移动控制"><div></div><button class="dpad-btn" type="button" aria-label="Y 轴正向"><i data-lucide="chevron-up"></i></button><div></div><button class="dpad-btn" type="button" aria-label="X 轴负向"><i data-lucide="chevron-left"></i></button><div class="dpad-center" aria-hidden="true">X/Y</div><button class="dpad-btn" type="button" aria-label="X 轴正向"><i data-lucide="chevron-right"></i></button><div></div><button class="dpad-btn" type="button" aria-label="Y 轴负向"><i data-lucide="chevron-down"></i></button><div></div></div>
+            <div class="bed-controls" aria-label="热床移动控制"><button class="dpad-btn" type="button" aria-label="热床上移"><i data-lucide="chevron-up"></i></button><span class="bed-controls__label">热床</span><button class="dpad-btn" type="button" aria-label="热床下移"><i data-lucide="chevron-down"></i></button></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Material summary card -->
+      <section class="card material-summary-card" data-device-content aria-labelledby="material-summary-title">
+        <div class="material-summary-heading">
+          <div>
+            <span class="material-summary-title" id="material-summary-title">耗材</span>
+            <span class="material-summary-count">8 卷</span>
+          </div>
+        </div>
+        <div class="material-thumbnails">
+          <button class="material-thumbnail material-thumbnail--active" type="button" data-material-trigger data-material-id="1" aria-haspopup="dialog" aria-label="槽位 1：PLA Matte，星空蓝，42%，当前打印 · 耗材充足" style="--material-color: #2B78E4"><span class="material-thumbnail-swatch"></span><span class="material-thumbnail-name">PLA Matte</span><span class="material-thumbnail-pct">42%</span></button>
+          <button class="material-thumbnail" type="button" data-material-trigger data-material-id="2" aria-haspopup="dialog" aria-label="槽位 2：PLA Basic，月岩灰，76%，待用" style="--material-color: #757B84"><span class="material-thumbnail-swatch"></span><span class="material-thumbnail-name">PLA Basic</span><span class="material-thumbnail-pct">76%</span></button>
+          <button class="material-thumbnail" type="button" data-material-trigger data-material-id="3" aria-haspopup="dialog" aria-label="槽位 3：PETG，透明琥珀，64%，待用" style="--material-color: #D8892B"><span class="material-thumbnail-swatch"></span><span class="material-thumbnail-name">PETG</span><span class="material-thumbnail-pct">64%</span></button>
+          <button class="material-thumbnail" type="button" data-material-trigger data-material-id="4" aria-haspopup="dialog" aria-label="槽位 4：ABS，工业黑，31%，待用" style="--material-color: #303236"><span class="material-thumbnail-swatch"></span><span class="material-thumbnail-name">ABS</span><span class="material-thumbnail-pct">31%</span></button>
+          <button class="material-thumbnail" type="button" data-material-trigger data-material-id="5" aria-haspopup="dialog" aria-label="槽位 5：TPU 95A，熔岩红，58%，待用" style="--material-color: #D74C46"><span class="material-thumbnail-swatch"></span><span class="material-thumbnail-name">TPU 95A</span><span class="material-thumbnail-pct">58%</span></button>
+          <button class="material-thumbnail" type="button" data-material-trigger data-material-id="6" aria-haspopup="dialog" aria-label="槽位 6：PLA Silk，玫瑰金，88%，待用" style="--material-color: #C98291"><span class="material-thumbnail-swatch"></span><span class="material-thumbnail-name">PLA Silk</span><span class="material-thumbnail-pct">88%</span></button>
+          <button class="material-thumbnail" type="button" data-material-trigger data-material-id="7" aria-haspopup="dialog" aria-label="槽位 7：ASA，高光白，47%，待用" style="--material-color: #D9D6CF"><span class="material-thumbnail-swatch"></span><span class="material-thumbnail-name">ASA</span><span class="material-thumbnail-pct">47%</span></button>
+          <button class="material-thumbnail" type="button" data-material-trigger data-material-id="8" aria-haspopup="dialog" aria-label="槽位 8：PA-CF，碳黑，19%，库存偏低" style="--material-color: #25282B"><span class="material-thumbnail-swatch"></span><span class="material-thumbnail-name">PA-CF</span><span class="material-thumbnail-pct material-thumbnail-pct--low">19%</span></button>
+        </div>
+        <div class="material-summary-footer"><span><strong data-active-material-color-name>星空蓝</strong>正在打印</span></div>
+      </section>
+
+
+    </section>
+    <!-- ============ 通知 Panel ============ -->
+    <section data-page="notifications" class="page notifications-page">
+      <header class="page-header notifications-header">
+        <button class="icon-btn" type="button" data-nav="device" aria-label="返回设备页">
+          <i data-lucide="chevron-left"></i>
+        </button>
+        <h2>通知</h2>
+        <button class="notification-read-all" type="button" data-notification-read-all>全部已读</button>
+      </header>
+
+      <div class="notification-overview" aria-label="通知摘要">
+        <div><strong data-unread-count>3</strong><span>未读消息</span></div>
+        <span class="notification-overview__icon"><i data-lucide="bell-ring"></i></span>
+      </div>
+
+      <section class="notification-section" aria-labelledby="notification-today-title">
+        <div class="notification-section__heading">
+          <h3 id="notification-today-title">今天</h3>
+          <span data-unread-label>3 条未读</span>
+        </div>
+        <div class="notification-list">
+          <article class="notification-item notification-item--unread">
+            <span class="notification-item__icon notification-item__icon--success"><i data-lucide="circle-check"></i></span>
+            <div class="notification-item__content">
+              <div class="notification-item__title"><strong>打印任务已完成</strong><time>刚刚</time></div>
+              <p>“螺旋花器”已完成打印，共用时 5 小时 28 分钟。</p>
+              <span class="notification-item__device">XK1 Carbon</span>
+            </div>
+          </article>
+          <article class="notification-item notification-item--unread">
+            <span class="notification-item__icon notification-item__icon--warning"><i data-lucide="package-minus"></i></span>
+            <div class="notification-item__content">
+              <div class="notification-item__title"><strong>耗材余量偏低</strong><time>10:42</time></div>
+              <p>槽位 8 的 PA-CF 仅剩 19%，建议在下次打印前补充。</p>
+              <span class="notification-item__device">AMS · 槽位 8</span>
+            </div>
+          </article>
+          <article class="notification-item notification-item--unread">
+            <span class="notification-item__icon notification-item__icon--info"><i data-lucide="sparkles"></i></span>
+            <div class="notification-item__content">
+              <div class="notification-item__title"><strong>切片任务已就绪</strong><time>09:18</time></div>
+              <p>“桌面收纳托盘”切片完成，预计打印时间 3 小时 12 分钟。</p>
+              <span class="notification-item__device">云端切片</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="notification-section" aria-labelledby="notification-earlier-title">
+        <div class="notification-section__heading"><h3 id="notification-earlier-title">更早</h3></div>
+        <div class="notification-list">
+          <article class="notification-item">
+            <span class="notification-item__icon notification-item__icon--info"><i data-lucide="download"></i></span>
+            <div class="notification-item__content">
+              <div class="notification-item__title"><strong>固件更新可用</strong><time>昨天</time></div>
+              <p>XK1 Carbon 固件 v1.8.2 已发布，包含运动控制优化。</p>
+              <span class="notification-item__device">系统通知</span>
+            </div>
+          </article>
+          <article class="notification-item">
+            <span class="notification-item__icon notification-item__icon--success"><i data-lucide="shield-check"></i></span>
+            <div class="notification-item__content">
+              <div class="notification-item__title"><strong>设备安全检查通过</strong><time>7月 26日</time></div>
+              <p>喷嘴、热床与舱温传感器运行正常。</p>
+              <span class="notification-item__device">XK1 Carbon</span>
+            </div>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <!-- ============ 本地文件 Panel ============ -->
+    <section data-page="files" class="page file-browser-page">
+      <header class="page-header file-browser-header">
+        <button class="icon-btn" type="button" data-files-back aria-label="返回设备页">
+          <i data-lucide="chevron-left"></i>
+        </button>
+        <h2>打印文件</h2>
+        <button class="icon-btn" type="button" data-nav="settings" aria-label="打开设置">
+          <i data-lucide="settings"></i>
+        </button>
+      </header>
+
+      <div class="file-source-switch" role="group" aria-label="文件来源">
+        <button class="file-source-option active" type="button" aria-pressed="true">
+          <i data-lucide="folder"></i>
+          <span>本地文件</span>
+          <small>设备存储</small>
+        </button>
+        <button class="file-source-option" type="button" aria-pressed="false">
+          <i data-lucide="usb"></i>
+          <span>U盘文件</span>
+          <small>USB 存储</small>
+        </button>
+      </div>
+
+      <div class="file-storage-card">
+        <div class="file-storage-heading">
+          <span><i data-lucide="hard-drive"></i> 本地存储</span>
+          <strong>12.8 GB 可用</strong>
+        </div>
+        <div class="file-storage-bar"><span></span></div>
+        <div class="file-storage-meta"><span>已使用 19.2 GB</span><span>共 32 GB</span></div>
+      </div>
+
+      <div class="file-list-heading">
+        <div><h3>模型文件</h3><span>4 个文件</span></div>
+        <button class="file-sort-button" type="button"><i data-lucide="arrow-down-up"></i> 最近使用</button>
+      </div>
+
+      <div class="print-file-list">
+        <article class="print-file-card">
+          <div class="print-file-thumb spiral-vase"></div>
+          <div class="print-file-info">
+            <div class="print-file-title"><strong>螺旋花器.3mf</strong><span class="file-ready-dot"></span></div>
+            <p>98 × 98 × 180 mm · 128 g</p>
+            <div><span class="tag">3MF</span><span><i data-lucide="clock-3"></i> 5h 28m</span><time>今天 10:24</time></div>
+          </div>
+          <button class="print-file-more" type="button" aria-label="螺旋花器更多操作"><i data-lucide="ellipsis-vertical"></i></button>
+        </article>
+        <article class="print-file-card">
+          <div class="print-file-thumb tray"></div>
+          <div class="print-file-info">
+            <div class="print-file-title"><strong>桌面收纳托盘.gcode</strong><span class="file-ready-dot"></span></div>
+            <p>220 × 150 × 40 mm · 72 g</p>
+            <div><span class="tag">GCODE</span><span><i data-lucide="clock-3"></i> 3h 12m</span><time>昨天 18:42</time></div>
+          </div>
+          <button class="print-file-more" type="button" aria-label="桌面收纳托盘更多操作"><i data-lucide="ellipsis-vertical"></i></button>
+        </article>
+        <article class="print-file-card">
+          <div class="print-file-thumb dragon"></div>
+          <div class="print-file-info">
+            <div class="print-file-title"><strong>机械龙.stl</strong></div>
+            <p>140 × 80 × 220 mm · 24.6 MB</p>
+            <div><span class="tag">STL</span><span class="file-needs-slice">待切片</span><time>7月 25日</time></div>
+          </div>
+          <button class="print-file-more" type="button" aria-label="机械龙更多操作"><i data-lucide="ellipsis-vertical"></i></button>
+        </article>
+        <article class="print-file-card">
+          <div class="print-file-thumb lamp-shade"></div>
+          <div class="print-file-info">
+            <div class="print-file-title"><strong>参数化灯罩.3mf</strong><span class="file-ready-dot"></span></div>
+            <p>ø120 × 160 mm · 195 g</p>
+            <div><span class="tag">3MF</span><span><i data-lucide="clock-3"></i> 8h 05m</span><time>7月 22日</time></div>
+          </div>
+          <button class="print-file-more" type="button" aria-label="参数化灯罩更多操作"><i data-lucide="ellipsis-vertical"></i></button>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 模型 Panel ============ -->
+    <section data-page="models" class="page active">
+      <header class="page-header">
+        <h2>我的模型</h2>
+        <div class="header-actions">
+          <button class="icon-btn" type="button" data-nav="settings" aria-label="打开设置">
+            <i data-lucide="settings"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Add model card -->
+      <div class="add-model-card">
+        <i data-lucide="plus" class="add-icon"></i>
+        <span class="add-label">添加模型</span>
+        <span class="add-hint">支持 STL、OBJ、3MF</span>
+      </div>
+
+      <!-- Filter chips -->
+      <div class="filter-row">
+        <button class="chip active">全部</button>
+        <button class="chip">已切片</button>
+        <button class="chip">收藏</button>
+      </div>
+
+      <!-- Model grid -->
+      <div class="model-grid">
+        <div class="model-card">
+          <div class="model-thumb spiral-vase"></div>
+          <div class="model-meta">
+            <span class="model-name">螺旋花器</span>
+            <div class="model-tags">
+              <span class="tag">3MF</span>
+              <span class="tag">98 × 98 × 180 mm</span>
+            </div>
+            <div class="model-est">
+              <span>~5h 28m</span>
+              <span>~128 g</span>
+            </div>
+            <span class="model-status printing">正在打印</span>
+            <span class="share-badge">来自 Kai 的分享</span>
+          </div>
+        </div>
+
+        <div class="model-card">
+          <div class="model-thumb tray"></div>
+          <div class="model-meta">
+            <span class="model-name">桌面收纳托盘</span>
+            <div class="model-tags">
+              <span class="tag">STL</span>
+              <span class="tag">220 × 150 × 40 mm</span>
+            </div>
+            <div class="model-est">
+              <span>~3h 12m</span>
+              <span>~72 g</span>
+            </div>
+            <span class="model-status ready">可打印</span>
+            <span class="share-badge">来自 Kai 的分享</span>
+          </div>
+        </div>
+
+        <div class="model-card">
+          <div class="model-thumb dragon"></div>
+          <div class="model-meta">
+            <span class="model-name">机械龙</span>
+            <div class="model-tags">
+              <span class="tag">STL</span>
+              <span class="tag">140 × 80 × 220 mm</span>
+            </div>
+            <div class="model-est">
+              <span>~12h 45m</span>
+              <span>~310 g</span>
+            </div>
+            <span class="model-status slicing">待切片</span>
+          </div>
+        </div>
+
+        <div class="model-card">
+          <div class="model-thumb lamp-shade"></div>
+          <div class="model-meta">
+            <span class="model-name">参数化灯罩</span>
+            <div class="model-tags">
+              <span class="tag">3MF</span>
+              <span class="tag">ø120 × 160 mm</span>
+            </div>
+            <div class="model-est">
+              <span>~8h 05m</span>
+              <span>~195 g</span>
+            </div>
+            <span class="model-status ready">可打印</span>
+            <span class="share-badge">来自 Kai 的分享</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 商城 Panel ============ -->
+    <section data-page="market" class="page">
+      <header class="page-header">
+        <h2>模型商城</h2>
+        <div class="header-actions">
+          <button class="icon-btn" type="button" data-nav="settings" aria-label="打开设置">
+            <i data-lucide="settings"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="search-field">
+        <i data-lucide="search" class="search-icon"></i>
+        <span class="search-placeholder">搜索模型...</span>
+      </div>
+
+      <div class="category-row">
+        <button class="chip active">精选</button>
+        <button class="chip">家居</button>
+        <button class="chip">玩具</button>
+        <button class="chip">工具</button>
+      </div>
+
+      <div class="featured-card">
+        <div class="featured-thumb"></div>
+        <div class="featured-info">
+          <span class="featured-label">本周编辑精选</span>
+          <span class="featured-title">折纸氛围灯</span>
+          <span class="featured-desc">几何切面设计，光影层次丰富</span>
+          <div class="featured-meta">
+            <span class="price">¥12</span>
+            <span class="downloads">2.4k 下载</span>
+          </div>
+          <div class="creator verified">
+            <i data-lucide="badge-check"></i>
+            XK Official
+          </div>
+        </div>
+      </div>
+
+      <div class="market-grid">
+        <div class="market-item">
+          <div class="item-thumb origami-lamp"></div>
+          <div class="item-info">
+            <span class="item-name">折纸氛围灯</span>
+            <span class="item-price">¥12</span>
+            <span class="item-downloads">2.4k 下载</span>
+            <div class="creator verified">
+              <i data-lucide="badge-check"></i>
+              XK Official
+            </div>
+          </div>
+        </div>
+
+        <div class="market-item">
+          <div class="item-thumb modular-holder"></div>
+          <div class="item-info">
+            <span class="item-name">模块化笔筒</span>
+            <span class="item-price free">免费</span>
+            <span class="item-downloads">8.7k 下载</span>
+            <div class="creator verified">
+              <i data-lucide="badge-check"></i>
+              XK Official
+            </div>
+          </div>
+        </div>
+
+        <div class="market-item">
+          <div class="item-thumb mini-moon"></div>
+          <div class="item-info">
+            <span class="item-name">迷你月球灯</span>
+            <span class="item-price">¥18</span>
+            <span class="item-downloads">5.1k 下载</span>
+            <div class="creator verified">
+              <i data-lucide="badge-check"></i>
+              XK Official
+            </div>
+          </div>
+        </div>
+
+        <div class="market-item">
+          <div class="item-thumb gear-box"></div>
+          <div class="item-info">
+            <span class="item-name">齿轮收纳盒</span>
+            <span class="item-price">¥9</span>
+            <span class="item-downloads">3.2k 下载</span>
+            <div class="creator verified">
+              <i data-lucide="badge-check"></i>
+              XK Official
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 我的 Panel ============ -->
+    <section data-page="profile" class="page">
+      <header class="page-header">
+        <h2>我的</h2>
+        <div class="header-actions">
+          <button class="icon-btn" type="button" data-nav="settings" aria-label="打开设置">
+            <i data-lucide="settings"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Profile card -->
+      <div class="profile-card">
+        <div class="avatar">AX</div>
+        <div class="profile-info">
+          <span class="profile-name">Alex Chen</span>
+          <span class="profile-badge">Maker Pro</span>
+          <span class="profile-id">XK-2048-7731</span>
+        </div>
+      </div>
+
+      <!-- Metrics -->
+      <div class="metrics-row">
+        <div class="metric">
+          <span class="metric-value">128</span>
+          <span class="metric-label">打印</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value">486h</span>
+          <span class="metric-label">打印时长</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value">23</span>
+          <span class="metric-label">模型</span>
+        </div>
+      </div>
+
+      <!-- Active Printer -->
+      <div class="card printer-row">
+        <i data-lucide="printer" class="printer-icon"></i>
+        <div class="printer-info">
+          <span class="printer-name">XK1 Carbon</span>
+          <span class="printer-status online">在线</span>
+        </div>
+        <i data-lucide="chevron-right" class="chevron"></i>
+      </div>
+
+      <!-- Material summary -->
+      <div class="card material-summary">
+        <div class="mat-summary-head">
+          <span class="mat-summary-label">总耗材</span>
+          <span class="mat-summary-value">2.8 kg</span>
+        </div>
+      </div>
+
+      <!-- Menu rows -->
+      <div class="menu-group">
+        <button class="menu-row">
+          <i data-lucide="heart"></i>
+          <span>我的收藏</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="menu-row">
+          <i data-lucide="clock"></i>
+          <span>打印历史</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="menu-row" type="button" data-nav="account-security">
+          <i data-lucide="shield-check"></i>
+          <span>用户与安全</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="menu-row">
+          <i data-lucide="life-buoy"></i>
+          <span>帮助与反馈</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="menu-row" type="button" data-nav="settings">
+          <i data-lucide="settings"></i>
+          <span>设置</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============ 设置 Panel ============ -->
+    <section data-page="settings" class="page settings-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-nav="profile" aria-label="返回我的"><i data-lucide="chevron-left"></i></button>
+        <h2>设置</h2>
+        <span class="header-spacer" aria-hidden="true"></span>
+      </header>
+
+      <div class="settings-group" aria-label="通用设置">
+        <button class="settings-row" type="button" data-nav="language-settings">
+          <span class="settings-row__icon settings-row__icon--blue"><i data-lucide="languages"></i></span>
+          <span class="settings-row__label">语言</span>
+          <span class="settings-row__value">简体中文</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="settings-row" type="button" data-nav="theme-settings">
+          <span class="settings-row__icon settings-row__icon--violet"><i data-lucide="palette"></i></span>
+          <span class="settings-row__label">主题</span>
+          <span class="settings-row__value">跟随系统</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="settings-row" type="button" data-nav="cache-settings">
+          <span class="settings-row__icon settings-row__icon--amber"><i data-lucide="database"></i></span>
+          <span class="settings-row__label">应用缓存</span>
+          <span class="settings-row__value">128 MB</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+      </div>
+
+      <div class="settings-group" aria-label="设备设置">
+        <button class="settings-row" type="button" data-nav="device-calibration">
+          <span class="settings-row__icon settings-row__icon--teal"><i data-lucide="scan-line"></i></span>
+          <span class="settings-row__label">设备校准</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="settings-row" type="button" data-nav="about-device">
+          <span class="settings-row__icon settings-row__icon--slate"><i data-lucide="info"></i></span>
+          <span class="settings-row__label">关于本机</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+      </div>
+
+      <div class="settings-group" aria-label="应用设置">
+        <button class="settings-row" type="button">
+          <span class="settings-row__icon settings-row__icon--green"><i data-lucide="bell-ring"></i></span>
+          <span class="settings-row__label">推送通知权限</span>
+          <span class="settings-row__value">已开启</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="settings-row" type="button" data-nav="about-app">
+          <span class="settings-row__icon settings-row__icon--blue"><i data-lucide="badge-info"></i></span>
+          <span class="settings-row__label">关于应用</span>
+          <span class="settings-row__value">v1.0.0</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="settings-row settings-row--danger" type="button" data-settings-logout>
+          <span class="settings-row__icon settings-row__icon--danger"><i data-lucide="log-out"></i></span>
+          <span class="settings-row__label">退出登录</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============ 语言设置 Panel ============ -->
+    <section data-page="language-settings" class="page settings-page settings-detail-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="chevron-left"></i></button>
+        <h2>语言</h2>
+        <span class="header-spacer" aria-hidden="true"></span>
+      </header>
+      <p class="settings-detail-hint">选择应用显示语言</p>
+      <div class="settings-group settings-choice-group" role="listbox" aria-label="语言选项">
+        <button class="settings-choice is-selected" type="button" role="option" aria-selected="true">
+          <span><strong>简体中文</strong><small>简体中文</small></span>
+          <span class="settings-choice__check"><i data-lucide="check"></i></span>
+        </button>
+        <button class="settings-choice" type="button" role="option" aria-selected="false">
+          <span><strong>繁體中文</strong><small>繁體中文</small></span>
+          <span class="settings-choice__check"><i data-lucide="check"></i></span>
+        </button>
+        <button class="settings-choice" type="button" role="option" aria-selected="false">
+          <span><strong>English</strong><small>English</small></span>
+          <span class="settings-choice__check"><i data-lucide="check"></i></span>
+        </button>
+        <button class="settings-choice" type="button" role="option" aria-selected="false">
+          <span><strong>日本語</strong><small>日本語</small></span>
+          <span class="settings-choice__check"><i data-lucide="check"></i></span>
+        </button>
+        <button class="settings-choice" type="button" role="option" aria-selected="false">
+          <span><strong>한국어</strong><small>한국어</small></span>
+          <span class="settings-choice__check"><i data-lucide="check"></i></span>
+        </button>
+      </div>
+      <p class="settings-detail-note"><i data-lucide="info"></i>切换语言后，应用内文字将使用所选语言显示</p>
+    </section>
+
+    <!-- ============ 主题设置 Panel ============ -->
+    <section data-page="theme-settings" class="page settings-page settings-detail-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="chevron-left"></i></button>
+        <h2>主题</h2>
+        <span class="header-spacer" aria-hidden="true"></span>
+      </header>
+      <p class="settings-detail-hint">选择你喜欢的界面外观</p>
+      <div class="theme-choice-grid" role="listbox" aria-label="主题选项">
+        <button class="theme-choice is-selected" type="button" role="option" aria-selected="true">
+          <span class="theme-preview theme-preview--system"><svg class="theme-system-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2"></rect><path d="M12 18h.01"></path></svg></span>
+          <span><strong>跟随系统</strong><small>自动适配系统外观</small></span>
+          <span class="settings-choice__check"><i data-lucide="check"></i></span>
+        </button>
+        <button class="theme-choice" type="button" role="option" aria-selected="false">
+          <span class="theme-preview theme-preview--dark"><i data-lucide="moon"></i></span>
+          <span><strong>深色</strong><small>适合暗光环境</small></span>
+          <span class="settings-choice__check"><i data-lucide="check"></i></span>
+        </button>
+        <button class="theme-choice" type="button" role="option" aria-selected="false">
+          <span class="theme-preview theme-preview--light"><i data-lucide="sun"></i></span>
+          <span><strong>亮色</strong><small>清晰明亮的外观</small></span>
+          <span class="settings-choice__check"><i data-lucide="check"></i></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============ 应用缓存 Panel ============ -->
+    <section data-page="cache-settings" class="page settings-page settings-detail-page cache-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="chevron-left"></i></button>
+        <h2>应用缓存</h2>
+        <span class="header-spacer" aria-hidden="true"></span>
+      </header>
+      <article class="cache-overview">
+        <span class="cache-overview__icon"><i data-lucide="database"></i></span>
+        <span>当前缓存</span>
+        <strong>128 MB</strong>
+        <p>清理缓存不会删除账号信息、打印记录或已下载的模型。</p>
+      </article>
+      <div class="settings-group cache-detail-list" aria-label="缓存详细信息">
+        <div class="cache-detail-row"><span><i data-lucide="image"></i>图片与缩略图</span><strong>68.4 MB</strong></div>
+        <div class="cache-detail-row"><span><i data-lucide="box"></i>模型预览数据</span><strong>42.1 MB</strong></div>
+        <div class="cache-detail-row"><span><i data-lucide="file-text"></i>日志与临时文件</span><strong>17.5 MB</strong></div>
+      </div>
+      <button class="btn cache-clear-button" type="button" data-clear-cache><i data-lucide="trash-2"></i>清理缓存</button>
+      <p class="cache-clear-hint">建议定期清理以释放设备存储空间</p>
+    </section>
+
+    <!-- ============ 设备校准 Panel ============ -->
+    <section data-page="device-calibration" class="page settings-page settings-detail-page calibration-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="chevron-left"></i></button>
+        <h2>设备校准</h2>
+        <span class="header-spacer" aria-hidden="true"></span>
+      </header>
+      <p class="settings-detail-hint">选择需要启用的设备校准项目</p>
+      <div class="settings-group calibration-list" aria-label="设备校准选项">
+        <label class="calibration-option">
+          <span class="calibration-option__icon calibration-option__icon--blue"><i data-lucide="focus"></i></span>
+          <span class="calibration-option__copy"><strong>高精度喷嘴校准</strong><small>提升喷嘴定位与挤出精度</small></span>
+          <span class="setting-switch"><input type="checkbox" data-calibration-toggle="nozzle" checked><span class="setting-switch__track" aria-hidden="true"></span></span>
+        </label>
+        <label class="calibration-option">
+          <span class="calibration-option__icon calibration-option__icon--violet"><i data-lucide="audio-waveform"></i></span>
+          <span class="calibration-option__copy"><strong>震动补偿校准</strong><small>减少高速打印产生的振纹</small></span>
+          <span class="setting-switch"><input type="checkbox" data-calibration-toggle="vibration"><span class="setting-switch__track" aria-hidden="true"></span></span>
+        </label>
+        <label class="calibration-option">
+          <span class="calibration-option__icon calibration-option__icon--amber"><i data-lucide="grid-3x3"></i></span>
+          <span class="calibration-option__copy"><strong>热床校准</strong><small>检测并补偿热床平整度</small></span>
+          <span class="setting-switch"><input type="checkbox" data-calibration-toggle="bed" checked><span class="setting-switch__track" aria-hidden="true"></span></span>
+        </label>
+      </div>
+      <p class="settings-detail-note"><i data-lucide="info"></i>开启的项目将在下次执行设备校准时自动运行</p>
+    </section>
+
+    <!-- ============ 关于本机 Panel ============ -->
+    <section data-page="about-device" class="page settings-page settings-detail-page about-device-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="chevron-left"></i></button>
+        <h2>关于本机</h2>
+        <span class="header-spacer" aria-hidden="true"></span>
+      </header>
+      <article class="device-identity-card">
+        <span class="device-identity-card__icon"><i data-lucide="printer"></i></span>
+        <strong data-device-name-display>XK1 Carbon</strong>
+        <span>在线</span>
+      </article>
+      <div class="settings-group device-info-list" aria-label="设备信息">
+        <div class="device-info-row device-name-row">
+          <span class="device-info-row__label">设备名称</span>
+          <span class="device-name-editor">
+            <input type="text" maxlength="24" value="XK1 Carbon" aria-label="设备名称" data-device-name-input readonly>
+            <button type="button" aria-label="编辑设备名称" data-device-name-edit><i data-lucide="pencil"></i><span>编辑</span></button>
+          </span>
+        </div>
+        <div class="device-info-row"><span class="device-info-row__label">设备型号</span><strong>XK-X1C-2026</strong></div>
+        <div class="device-info-row"><span class="device-info-row__label">设备序列号</span><strong class="device-info-row__mono">XK1C-2607-A8F3</strong></div>
+        <button class="device-info-row device-info-row--link" type="button" data-nav="software-version">
+          <span class="device-info-row__label">软件版本</span><span class="device-info-row__value">v1.4.2</span><i data-lucide="chevron-right"></i>
+        </button>
+      </div>
+      <article class="device-storage-card" aria-label="储存容量">
+        <div class="device-storage-card__heading"><span><i data-lucide="hard-drive"></i>储存容量</span><strong>18.6 GB / 32 GB</strong></div>
+        <div class="device-storage-card__bar" role="progressbar" aria-label="储存空间已使用" aria-valuemin="0" aria-valuemax="32" aria-valuenow="18.6"><span></span></div>
+        <div class="device-storage-card__meta"><span>已使用 58%</span><span>剩余 13.4 GB</span></div>
+      </article>
+    </section>
+
+    <!-- ============ 软件版本 Panel ============ -->
+    <section data-page="software-version" class="page settings-page settings-detail-page software-version-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-nav="about-device" aria-label="返回关于本机"><i data-lucide="chevron-left"></i></button>
+        <h2>软件版本</h2>
+        <span class="header-spacer" aria-hidden="true"></span>
+      </header>
+      <article class="software-version-card">
+        <span class="software-version-card__icon"><i data-lucide="badge-check"></i></span>
+        <span>当前版本</span>
+        <strong data-current-software-version>v1.4.2</strong>
+        <p data-software-version-status>当前已是最新版本</p>
+      </article>
+      <div class="software-update-actions" aria-label="软件更新操作">
+        <button class="btn btn-primary software-update-button" type="button" data-check-update><i data-lucide="refresh-cw"></i>检查更新</button>
+      </div>
+    </section>
+
+    <!-- ============ 关于应用 Panel ============ -->
+    <section data-page="about-app" class="page settings-page settings-detail-page about-app-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="chevron-left"></i></button>
+        <h2>关于应用</h2>
+        <span class="header-spacer" aria-hidden="true"></span>
+      </header>
+      <article class="about-app-hero">
+        <span class="app-brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none"><path d="M17 43 31.1 17.5a2 2 0 0 1 3.5 0L48 43" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M22.5 35h20" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><circle cx="49" cy="18" r="5" fill="currentColor"/></svg>
+        </span>
+        <strong>Axiloop</strong>
+        <span>让创意稳定成型</span>
+        <small>版本 <span data-current-app-version>v1.0.0</span></small>
+      </article>
+      <div class="settings-group about-app-menu" aria-label="关于应用选项">
+        <button class="settings-row" type="button" data-nav="app-terms">
+          <span class="settings-row__icon settings-row__icon--blue"><i data-lucide="file-check-2"></i></span>
+          <span class="settings-row__label">服务条款</span><i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="settings-row" type="button" data-nav="app-privacy">
+          <span class="settings-row__icon settings-row__icon--green"><i data-lucide="shield-check"></i></span>
+          <span class="settings-row__label">隐私政策</span><i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="settings-row" type="button" data-nav="app-contact">
+          <span class="settings-row__icon settings-row__icon--violet"><i data-lucide="messages-square"></i></span>
+          <span class="settings-row__label">联系我们</span><i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="settings-row" type="button" data-nav="device-compatibility">
+          <span class="settings-row__icon settings-row__icon--amber"><i data-lucide="cpu"></i></span>
+          <span class="settings-row__label">设备版本兼容</span><i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+      </div>
+      <p class="about-app-copyright">© 2026 Axiloop. All rights reserved.</p>
+    </section>
+
+    <!-- ============ 服务条款 Panel ============ -->
+    <section data-page="app-terms" class="page settings-page settings-detail-page legal-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-nav="about-app" aria-label="返回关于应用"><i data-lucide="chevron-left"></i></button>
+        <h2>服务条款</h2><span class="header-spacer" aria-hidden="true"></span>
+      </header>
+      <article class="legal-document">
+        <div class="legal-document__meta"><span>Axiloop 服务条款</span><time datetime="2026-07-28">更新日期：2026 年 7 月 28 日</time></div>
+        <p>欢迎使用 Axiloop。使用本应用及相关设备服务前，请仔细阅读并理解本条款。继续使用即表示你同意遵守以下约定。</p>
+        <section><h3>一、服务内容</h3><p>Axiloop 提供设备连接、打印任务管理、模型浏览和固件升级等功能。演示环境中的设备状态与数据仅用于界面展示。</p></section>
+        <section><h3>二、账号与使用规范</h3><p>你应妥善保管账号信息，不得利用本服务从事违法活动、侵害他人权益或干扰设备与网络正常运行的行为。</p></section>
+        <section><h3>三、设备与内容</h3><p>请按照设备说明书及屏幕提示操作。你应确保上传模型及打印内容拥有合法授权，并自行确认打印材料和参数安全。</p></section>
+        <section><h3>四、服务变更</h3><p>我们可能基于安全、产品优化或法律要求调整服务内容，并通过应用内通知等合理方式告知重要变更。</p></section>
+        <section><h3>五、联系我们</h3><p>如对本条款有疑问，可通过“关于应用—联系我们”页面与我们取得联系。</p></section>
+      </article>
+    </section>
+
+    <!-- ============ 隐私政策 Panel ============ -->
+    <section data-page="app-privacy" class="page settings-page settings-detail-page legal-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-nav="about-app" aria-label="返回关于应用"><i data-lucide="chevron-left"></i></button>
+        <h2>隐私政策</h2><span class="header-spacer" aria-hidden="true"></span>
+      </header>
+      <article class="legal-document">
+        <div class="legal-document__meta"><span>Axiloop 隐私政策</span><time datetime="2026-07-28">生效日期：2026 年 7 月 28 日</time></div>
+        <p>我们重视你的个人信息与隐私安全。本政策说明 Axiloop 在提供应用服务时如何处理相关信息。</p>
+        <section><h3>一、信息收集</h3><p>为完成账号登录、设备连接和故障诊断，我们可能收集账号标识、设备型号、固件版本、网络状态及必要的运行日志。</p></section>
+        <section><h3>二、信息使用</h3><p>所收集信息仅用于提供和改进产品功能、保障账号与设备安全、响应客服请求以及履行法律义务。</p></section>
+        <section><h3>三、信息存储与保护</h3><p>我们采用合理的访问控制、传输加密和数据最小化措施保护信息，并在实现目的所需期限内保存。</p></section>
+        <section><h3>四、你的权利</h3><p>你可以申请查询、更正或删除相关个人信息，也可以撤回非必要权限。部分信息删除后，相应功能可能无法继续使用。</p></section>
+        <section><h3>五、政策更新</h3><p>政策发生重要变化时，我们会以应用内提示等方式通知。若有疑问，请通过联系我们页面反馈。</p></section>
+      </article>
+    </section>
+
+    <!-- ============ 联系我们 Panel ============ -->
+    <section data-page="app-contact" class="page settings-page settings-detail-page contact-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-nav="about-app" aria-label="返回关于应用"><i data-lucide="chevron-left"></i></button>
+        <h2>联系我们</h2><span class="header-spacer" aria-hidden="true"></span>
+      </header>
+      <article class="contact-brand-card">
+        <!-- Lucide Messages Square icon, ISC License: https://lucide.dev/license -->
+        <span class="contact-brand-card__logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/><path d="M8 9h8M8 13h5"/></svg></span>
+        <strong>Axiloop 客户支持</strong>
+        <p>工作日 09:00–18:00，我们会尽快回复你的问题。</p>
+      </article>
+      <div class="settings-group contact-list" aria-label="联系信息">
+        <a class="contact-row" href="tel:+864008208888"><span class="contact-row__icon"><i data-lucide="phone"></i></span><span><small>电话</small><strong>400-820-8888</strong></span><i data-lucide="external-link"></i></a>
+        <a class="contact-row" href="mailto:support@axiloop.com"><span class="contact-row__icon"><i data-lucide="mail"></i></span><span><small>邮箱</small><strong>support@axiloop.com</strong></span><i data-lucide="external-link"></i></a>
+        <div class="contact-row"><span class="contact-row__icon"><i data-lucide="map-pin"></i></span><span><small>地址</small><strong>中国上海市浦东新区张江路 88 号</strong></span></div>
+      </div>
+      <p class="settings-detail-note"><i data-lucide="info"></i>以上信息为产品原型模拟数据。</p>
+    </section>
+
+    <!-- ============ 设备版本兼容 Panel ============ -->
+    <section data-page="device-compatibility" class="page settings-page settings-detail-page compatibility-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-nav="about-app" aria-label="返回关于应用"><i data-lucide="chevron-left"></i></button>
+        <h2>设备版本兼容</h2><span class="header-spacer" aria-hidden="true"></span>
+      </header>
+      <p class="settings-detail-hint">设备最低版本要求</p>
+      <article class="compatibility-device-card">
+        <figure class="compatibility-device-card__image">
+          <!-- Lucide Printer icon, ISC License: https://lucide.dev/license -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Axiloop MC 8 产品占位图"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14" rx="1"/><path d="M18 12h.01"/></svg>
+        </figure>
+        <div class="compatibility-device-card__copy"><span>兼容设备</span><strong>Axiloop MC 8</strong><small>最低版本要求</small><b>1.0.0</b></div>
+      </article>
+      <article class="firmware-guide">
+        <span class="firmware-guide__icon"><i data-lucide="circle-help"></i></span>
+        <div><h3>如何升级固件？</h3><ol><li>从设备屏幕进入“设备设置—关于本机”页面，点击“设备固件”。</li><li>按照屏幕上的提示完成固件升级。</li></ol></div>
+      </article>
+    </section>
+
+    <dialog class="logout-confirm-dialog" data-logout-confirm aria-labelledby="logout-confirm-title">
+      <div class="logout-confirm-dialog__panel">
+        <span class="logout-confirm-dialog__icon"><i data-lucide="log-out"></i></span>
+        <h2 id="logout-confirm-title">是否退出登录？</h2>
+        <p>退出后将无法继续查看账号相关信息，设备连接状态不会受到影响。</p>
+        <div class="logout-confirm-dialog__actions">
+          <button class="btn btn-secondary" type="button" data-logout-cancel>取消</button>
+          <button class="btn logout-confirm-dialog__submit" type="button" data-logout-submit>退出登录</button>
+        </div>
+      </div>
+    </dialog>
+
+    <div class="settings-toast" role="status" aria-live="polite" aria-hidden="true" data-cache-toast>
+      <span><i data-lucide="check"></i></span>缓存已清理
+    </div>
+
+    <!-- ============ 用户与安全 Panel ============ -->
+    <section data-page="account-security" class="page account-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-nav="profile" aria-label="返回我的"><i data-lucide="chevron-left"></i></button>
+        <h2>用户与安全</h2>
+        <span class="header-spacer" aria-hidden="true"></span>
+      </header>
+      <div class="account-menu-group">
+        <div class="account-info-row">
+          <span class="account-row-icon"><i data-lucide="smartphone"></i></span>
+          <div><span>账号</span><strong>138****5678</strong></div>
+        </div>
+        <button class="account-action-row" type="button" data-nav="change-password">
+          <span class="account-row-icon"><i data-lucide="key-round"></i></span>
+          <span>修改密码</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+        <button class="account-action-row account-action-row--danger" type="button" data-nav="delete-account">
+          <span class="account-row-icon"><i data-lucide="user-round-x"></i></span>
+          <span>注销账户</span>
+          <i data-lucide="chevron-right" class="chevron"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============ 修改密码 Panel ============ -->
+    <section data-page="change-password" class="page account-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-nav="account-security" aria-label="返回用户与安全"><i data-lucide="chevron-left"></i></button>
+        <h2>修改密码</h2>
+        <span class="header-spacer" aria-hidden="true"></span>
+      </header>
+      <form class="account-form" data-password-form>
+        <label class="account-field" for="password-phone">
+          <span>手机号</span>
+          <div class="account-input-wrap"><i data-lucide="smartphone"></i><input id="password-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="请输入手机号"></div>
+        </label>
+        <label class="account-field" for="password-code">
+          <span>验证码</span>
+          <div class="verification-row">
+            <div class="account-input-wrap"><i data-lucide="shield-check"></i><input id="password-code" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="请输入验证码"></div>
+            <button class="verification-button" type="button">获取验证码</button>
+          </div>
+        </label>
+        <label class="account-field" for="password-new">
+          <span>新密码</span>
+          <div class="account-input-wrap"><i data-lucide="lock-keyhole"></i><input id="password-new" type="password" autocomplete="new-password" placeholder="请输入新密码"></div>
+          <small>建议使用 8–20 位字母、数字或符号组合</small>
+        </label>
+        <button class="btn btn-primary account-submit" type="button">完成</button>
+      </form>
+    </section>
+
+    <!-- ============ 注销账户 Panel ============ -->
+    <section data-page="delete-account" class="page account-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-nav="account-security" aria-label="返回用户与安全"><i data-lucide="chevron-left"></i></button>
+        <h2>注销账户</h2>
+        <span class="header-spacer" aria-hidden="true"></span>
+      </header>
+      <article class="delete-notice">
+        <div class="delete-notice__icon"><i data-lucide="triangle-alert"></i></div>
+        <h3>注销前请确认以下事项</h3>
+        <p>账户注销后将无法恢复。你的个人资料、打印记录、收藏模型及相关服务数据将被永久删除，同时所有已登录设备会自动退出。</p>
+        <ul>
+          <li>请确保账户内没有正在进行的打印任务或未完成的订单。</li>
+          <li>注销申请提交后，账户及相关数据将按照平台规则处理。</li>
+          <li>注销完成后，原账户数据无法找回或迁移。</li>
+        </ul>
+      </article>
+      <label class="delete-agreement">
+        <input type="checkbox" data-delete-agreement>
+        <span class="delete-checkbox"><i data-lucide="check"></i></span>
+        <span>我已阅读并同意<strong>《账户删除条款》</strong></span>
+      </label>
+      <button class="btn delete-account-button" type="button" data-delete-submit disabled>注销账户</button>
+    </section>
+
+    <dialog class="control-dialog" data-control-dialog-panel="bed" aria-labelledby="bed-dialog-title">
+      <div class="control-dialog__header"><h2 id="bed-dialog-title">热床温度</h2><button class="icon-btn" type="button" data-control-close aria-label="关闭"><i data-lucide="x"></i></button></div>
+      <div class="control-dialog__body">
+        <label class="control-number-label" for="bed-number-input"><span>目标温度</span><span class="control-number-field"><input id="bed-number-input" type="number" inputmode="numeric" enterkeyhint="done" data-control-input="bed-number" min="0" max="120" step="1" value="60" required aria-describedby="bed-temperature-hint"><span aria-hidden="true">°C</span></span></label>
+        <span class="control-input-hint" id="bed-temperature-hint">请输入 0–120 之间的整数</span>
+        <div class="control-presets" aria-label="常用温度">
+          <button type="button" data-bed-preset="35">35°C</button>
+          <button type="button" data-bed-preset="45">45°C</button>
+          <button type="button" data-bed-preset="65">65°C</button>
+          <button type="button" data-bed-preset="95">95°C</button>
+          <button type="button" data-bed-preset="100">100°C</button>
+        </div>
+        <label class="control-range-label" for="bed-control-input">滑动调节 <output data-control-output="bed">60°C</output></label>
+        <input id="bed-control-input" type="range" data-control-input="bed" min="0" max="120" step="1" value="60">
+      </div>
+      <div class="control-dialog__actions"><button class="btn btn-secondary" type="button" data-control-cancel>取消</button><button class="btn btn-primary" type="button" data-control-apply>应用</button></div>
+    </dialog>
+    <dialog class="control-dialog" data-control-dialog-panel="speed" aria-labelledby="speed-dialog-title">
+      <div class="control-dialog__header"><h2 id="speed-dialog-title">打印速度</h2><button class="icon-btn" type="button" data-control-close aria-label="关闭"><i data-lucide="x"></i></button></div>
+      <div class="control-dialog__body">
+        <div class="control-presets control-presets--modes" aria-label="打印速度模式">
+          <button type="button" data-speed-preset="166"><strong>狂暴模式</strong><span>166%</span></button>
+          <button type="button" data-speed-preset="124"><strong>运动模式</strong><span>124%</span></button>
+          <button type="button" data-speed-preset="100"><strong>标准模式</strong><span>100%</span></button>
+          <button type="button" data-speed-preset="50"><strong>静音模式</strong><span>50%</span></button>
+        </div>
+        <label class="control-range-label" for="speed-control-input">速度 <output data-control-output="speed">100%</output></label>
+        <input id="speed-control-input" type="range" data-control-input="speed" min="10" max="200" step="1" value="100">
+      </div>
+      <div class="control-dialog__actions"><button class="btn btn-secondary" type="button" data-control-cancel>取消</button><button class="btn btn-primary" type="button" data-control-apply>应用</button></div>
+    </dialog>
+    <dialog class="control-dialog" data-control-dialog-panel="fan" aria-labelledby="fan-dialog-title">
+      <div class="control-dialog__header"><h2 id="fan-dialog-title">风扇</h2><button class="icon-btn" type="button" data-control-close aria-label="关闭"><i data-lucide="x"></i></button></div>
+      <div class="control-dialog__body control-dialog__body--fans">
+        <section class="fan-control-group" data-fan-control="part">
+          <label class="control-switch"><span>部件风扇</span><input type="checkbox" data-control-input="fan-part-enabled" checked><span class="control-switch__track" aria-hidden="true"></span></label>
+          <label class="control-range-label" for="fan-part-input">速度 <output data-control-output="fan-part">80%</output></label>
+          <input id="fan-part-input" type="range" data-control-input="fan-part" min="0" max="100" step="10" value="80">
+        </section>
+        <section class="fan-control-group" data-fan-control="auxiliary">
+          <label class="control-switch"><span>辅助风扇</span><input type="checkbox" data-control-input="fan-auxiliary-enabled"><span class="control-switch__track" aria-hidden="true"></span></label>
+          <label class="control-range-label" for="fan-auxiliary-input">速度 <output data-control-output="fan-auxiliary">0%</output></label>
+          <input id="fan-auxiliary-input" type="range" data-control-input="fan-auxiliary" min="0" max="100" step="10" value="0" disabled>
+        </section>
+        <section class="fan-control-group" data-fan-control="chamber">
+          <label class="control-switch"><span>机箱风扇</span><input type="checkbox" data-control-input="fan-chamber-enabled"><span class="control-switch__track" aria-hidden="true"></span></label>
+          <label class="control-range-label" for="fan-chamber-input">速度 <output data-control-output="fan-chamber">0%</output></label>
+          <input id="fan-chamber-input" type="range" data-control-input="fan-chamber" min="0" max="100" step="10" value="0" disabled>
+        </section>
+      </div>
+      <div class="control-dialog__actions"><button class="btn btn-secondary" type="button" data-control-cancel>取消</button><button class="btn btn-primary" type="button" data-control-apply>应用</button></div>
+    </dialog>
+    <dialog class="control-dialog" data-control-dialog-panel="lighting" aria-labelledby="lighting-dialog-title">
+      <div class="control-dialog__header"><h2 id="lighting-dialog-title">照明和 RGB 灯</h2><button class="icon-btn" type="button" data-control-close aria-label="关闭"><i data-lucide="x"></i></button></div>
+      <div class="control-dialog__body"><label class="control-switch"><span>照明灯</span><input type="checkbox" data-control-input="light-enabled"><span class="control-switch__track" aria-hidden="true"></span></label><label class="control-switch"><span>RGB 灯</span><input type="checkbox" data-control-input="rgb-enabled"><span class="control-switch__track" aria-hidden="true"></span></label></div>
+      <div class="control-dialog__actions"><button class="btn btn-secondary" type="button" data-control-cancel>取消</button><button class="btn btn-primary" type="button" data-control-apply>应用</button></div>
+    </dialog>
+    <dialog class="control-dialog" data-toolhead-temperature-dialog aria-labelledby="toolhead-temperature-dialog-title">
+      <div class="control-dialog__header"><h2 id="toolhead-temperature-dialog-title">设置执行头温度</h2><button class="icon-btn" type="button" data-toolhead-temperature-close aria-label="关闭"><i data-lucide="x"></i></button></div>
+      <div class="control-dialog__body">
+        <label class="control-number-label" for="toolhead-temperature-number"><span>目标温度</span><span class="control-number-field"><input id="toolhead-temperature-number" type="number" inputmode="numeric" enterkeyhint="done" data-toolhead-temperature-input="number" min="0" max="300" step="1" required aria-describedby="toolhead-temperature-hint"><span aria-hidden="true">°C</span></span></label>
+        <span class="control-input-hint" id="toolhead-temperature-hint">请输入 0–300 之间的整数</span>
+        <label class="control-range-label" for="toolhead-temperature-range">滑动调节 <output data-toolhead-temperature-output>0°C</output></label>
+        <input id="toolhead-temperature-range" type="range" data-toolhead-temperature-input="range" min="0" max="300" step="1" value="0">
+      </div>
+      <div class="control-dialog__actions"><button class="btn btn-secondary" type="button" data-toolhead-temperature-cancel>取消</button><button class="btn btn-primary" type="button" data-toolhead-temperature-apply>应用</button></div>
+    </dialog>
+    <dialog class="control-dialog material-drawer" data-material-drawer aria-labelledby="material-drawer-title">
+      <div class="material-drawer__handle" aria-hidden="true"></div>
+      <div class="control-dialog__header"><h2 id="material-drawer-title">耗材详情</h2><button class="icon-btn" type="button" data-material-close aria-label="关闭"><i data-lucide="x"></i></button></div>
+      <div class="control-dialog__body material-drawer__body">
+        <section data-material-view="detail">
+          <div class="material-drawer__hero"><span class="material-drawer__slot" data-material-slot></span><button class="material-drawer__icon-button" type="button" data-material-edit aria-label="更改耗材种类和颜色"><!-- Lucide Icons spool, ISC license: https://lucide.dev/license --><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 13.44 4.442 17.082A2 2 0 0 0 4.982 21H19a2 2 0 0 0 .558-3.921l-1.115-.32A2 2 0 0 1 17 14.837V7.66"/><path d="m7 10.56 12.558-3.642A2 2 0 0 0 19.018 3H5a2 2 0 0 0-.558 3.921l1.115.32A2 2 0 0 1 7 9.163v7.178"/></svg></button></div>
+          <div class="material-drawer__identity"><span class="material-drawer__name" data-material-name></span><span class="material-drawer__color"><span class="material-drawer__swatch" data-material-swatch></span><span data-material-color-name></span><code data-material-color-value></code></span></div>
+          <dl class="material-drawer__stats"><div><dt>剩余</dt><dd data-material-remaining></dd></div><div><dt>重量</dt><dd data-material-weight></dd></div><div><dt>建议喷嘴</dt><dd data-material-temperature></dd></div><div><dt>状态</dt><dd data-material-status></dd></div></dl>
+        </section>
+        <section data-material-view="type" hidden>
+          <button class="material-drawer__back" type="button" data-material-back="detail"><i data-lucide="chevron-left"></i>返回详情</button><p class="material-drawer__instruction">选择耗材种类</p><div class="material-type-options" data-material-type-options></div>
+        </section>
+        <section data-material-view="color" hidden>
+          <button class="material-drawer__back" type="button" data-material-back="type"><i data-lucide="chevron-left"></i>返回种类</button><p class="material-drawer__instruction">选择颜色</p><div class="material-color-options" data-material-color-options></div>
+        </section>
+      </div>
+      <div class="control-dialog__actions" data-material-actions><button class="btn btn-secondary" type="button" data-material-cancel>取消</button><button class="btn btn-primary" type="button" data-material-apply>应用</button></div>
+    </dialog>
+    <dialog class="software-update-dialog" data-update-dialog aria-labelledby="update-dialog-title">
+      <div class="software-update-dialog__panel">
+        <button class="icon-btn software-update-dialog__close" type="button" data-update-close aria-label="关闭更新窗口"><i data-lucide="x"></i></button>
+        <section class="software-update-view" data-update-view="checking">
+          <span class="software-update-state-icon software-update-state-icon--checking"><i data-lucide="loader-circle"></i></span>
+          <h2 id="update-dialog-title">正在检查更新</h2>
+          <p>正在连接更新服务，请稍候…</p>
+        </section>
+        <section class="software-update-view" data-update-view="available" hidden>
+          <span class="software-update-state-icon"><i data-lucide="package-check"></i></span>
+          <span class="software-update-eyebrow">发现新版本</span>
+          <h2>v1.5.0</h2>
+          <p class="software-update-meta">安装包 128 MB · 建议使用稳定网络</p>
+          <div class="software-update-notes"><strong>本次更新</strong><ul><li>优化设备连接稳定性</li><li>新增打印任务预览体验</li><li>修复若干已知问题</li></ul></div>
+          <div class="software-update-dialog__actions"><button class="btn btn-secondary" type="button" data-update-later>稍后更新</button><button class="btn btn-primary" type="button" data-update-start><i data-lucide="cloud-download"></i>在线升级</button></div>
+        </section>
+        <section class="software-update-view" data-update-view="upgrading" hidden>
+          <span class="software-update-state-icon"><i data-lucide="download"></i></span>
+          <h2>正在升级</h2>
+          <p data-update-stage>正在下载更新包，请保持设备在线</p>
+          <div class="software-upgrade-progress" role="progressbar" aria-label="软件升级进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-update-progress><span data-update-progress-fill></span></div>
+          <strong class="software-upgrade-percent" data-update-percent>0%</strong>
+          <button class="btn btn-secondary software-update-cancel" type="button" data-update-cancel>取消升级</button>
+        </section>
+        <section class="software-update-view" data-update-view="complete" hidden>
+          <span class="software-update-state-icon software-update-state-icon--success"><i data-lucide="check"></i></span>
+          <h2>升级完成</h2>
+          <p>软件已成功升级至 v1.5.0</p>
+          <button class="btn btn-primary software-update-done" type="button" data-update-done>完成</button>
+        </section>
+      </div>
+    </dialog>
+    <dialog class="software-update-dialog software-update-confirm" data-update-confirm aria-labelledby="update-confirm-title">
+      <div class="software-update-dialog__panel">
+        <span class="software-update-state-icon software-update-state-icon--warning"><i data-lucide="triangle-alert"></i></span>
+        <h2 id="update-confirm-title">确认取消升级？</h2>
+        <p>取消后，本次下载进度将不会保留。</p>
+        <div class="software-update-dialog__actions"><button class="btn btn-secondary" type="button" data-update-continue>继续升级</button><button class="btn software-update-danger" type="button" data-update-confirm-cancel>确认取消</button></div>
+      </div>
+    </dialog>
+    <!-- ============ Bottom Navigation ============ -->
+    <nav class="bottom-nav">
+      <button data-nav="models" class="nav-item active">
+        <i data-lucide="package"></i>
+        <span>模型</span>
+      </button>
+      <button data-nav="device" class="nav-item">
+        <i data-lucide="printer"></i>
+        <span>设备</span>
+      </button>
+      <button data-nav="market" class="nav-item">
+        <i data-lucide="store"></i>
+        <span>商城</span>
+      </button>
+      <button data-nav="profile" class="nav-item">
+        <i data-lucide="user"></i>
+        <span>我的</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
