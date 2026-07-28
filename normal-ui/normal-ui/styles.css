@@ -526,41 +526,29 @@ button.card {
 .material-summary-footer { display: flex; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.72rem; }
 
 /* ----- Material Detail Drawer ----- */
-.material-drawer { max-height: min(86dvh, 620px); }
+.material-drawer, .material-picker { max-height: min(86dvh, 620px); }
 .material-drawer__handle { width: 36px; height: 4px; margin: 8px auto -4px; background: var(--border-strong); border-radius: 999px; }
 .material-drawer .control-dialog__header { padding-top: 4px; }
 .material-drawer__body { max-height: calc(min(86dvh, 620px) - 116px); scrollbar-width: none; }
 .material-drawer__body::-webkit-scrollbar { display: none; }
-.material-drawer__hero { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-.material-drawer__slot { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.78rem; }
-.material-drawer__icon-button { display: grid; width: 88px; height: 88px; place-items: center; color: var(--text-primary); background: var(--surface-raised); border: 1px solid var(--border-strong); border-radius: 50%; cursor: pointer; }
-.material-drawer__icon-button svg { width: 46px; height: 46px; }
-.material-drawer__icon-button:active { background: var(--accent-dim); border-color: var(--accent); }
-.material-drawer__icon-button:focus-visible, .material-drawer__back:focus-visible, .material-type-option:focus-visible, .material-color-option:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.material-drawer__identity { display: flex; flex-direction: column; gap: 8px; }
-.material-drawer__name { font-size: 1.15rem; font-weight: 700; }
-.material-drawer__color { display: flex; align-items: center; gap: 7px; color: var(--text-secondary); font-size: 0.82rem; }
+.material-drawer__details { overflow: hidden; background: var(--surface-raised); border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.material-drawer__details button { display: flex; width: 100%; min-height: 58px; align-items: center; justify-content: space-between; gap: 16px; padding: 0 12px 0 14px; color: inherit; background: transparent; border: 0; font: inherit; text-align: left; cursor: pointer; }
+.material-drawer__details button + button { border-top: 1px solid var(--border); }
+.material-drawer__details button:active { background: var(--accent-dim); }
+.material-drawer__details button:focus-visible, .material-type-option:focus-visible, .material-color-option:focus-visible { position: relative; outline: 2px solid var(--accent); outline-offset: -2px; }
+.material-drawer__label { color: var(--text-muted); font-size: 0.76rem; }
+.material-drawer__value { display: flex; align-items: center; justify-content: flex-end; gap: 8px; color: var(--text-primary); font-size: 0.86rem; }
+.material-drawer__value strong { font-weight: 700; }
+.material-drawer__value > svg { width: 17px; height: 17px; margin-left: 2px; color: var(--text-muted); }
 .material-drawer__swatch, .material-color-option__swatch { width: 18px; height: 18px; flex: 0 0 auto; border: 1px solid rgba(0, 0, 0, 0.16); border-radius: 50%; }
-.material-drawer__color code { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.72rem; }
-.material-drawer__stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
-.material-drawer__stats div { display: flex; flex-direction: column; gap: 4px; min-height: 72px; padding: 12px; background: var(--surface-raised); }
-.material-drawer__stats div:nth-child(odd) { border-right: 1px solid var(--border); }
-.material-drawer__stats div:nth-child(-n + 2) { border-bottom: 1px solid var(--border); }
-.material-drawer__stats dt { color: var(--text-muted); font-size: 0.68rem; }
-.material-drawer__stats dd { margin: 0; color: var(--text-primary); font-family: var(--font-mono); font-size: 0.82rem; font-weight: 600; }
-.material-drawer__back { display: inline-flex; align-items: center; gap: 2px; padding: 0; color: var(--text-secondary); background: none; border: 0; font: inherit; font-size: 0.8rem; cursor: pointer; }
-.material-drawer__back svg { width: 17px; height: 17px; }
-.material-drawer__instruction { margin: 0; color: var(--text-secondary); font-size: 0.9rem; font-weight: 600; }
-.material-type-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.material-type-option, .material-color-option { display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 9px 10px; color: var(--text-primary); background: var(--surface-raised); border: 1px solid var(--border); border-radius: var(--radius-sm); font: inherit; font-size: 0.78rem; text-align: left; cursor: pointer; }
-.material-type-option { justify-content: space-between; }
-.material-type-option span { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.68rem; }
-.material-color-options { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
-.material-color-option { flex-direction: column; justify-content: center; min-height: 76px; gap: 6px; padding: 8px 4px; font-size: 0.68rem; text-align: center; }
-.material-color-option__swatch { width: 26px; height: 26px; }
+.material-picker__body { max-height: calc(min(86dvh, 620px) - 64px); overflow-y: auto; }
+.material-type-options, .material-color-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.material-type-option, .material-color-option { display: flex; min-height: 54px; align-items: center; gap: 10px; padding: 12px; color: var(--text-primary); background: var(--surface-raised); border: 1px solid var(--border); border-radius: var(--radius-sm); font: inherit; font-size: 0.78rem; text-align: left; cursor: pointer; }
+.material-color-option { justify-content: flex-start; }
+.material-color-option__swatch { width: 28px; height: 28px; }
 .material-type-option[aria-pressed="true"], .material-color-option[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent-dim); background: var(--accent-dim); }
 .material-type-option:active, .material-color-option:active { border-color: var(--accent); }
-@media (max-width: 359px) { .material-color-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } .material-color-option { flex-direction: row; justify-content: flex-start; padding: 8px; text-align: left; } }
+@media (max-width: 359px) { .material-type-options, .material-color-options { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) {
   .material-thumbnail { transition: none; }
   .control-dialog[open], .control-dialog[open]::backdrop { animation: none; }
@@ -1815,51 +1803,31 @@ button.card {
 }
 .fan-levels {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  align-items: end;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
   width: 100%;
   flex: 1;
+  gap: 5px;
 }
 .fan-levels__item {
   display: flex;
+  min-width: 0;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
-.fan-levels__bar {
-  position: relative;
-  width: 7px;
-  height: 28px;
-  overflow: hidden;
-  background: var(--border);
-  border-radius: 999px;
+.fan-levels__value {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
-.fan-levels__bar > span {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  min-height: 2px;
-  background: var(--accent);
-  border-radius: inherit;
-  transition: height 0.2s ease;
-}
-.fan-levels__item.is-off .fan-levels__bar {
-  background: transparent;
-  border: 1px dashed var(--text-muted);
-  opacity: 0.7;
-}
-.fan-levels__item.is-off .fan-levels__bar > span {
-  display: none;
-}
-.fan-levels__item.is-off .fan-levels__label::after {
-  content: " · 关";
-  color: var(--text-muted);
-  font-size: 0.52rem;
-}
+.fan-levels__item.is-off .fan-levels__value { color: var(--text-muted); }
 .fan-levels__label {
   color: var(--text-muted);
-  font-size: 0.6rem;
+  font-size: 0.56rem;
   font-weight: 500;
   line-height: 1;
   white-space: nowrap;

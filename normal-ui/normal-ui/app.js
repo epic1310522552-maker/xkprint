@@ -607,10 +607,10 @@
         fanLevels.forEach(function (type, index) {
           var enabled = state['fan' + type + 'Enabled'];
           var value = enabled ? state['fan' + type] : 0;
-          summary.style.setProperty('--fan-' + type.toLowerCase(), value + '%');
           var item = summary.querySelector('[data-fan-state="' + type.toLowerCase() + '"]');
           item.classList.toggle('is-on', enabled);
           item.classList.toggle('is-off', !enabled);
+          item.querySelector('.fan-levels__value').textContent = enabled ? value + '%' : '关';
         });
         summary.setAttribute('aria-label', fanLevels.map(function (type, index) {
           return fanLabels[index] + (state['fan' + type + 'Enabled'] ? ' ' + state['fan' + type] + '%' : '已关闭');
@@ -759,16 +759,7 @@
     if (!triggers.length || !dialog || dialog.dataset.materialInitialized) return;
     dialog.dataset.materialInitialized = 'true';
 
-    var materialTypes = [
-      { name: 'PLA Matte', temperature: '200–220°C' },
-      { name: 'PLA Basic', temperature: '205–220°C' },
-      { name: 'PETG', temperature: '230–245°C' },
-      { name: 'ABS', temperature: '245–260°C' },
-      { name: 'TPU 95A', temperature: '210–225°C' },
-      { name: 'PLA Silk', temperature: '200–215°C' },
-      { name: 'ASA', temperature: '250–265°C' },
-      { name: 'PA-CF', temperature: '270–290°C' }
-    ];
+    var materialTypes = ['PLA Matte', 'PLA Basic', 'PETG', 'ABS', 'TPU 95A', 'PLA Silk', 'ASA', 'PA-CF'];
     var colors = [
       { name: '星空蓝', value: '#2B78E4' }, { name: '月岩灰', value: '#757B84' },
       { name: '透明琥珀', value: '#D8892B' }, { name: '工业黑', value: '#303236' },
@@ -776,20 +767,20 @@
       { name: '高光白', value: '#D9D6CF' }, { name: '碳黑', value: '#25282B' }
     ];
     var materials = [
-      { id: 1, type: 'PLA Matte', colorName: '星空蓝', color: '#2B78E4', remaining: 42, weight: 412, nozzleTemperature: '200–220°C', status: '当前打印 · 耗材充足', active: true },
-      { id: 2, type: 'PLA Basic', colorName: '月岩灰', color: '#757B84', remaining: 76, weight: 758, nozzleTemperature: '205–220°C', status: '待用', active: false },
-      { id: 3, type: 'PETG', colorName: '透明琥珀', color: '#D8892B', remaining: 64, weight: 635, nozzleTemperature: '230–245°C', status: '待用', active: false },
-      { id: 4, type: 'ABS', colorName: '工业黑', color: '#303236', remaining: 31, weight: 304, nozzleTemperature: '245–260°C', status: '待用', active: false },
-      { id: 5, type: 'TPU 95A', colorName: '熔岩红', color: '#D74C46', remaining: 58, weight: 571, nozzleTemperature: '210–225°C', status: '待用', active: false },
-      { id: 6, type: 'PLA Silk', colorName: '玫瑰金', color: '#C98291', remaining: 88, weight: 874, nozzleTemperature: '200–215°C', status: '待用', active: false },
-      { id: 7, type: 'ASA', colorName: '高光白', color: '#D9D6CF', remaining: 47, weight: 465, nozzleTemperature: '250–265°C', status: '待用', active: false },
-      { id: 8, type: 'PA-CF', colorName: '碳黑', color: '#25282B', remaining: 19, weight: 188, nozzleTemperature: '270–290°C', status: '库存偏低', active: false }
+      { id: 1, type: 'PLA Matte', colorName: '星空蓝', color: '#2B78E4', remaining: 42, status: '当前打印 · 耗材充足', active: true },
+      { id: 2, type: 'PLA Basic', colorName: '月岩灰', color: '#757B84', remaining: 76, status: '待用', active: false },
+      { id: 3, type: 'PETG', colorName: '透明琥珀', color: '#D8892B', remaining: 64, status: '待用', active: false },
+      { id: 4, type: 'ABS', colorName: '工业黑', color: '#303236', remaining: 31, status: '待用', active: false },
+      { id: 5, type: 'TPU 95A', colorName: '熔岩红', color: '#D74C46', remaining: 58, status: '待用', active: false },
+      { id: 6, type: 'PLA Silk', colorName: '玫瑰金', color: '#C98291', remaining: 88, status: '待用', active: false },
+      { id: 7, type: 'ASA', colorName: '高光白', color: '#D9D6CF', remaining: 47, status: '待用', active: false },
+      { id: 8, type: 'PA-CF', colorName: '碳黑', color: '#25282B', remaining: 19, status: '库存偏低', active: false }
     ];
-    var views = dialog.querySelectorAll('[data-material-view]');
-    var title = dialog.querySelector('#material-drawer-title');
-    var actions = dialog.querySelector('[data-material-actions]');
-    var typeOptions = dialog.querySelector('[data-material-type-options]');
-    var colorOptions = dialog.querySelector('[data-material-color-options]');
+    var picker = document.querySelector('[data-material-picker]');
+    var pickerViews = picker.querySelectorAll('[data-material-picker-view]');
+    var pickerTitle = picker.querySelector('#material-picker-title');
+    var typeOptions = picker.querySelector('[data-material-type-options]');
+    var colorOptions = picker.querySelector('[data-material-color-options]');
     var editingMaterialId = null;
     var pendingType = null;
     var pendingColorName = null;
@@ -797,7 +788,6 @@
     var invokingTrigger = null;
 
     function getMaterial(id) { return materials.find(function (material) { return material.id === id; }); }
-    function typeFor(name) { return materialTypes.find(function (type) { return type.name === name; }); }
     function createOption(className, label, value, pressed) {
       var button = document.createElement('button');
       button.className = className;
@@ -810,11 +800,8 @@
     function renderOptions() {
       typeOptions.replaceChildren();
       materialTypes.forEach(function (type) {
-        var button = createOption('material-type-option', type.name, type.name, pendingType === type.name);
-        var temperature = document.createElement('span');
-        temperature.textContent = type.temperature;
-        button.appendChild(temperature);
-        button.addEventListener('click', function () { pendingType = type.name; renderOptions(); showMaterialView('color'); });
+        var button = createOption('material-type-option', type, type, pendingType === type);
+        button.addEventListener('click', function () { pendingType = type; renderOptions(); renderMaterialDetail(); picker.close(); });
         typeOptions.appendChild(button);
       });
       colorOptions.replaceChildren();
@@ -824,28 +811,21 @@
         swatch.className = 'material-color-option__swatch';
         swatch.style.background = color.value;
         button.prepend(swatch);
-        button.addEventListener('click', function () { pendingColorName = color.name; pendingColor = color.value; renderOptions(); renderMaterialDetail(); showMaterialView('detail'); });
+        button.addEventListener('click', function () { pendingColorName = color.name; pendingColor = color.value; renderOptions(); renderMaterialDetail(); picker.close(); });
         colorOptions.appendChild(button);
       });
     }
     function renderMaterialDetail() {
       var material = getMaterial(editingMaterialId);
-      var selectedType = typeFor(pendingType);
-      if (!material || !selectedType) return;
-      dialog.querySelector('[data-material-slot]').textContent = '槽位 ' + material.id;
-      dialog.querySelector('[data-material-name]').textContent = pendingType + ' · ' + pendingColorName;
+      if (!material) return;
+      dialog.querySelector('[data-material-type]').textContent = pendingType;
       dialog.querySelector('[data-material-swatch]').style.background = pendingColor;
       dialog.querySelector('[data-material-color-name]').textContent = pendingColorName;
-      dialog.querySelector('[data-material-color-value]').textContent = pendingColor;
-      dialog.querySelector('[data-material-remaining]').textContent = material.remaining + '%';
-      dialog.querySelector('[data-material-weight]').textContent = material.weight + ' g';
-      dialog.querySelector('[data-material-temperature]').textContent = selectedType.temperature;
-      dialog.querySelector('[data-material-status]').textContent = material.status;
     }
-    function showMaterialView(name) {
-      views.forEach(function (view) { view.hidden = view.getAttribute('data-material-view') !== name; });
-      title.textContent = name === 'detail' ? '耗材详情' : name === 'type' ? '选择耗材种类' : '选择颜色';
-      actions.hidden = name !== 'detail';
+    function openMaterialPicker(name) {
+      pickerViews.forEach(function (view) { view.hidden = view.getAttribute('data-material-picker-view') !== name; });
+      pickerTitle.textContent = name === 'type' ? '选择耗材种类' : '选择颜色';
+      picker.showModal();
     }
     function renderMaterialTrigger(material) {
       var trigger = document.querySelector('[data-material-trigger][data-material-id="' + material.id + '"]');
@@ -865,24 +845,23 @@
       invokingTrigger = trigger;
       renderOptions();
       renderMaterialDetail();
-      showMaterialView('detail');
       dialog.showModal();
     }
     function commitMaterialSelection() {
       var material = getMaterial(editingMaterialId);
-      var selectedType = typeFor(pendingType);
-      if (!material || !selectedType || !pendingColorName || !pendingColor) return;
+      if (!material || !pendingType || !pendingColorName || !pendingColor) return;
       material.type = pendingType;
       material.colorName = pendingColorName;
       material.color = pendingColor;
-      material.nozzleTemperature = selectedType.temperature;
       renderMaterialTrigger(material);
       dialog.close();
     }
 
     triggers.forEach(function (trigger) { trigger.addEventListener('click', function () { openMaterialDrawer(Number(trigger.dataset.materialId), trigger); }); });
-    dialog.querySelector('[data-material-edit]').addEventListener('click', function () { showMaterialView('type'); });
-    dialog.querySelectorAll('[data-material-back]').forEach(function (button) { button.addEventListener('click', function () { showMaterialView(button.dataset.materialBack); }); });
+    dialog.querySelectorAll('[data-material-edit]').forEach(function (button) { button.addEventListener('click', function () { openMaterialPicker(button.dataset.materialEdit); }); });
+    picker.querySelector('[data-material-picker-close]').addEventListener('click', function () { picker.close(); });
+    picker.addEventListener('cancel', function (event) { event.preventDefault(); picker.close(); });
+    picker.addEventListener('click', function (event) { if (event.target === picker) picker.close(); });
     dialog.querySelectorAll('[data-material-close], [data-material-cancel]').forEach(function (button) { button.addEventListener('click', function () { dialog.close(); }); });
     dialog.querySelector('[data-material-apply]').addEventListener('click', commitMaterialSelection);
     dialog.addEventListener('cancel', function (event) { event.preventDefault(); dialog.close(); });

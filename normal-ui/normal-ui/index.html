@@ -122,7 +122,7 @@
             </button>
             <button class="control-card control-card--fan" type="button" data-control-dialog="fan" aria-haspopup="dialog" aria-label="风扇">
               <span class="control-card__header"><i data-lucide="fan"></i><span class="param-label">风扇</span></span>
-              <span class="fan-levels" data-control-summary="fan" role="img" aria-label="部件风扇 80%，辅助风扇已关闭，机箱风扇已关闭" style="--fan-part: 80%; --fan-auxiliary: 0%; --fan-chamber: 0%"><span class="fan-levels__item is-on" data-fan-state="part"><span class="fan-levels__bar"><span style="height: var(--fan-part)"></span></span><span class="fan-levels__label">部件</span></span><span class="fan-levels__item is-off" data-fan-state="auxiliary"><span class="fan-levels__bar"><span style="height: var(--fan-auxiliary)"></span></span><span class="fan-levels__label">辅助</span></span><span class="fan-levels__item is-off" data-fan-state="chamber"><span class="fan-levels__bar"><span style="height: var(--fan-chamber)"></span></span><span class="fan-levels__label">机箱</span></span></span>
+              <span class="fan-levels" data-control-summary="fan" role="img" aria-label="部件风扇 80%，辅助风扇已关闭，机箱风扇已关闭"><span class="fan-levels__item is-on" data-fan-state="part"><strong class="fan-levels__value">80%</strong><span class="fan-levels__label">部件</span></span><span class="fan-levels__item is-off" data-fan-state="auxiliary"><strong class="fan-levels__value">关</strong><span class="fan-levels__label">辅助</span></span><span class="fan-levels__item is-off" data-fan-state="chamber"><strong class="fan-levels__value">关</strong><span class="fan-levels__label">机箱</span></span></span>
             </button>
             <button class="control-card control-card--lighting" type="button" data-control-dialog="lighting" aria-haspopup="dialog" aria-label="照明和 RGB 灯">
               <span class="control-card__header"><i data-lucide="lightbulb"></i><span class="param-label">照明和 RGB 灯</span></span>
@@ -1109,19 +1109,20 @@
       <div class="material-drawer__handle" aria-hidden="true"></div>
       <div class="control-dialog__header"><h2 id="material-drawer-title">耗材详情</h2><button class="icon-btn" type="button" data-material-close aria-label="关闭"><i data-lucide="x"></i></button></div>
       <div class="control-dialog__body material-drawer__body">
-        <section data-material-view="detail">
-          <div class="material-drawer__hero"><span class="material-drawer__slot" data-material-slot></span><button class="material-drawer__icon-button" type="button" data-material-edit aria-label="更改耗材种类和颜色"><!-- Lucide Icons spool, ISC license: https://lucide.dev/license --><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 13.44 4.442 17.082A2 2 0 0 0 4.982 21H19a2 2 0 0 0 .558-3.921l-1.115-.32A2 2 0 0 1 17 14.837V7.66"/><path d="m7 10.56 12.558-3.642A2 2 0 0 0 19.018 3H5a2 2 0 0 0-.558 3.921l1.115.32A2 2 0 0 1 7 9.163v7.178"/></svg></button></div>
-          <div class="material-drawer__identity"><span class="material-drawer__name" data-material-name></span><span class="material-drawer__color"><span class="material-drawer__swatch" data-material-swatch></span><span data-material-color-name></span><code data-material-color-value></code></span></div>
-          <dl class="material-drawer__stats"><div><dt>剩余</dt><dd data-material-remaining></dd></div><div><dt>重量</dt><dd data-material-weight></dd></div><div><dt>建议喷嘴</dt><dd data-material-temperature></dd></div><div><dt>状态</dt><dd data-material-status></dd></div></dl>
-        </section>
-        <section data-material-view="type" hidden>
-          <button class="material-drawer__back" type="button" data-material-back="detail"><i data-lucide="chevron-left"></i>返回详情</button><p class="material-drawer__instruction">选择耗材种类</p><div class="material-type-options" data-material-type-options></div>
-        </section>
-        <section data-material-view="color" hidden>
-          <button class="material-drawer__back" type="button" data-material-back="type"><i data-lucide="chevron-left"></i>返回种类</button><p class="material-drawer__instruction">选择颜色</p><div class="material-color-options" data-material-color-options></div>
-        </section>
+        <div class="material-drawer__details">
+          <button type="button" data-material-edit="type"><span class="material-drawer__label">耗材种类</span><span class="material-drawer__value"><strong data-material-type></strong><i data-lucide="chevron-right"></i></span></button>
+          <button type="button" data-material-edit="color"><span class="material-drawer__label">颜色</span><span class="material-drawer__value"><span class="material-drawer__swatch" data-material-swatch></span><strong data-material-color-name></strong><i data-lucide="chevron-right"></i></span></button>
+        </div>
       </div>
-      <div class="control-dialog__actions" data-material-actions><button class="btn btn-secondary" type="button" data-material-cancel>取消</button><button class="btn btn-primary" type="button" data-material-apply>应用</button></div>
+      <div class="control-dialog__actions"><button class="btn btn-secondary" type="button" data-material-cancel>取消</button><button class="btn btn-primary" type="button" data-material-apply>应用</button></div>
+    </dialog>
+    <dialog class="control-dialog material-picker" data-material-picker aria-labelledby="material-picker-title">
+      <div class="material-drawer__handle" aria-hidden="true"></div>
+      <div class="control-dialog__header"><h2 id="material-picker-title">选择耗材种类</h2><button class="icon-btn" type="button" data-material-picker-close aria-label="关闭"><i data-lucide="x"></i></button></div>
+      <div class="control-dialog__body material-picker__body">
+        <div data-material-picker-view="type"><div class="material-type-options" data-material-type-options></div></div>
+        <div data-material-picker-view="color" hidden><div class="material-color-options" data-material-color-options></div></div>
+      </div>
     </dialog>
     <dialog class="software-update-dialog" data-update-dialog aria-labelledby="update-dialog-title">
       <div class="software-update-dialog__panel">
