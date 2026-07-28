@@ -11,9 +11,9 @@
 ## 页面与导航
 
 - 页面根容器：`index.html` 的 `.app-shell`。
-- 页面标识：`section[data-page]`；现有页面值为 `device`、`materials`、`models`、`market`、`profile`。
+- 页面标识：`section[data-page]`；主页面为 `device`、`models`、`market`、`profile`，并包含通知、本地文件、耗材、设置及账户相关子页面。
 - 底部导航：`index.html` 的 `.bottom-nav`，入口使用 `button[data-nav]`。
-- 页面切换：`app.js` 的 `initNavigation()`；点击任意 `[data-nav]` 后，为同名 `[data-page]` 和当前按钮设置 `active`。
+- 页面切换：`app.js` 的 `initNavigation()`；点击任意 `[data-nav]` 后，为同名 `[data-page]` 和匹配的底部导航按钮设置 `active`。
 - 页面显示规则：`styles.css` 的 `.page` 与 `.page.active`。
 - 初始页面：模型页和“模型”底部导航按钮在 HTML 中带有 `active`。
 
@@ -83,20 +83,28 @@
 - 打印统计：`.metrics-row`。
 - 当前打印机：`.printer-row`。
 - 本月耗材图表：`.material-summary` 内的 `.weekly-chart`。
-- 菜单入口：`.menu-group .menu-row`；当前仅展示，未绑定页面或操作。
+- 菜单入口：`.menu-group .menu-row`；“用户与安全”和“设置”已通过 `data-nav` 接入子页面，其余入口仅展示。
 
+## 设置页
+
+位置：`section[data-page="settings"]`。
+
+- “我的”页面顶部设置图标和菜单内“设置”按钮均跳转至该页，返回按钮跳转至“我的”。
+- 设置项以三个 `.settings-group` 分组展示：语言、主题、应用缓存；设备校准、关于本机；推送通知权限、关于应用、退出登录。
+- “设备校准”跳转至 `section[data-page="device-calibration"]`，提供高精度喷嘴、震动补偿、热床三个独立开关。
+- “关于本机”跳转至 `section[data-page="about-device"]`，展示可编辑设备名称、模拟型号与序列号、软件版本入口和模拟储存容量；软件版本入口已预留详情页。
 ## 主题、图标与资源
 
 - 初始主题：`<html data-theme="light">`。
-- 主题按钮：所有 `[data-theme-toggle]`。
-- 主题逻辑：`app.js` 的 `initTheme()`；读写 `localStorage` 键 `xkprint-theme`，同时更新 `#theme-color` 与太阳/月亮图标状态。
+- 主题初始化：`app.js` 的 `initTheme()` 会读取既有 `localStorage` 键 `xkprint-theme` 并同步 `#theme-color`。
+- 设置页“主题”当前仅为样式入口，尚未绑定主题选择功能。
 - 主题样式：`styles.css` 顶部的 CSS 自定义属性及 `[data-theme="dark"]` 覆盖规则。
 - 图标：HTML 中的 `<i data-lucide="…">`；Lucide UMD CDN 位于 `index.html` 末尾，由 `lucide.createIcons()` 转为 SVG。
 - Three.js：`index.html` 的 import map 指向 jsDelivr `three@0.185.1`；仅打印预览使用。
 
 ## 初始化顺序
 
-`app.js` 的 `runInit()` 会在 DOM 可用后按以下顺序执行：Lucide 图标、导航、设备配对、设备控制标签、执行头、控制对话框、耗材卡、主题、Three.js 场景。各初始化函数均以 DOM 选择器为入口；新增对应页面元素时应沿用现有 `data-*` 标识和类名约定。
+`app.js` 的 `runInit()` 会在 DOM 可用后初始化图标、导航、通知、文件、设备配对与控制、耗材、主题、账户、设置预览、设备信息、Three.js 场景和悬浮操作。各初始化函数均以 DOM 选择器为入口；新增对应页面元素时应沿用现有 `data-*` 标识和类名约定。
 
 ## 样式定位
 

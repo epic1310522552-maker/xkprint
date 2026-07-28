@@ -104,48 +104,44 @@
   function initTheme() {
     var doc = document.documentElement;
     var metaTheme = document.getElementById('theme-color');
-
-    // restore saved preference
     var saved = localStorage.getItem('xkprint-theme');
+
     if (saved === 'dark' || saved === 'light') {
       doc.setAttribute('data-theme', saved);
     }
-    updateThemeMeta(doc.getAttribute('data-theme') || 'light');
+    updateTheme(doc.getAttribute('data-theme') || 'light');
 
-    // bind every toggle
-    document.querySelectorAll('[data-theme-toggle]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var current = doc.getAttribute('data-theme') || 'light';
-        var next = current === 'dark' ? 'light' : 'dark';
-        doc.setAttribute('data-theme', next);
-        localStorage.setItem('xkprint-theme', next);
-        updateThemeMeta(next);
-        // re-render Lucide icons after icon swap
-        if (typeof lucide !== 'undefined' && lucide.createIcons) {
-          lucide.createIcons();
-        }
+
+    document.querySelectorAll('[data-theme-option]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var theme = button.getAttribute('data-theme-option');
+        doc.setAttribute('data-theme', theme);
+        localStorage.setItem('xkprint-theme', theme);
+        updateTheme(theme);
       });
     });
 
-    function updateThemeMeta(theme) {
+    function updateTheme(theme) {
       if (metaTheme) {
         metaTheme.setAttribute('content', theme === 'dark' ? '#1A1A1E' : '#F5F0EB');
       }
-      // toggle sun/moon icons
-      document.querySelectorAll('[data-theme-toggle]').forEach(function (tog) {
-        var sun = tog.querySelector('[data-lucide="sun"]');
-        var moon = tog.querySelector('[data-lucide="moon"]');
-        if (sun && moon) {
-          if (theme === 'dark') {
-            sun.classList.add('hidden');
-            moon.classList.remove('hidden');
-          } else {
-            sun.classList.remove('hidden');
-            moon.classList.add('hidden');
-          }
-        }
+      document.querySelectorAll('[data-theme-option]').forEach(function (option) {
+        var selected = option.getAttribute('data-theme-option') === theme;
+        option.classList.toggle('active', selected);
+        option.setAttribute('aria-pressed', selected ? 'true' : 'false');
       });
     }
+  }
+
+  /* ----- Account Security ----- */
+  function initAccountSecurity() {
+    var agreement = document.querySelector('[data-delete-agreement]');
+    var submitButton = document.querySelector('[data-delete-submit]');
+    if (!agreement || !submitButton) return;
+
+    agreement.addEventListener('change', function () {
+      submitButton.disabled = !agreement.checked;
+    });
   }
 
   /* ----- Device Preview Floating Actions ----- */
@@ -901,6 +897,213 @@
     });
   }
 
+  /* ----- Settings previews ----- */
+  function initSettingsPreviews() {
+    var clearButton = document.querySelector('[data-clear-cache]');
+    var toast = document.querySelector('[data-cache-toast]');
+    var toastTimer;
+
+    if (!clearButton || !toast) return;
+
+    clearButton.addEventListener('click', function () {
+      window.clearTimeout(toastTimer);
+      toast.classList.add('is-visible');
+      toast.setAttribute('aria-hidden', 'false');
+      toastTimer = window.setTimeout(function () {
+        toast.classList.remove('is-visible');
+        toast.setAttribute('aria-hidden', 'true');
+      }, 1800);
+    });
+  }
+
+  /* ----- Device settings ----- */
+  function initDeviceSettings() {
+    var nameInput = document.querySelector('[data-device-name-input]');
+    var editButton = document.querySelector('[data-device-name-edit]');
+    var nameDisplay = document.querySelector('[data-device-name-display]');
+    var editLabel = editButton && editButton.querySelector('span');
+    var editIcon = editButton && editButton.querySelector('svg');
+    var previousName = '';
+
+    if (!nameInput || !editButton || !nameDisplay) return;
+
+    function setEditing(editing) {
+      nameInput.readOnly = !editing;
+      editButton.setAttribute('aria-label', editing ? '保存设备名称' : '编辑设备名称');
+      if (editLabel) editLabel.textContent = editing ? '保存' : '编辑';
+      if (editIcon) editIcon.style.display = editing ? 'none' : '';
+      if (editing) {
+        previousName = nameInput.value;
+        nameInput.focus();
+        nameInput.select();
+      }
+    }
+
+    function saveName() {
+      var name = nameInput.value.trim();
+      if (!name) {
+        nameInput.value = previousName;
+        name = previousName;
+      }
+      nameDisplay.textContent = name;
+      setEditing(false);
+    }
+
+    editButton.addEventListener('click', function () {
+      if (nameInput.readOnly) setEditing(true);
+      else saveName();
+    });
+    nameInput.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        saveName();
+      }
+      if (event.key === 'Escape') {
+        nameInput.value = previousName;
+        setEditing(false);
+      }
+    });
+    nameInput.addEventListener('blur', function (event) {
+      if (!nameInput.readOnly && event.relatedTarget !== editButton) saveName();
+    });
+  }
+
+  /* ----- Software update demo ----- */
+  function initSoftwareUpdate() {
+    var checkButton = document.querySelector('[data-check-update]');
+    var dialog = document.querySelector('[data-update-dialog]');
+    var confirmDialog = document.querySelector('[data-update-confirm]');
+    if (!checkButton || !dialog || !confirmDialog || dialog.dataset.initialized) return;
+    dialog.dataset.initialized = 'true';
+
+    var views = dialog.querySelectorAll('[data-update-view]');
+    var progress = dialog.querySelector('[data-update-progress]');
+    var progressFill = dialog.querySelector('[data-update-progress-fill]');
+    var percent = dialog.querySelector('[data-update-percent]');
+    var stage = dialog.querySelector('[data-update-stage]');
+    var currentVersion = document.querySelector('[data-current-software-version]');
+    var versionStatus = document.querySelector('[data-software-version-status]');
+    var checkTimer;
+    var upgradeTimer;
+    var upgradeStartedAt = 0;
+    var elapsedBeforePause = 0;
+    var activeView = 'checking';
+
+    var closeAfterCancel = false;
+
+    function showView(name) {
+      activeView = name;
+      views.forEach(function (view) { view.hidden = view.dataset.updateView !== name; });
+    }
+
+    function stopUpgradeTimer() {
+      window.clearInterval(upgradeTimer);
+      upgradeTimer = null;
+      if (upgradeStartedAt) elapsedBeforePause += Date.now() - upgradeStartedAt;
+      upgradeStartedAt = 0;
+    }
+
+    function renderProgress(value) {
+      var rounded = Math.min(100, Math.round(value));
+      progressFill.style.width = rounded + '%';
+      percent.textContent = rounded + '%';
+      progress.setAttribute('aria-valuenow', String(rounded));
+      stage.textContent = rounded < 72 ? '正在下载更新包，请保持设备在线' : '正在安装更新，请勿关闭设备';
+    }
+
+    function runUpgrade() {
+      upgradeStartedAt = Date.now();
+      upgradeTimer = window.setInterval(function () {
+        var value = ((elapsedBeforePause + Date.now() - upgradeStartedAt) / 5000) * 100;
+        renderProgress(value);
+        if (value >= 100) {
+          stopUpgradeTimer();
+          showView('complete');
+        }
+      }, 80);
+    }
+
+    function requestCancelUpgrade(shouldClose) {
+      if (confirmDialog.open) return;
+      closeAfterCancel = shouldClose;
+      stopUpgradeTimer();
+      confirmDialog.showModal();
+    }
+
+    function closeUpdateDialog() {
+      window.clearTimeout(checkTimer);
+      if (activeView === 'upgrading') stopUpgradeTimer();
+      if (dialog.open) dialog.close();
+    }
+
+    checkButton.addEventListener('click', function () {
+      window.clearTimeout(checkTimer);
+      showView('checking');
+      dialog.showModal();
+      checkTimer = window.setTimeout(function () { showView('available'); }, 1500);
+    });
+    dialog.querySelector('[data-update-start]').addEventListener('click', function () {
+      elapsedBeforePause = 0;
+      renderProgress(0);
+      showView('upgrading');
+      runUpgrade();
+    });
+    dialog.querySelector('[data-update-cancel]').addEventListener('click', function () {
+      requestCancelUpgrade(false);
+    });
+    confirmDialog.querySelector('[data-update-continue]').addEventListener('click', function () {
+      confirmDialog.close();
+      closeAfterCancel = false;
+      runUpgrade();
+    });
+    confirmDialog.querySelector('[data-update-confirm-cancel]').addEventListener('click', function () {
+      confirmDialog.close();
+      elapsedBeforePause = 0;
+      renderProgress(0);
+      showView('available');
+      if (closeAfterCancel && dialog.open) dialog.close();
+      closeAfterCancel = false;
+    });
+    dialog.querySelector('[data-update-done]').addEventListener('click', function () {
+      currentVersion.textContent = 'v1.5.0';
+      versionStatus.textContent = '当前已是最新版本';
+      checkButton.innerHTML = '<i data-lucide="refresh-cw"></i>再次检查';
+      if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+      dialog.close();
+    });
+    dialog.querySelector('[data-update-close]').addEventListener('click', function () {
+      if (activeView === 'upgrading') requestCancelUpgrade(true);
+      else closeUpdateDialog();
+    });
+    dialog.querySelector('[data-update-later]').addEventListener('click', closeUpdateDialog);
+    dialog.addEventListener('cancel', function (event) {
+      event.preventDefault();
+      if (activeView === 'upgrading') requestCancelUpgrade(true);
+      else closeUpdateDialog();
+    });
+    confirmDialog.addEventListener('cancel', function (event) { event.preventDefault(); confirmDialog.close(); closeAfterCancel = false; runUpgrade(); });
+  }
+
+  /* ----- Logout confirmation demo ----- */
+  function initLogoutConfirmation() {
+    var trigger = document.querySelector('[data-settings-logout]');
+    var dialog = document.querySelector('[data-logout-confirm]');
+    if (!trigger || !dialog || dialog.dataset.initialized) return;
+    dialog.dataset.initialized = 'true';
+
+    function closeDialog() {
+      dialog.close();
+      trigger.focus();
+    }
+
+    trigger.addEventListener('click', function () { dialog.showModal(); });
+    dialog.querySelector('[data-logout-cancel]').addEventListener('click', closeDialog);
+    dialog.querySelector('[data-logout-submit]').addEventListener('click', closeDialog);
+    dialog.addEventListener('cancel', function (event) { event.preventDefault(); closeDialog(); });
+    dialog.addEventListener('click', function (event) { if (event.target === dialog) closeDialog(); });
+  }
+
+  
   /* ----- Init ----- */
   document.addEventListener('DOMContentLoaded', function () {
     runInit();
@@ -925,6 +1128,11 @@
     initToolheadSelector();
     initMaterialDrawer();
     initTheme();
+    initAccountSecurity();
+    initSettingsPreviews();
+    initDeviceSettings();
+    initSoftwareUpdate();
+    initLogoutConfirmation();
     initModelScene();
     initDeviceFloatActions();
   }
