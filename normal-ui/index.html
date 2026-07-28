@@ -530,9 +530,7 @@
       <header class="page-header">
         <h2>我的</h2>
         <div class="header-actions">
-          <button class="icon-btn" type="button" data-nav="settings" aria-label="打开设置">
-            <i data-lucide="settings"></i>
-          </button>
+          <button class="icon-btn" type="button" data-nav="settings" aria-label="打开设置">设置</button>
         </div>
       </header>
 
@@ -564,12 +562,10 @@
 
       <!-- Active Printer -->
       <div class="card printer-row">
-        <i data-lucide="printer" class="printer-icon"></i>
         <div class="printer-info">
           <span class="printer-name">XK1 Carbon</span>
           <span class="printer-status online">在线</span>
         </div>
-        <i data-lucide="chevron-right" class="chevron"></i>
       </div>
 
       <!-- Material summary -->
@@ -583,29 +579,19 @@
       <!-- Menu rows -->
       <div class="menu-group">
         <button class="menu-row">
-          <i data-lucide="heart"></i>
           <span>我的收藏</span>
-          <i data-lucide="chevron-right" class="chevron"></i>
         </button>
         <button class="menu-row">
-          <i data-lucide="clock"></i>
           <span>打印历史</span>
-          <i data-lucide="chevron-right" class="chevron"></i>
         </button>
         <button class="menu-row" type="button" data-nav="account-security">
-          <i data-lucide="shield-check"></i>
           <span>用户与安全</span>
-          <i data-lucide="chevron-right" class="chevron"></i>
         </button>
         <button class="menu-row">
-          <i data-lucide="life-buoy"></i>
           <span>帮助与反馈</span>
-          <i data-lucide="chevron-right" class="chevron"></i>
         </button>
         <button class="menu-row" type="button" data-nav="settings">
-          <i data-lucide="settings"></i>
           <span>设置</span>
-          <i data-lucide="chevron-right" class="chevron"></i>
         </button>
       </div>
     </section>
@@ -613,7 +599,7 @@
     <!-- ============ 设置 Panel ============ -->
     <section data-page="settings" class="page settings-page">
       <header class="page-header subpage-header">
-        <button class="icon-btn" type="button" data-nav="profile" aria-label="返回我的"><i data-lucide="chevron-left"></i></button>
+        <button class="icon-btn" type="button" data-nav="profile" aria-label="返回我的">←</button>
         <h2>设置</h2>
         <span class="header-spacer" aria-hidden="true"></span>
       </header>
@@ -660,7 +646,7 @@
     <!-- ============ 语言设置 Panel ============ -->
     <section data-page="language-settings" class="page settings-page settings-detail-page">
       <header class="page-header subpage-header">
-        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="chevron-left"></i></button>
+        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置">←</button>
         <h2>语言</h2>
         <span class="header-spacer" aria-hidden="true"></span>
       </header>
@@ -668,51 +654,40 @@
       <div class="settings-group settings-choice-group" role="listbox" aria-label="语言选项">
         <button class="settings-choice is-selected" type="button" role="option" aria-selected="true">
           <span><strong>简体中文</strong><small>简体中文</small></span>
-          <span class="settings-choice__check"><i data-lucide="check"></i></span>
         </button>
         <button class="settings-choice" type="button" role="option" aria-selected="false">
           <span><strong>繁體中文</strong><small>繁體中文</small></span>
-          <span class="settings-choice__check"><i data-lucide="check"></i></span>
         </button>
         <button class="settings-choice" type="button" role="option" aria-selected="false">
           <span><strong>English</strong><small>English</small></span>
-          <span class="settings-choice__check"><i data-lucide="check"></i></span>
         </button>
         <button class="settings-choice" type="button" role="option" aria-selected="false">
           <span><strong>日本語</strong><small>日本語</small></span>
-          <span class="settings-choice__check"><i data-lucide="check"></i></span>
         </button>
         <button class="settings-choice" type="button" role="option" aria-selected="false">
           <span><strong>한국어</strong><small>한국어</small></span>
-          <span class="settings-choice__check"><i data-lucide="check"></i></span>
         </button>
       </div>
-      <p class="settings-detail-note"><i data-lucide="info"></i>切换语言后，应用内文字将使用所选语言显示</p>
+      <p class="settings-detail-note">切换语言后，应用内文字将使用所选语言显示</p>
     </section>
 
     <!-- ============ 主题设置 Panel ============ -->
     <section data-page="theme-settings" class="page settings-page settings-detail-page">
       <header class="page-header subpage-header">
-        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="chevron-left"></i></button>
+        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置">←</button>
         <h2>主题</h2>
         <span class="header-spacer" aria-hidden="true"></span>
       </header>
       <p class="settings-detail-hint">选择你喜欢的界面外观</p>
       <div class="theme-choice-grid" role="listbox" aria-label="主题选项">
         <button class="theme-choice is-selected" type="button" role="option" aria-selected="true">
-          <span class="theme-preview theme-preview--system"><svg class="theme-system-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2"></rect><path d="M12 18h.01"></path></svg></span>
           <span><strong>跟随系统</strong><small>自动适配系统外观</small></span>
-          <span class="settings-choice__check"><i data-lucide="check"></i></span>
         </button>
         <button class="theme-choice" type="button" role="option" aria-selected="false">
-          <span class="theme-preview theme-preview--dark"><i data-lucide="moon"></i></span>
           <span><strong>深色</strong><small>适合暗光环境</small></span>
-          <span class="settings-choice__check"><i data-lucide="check"></i></span>
         </button>
         <button class="theme-choice" type="button" role="option" aria-selected="false">
-          <span class="theme-preview theme-preview--light"><i data-lucide="sun"></i></span>
           <span><strong>亮色</strong><small>清晰明亮的外观</small></span>
-          <span class="settings-choice__check"><i data-lucide="check"></i></span>
         </button>
       </div>
     </section>
@@ -720,62 +695,57 @@
     <!-- ============ 应用缓存 Panel ============ -->
     <section data-page="cache-settings" class="page settings-page settings-detail-page cache-page">
       <header class="page-header subpage-header">
-        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="chevron-left"></i></button>
+        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置">←</button>
         <h2>应用缓存</h2>
         <span class="header-spacer" aria-hidden="true"></span>
       </header>
       <article class="cache-overview">
-        <span class="cache-overview__icon"><i data-lucide="database"></i></span>
         <span>当前缓存</span>
         <strong>128 MB</strong>
         <p>清理缓存不会删除账号信息、打印记录或已下载的模型。</p>
       </article>
       <div class="settings-group cache-detail-list" aria-label="缓存详细信息">
-        <div class="cache-detail-row"><span><i data-lucide="image"></i>图片与缩略图</span><strong>68.4 MB</strong></div>
-        <div class="cache-detail-row"><span><i data-lucide="box"></i>模型预览数据</span><strong>42.1 MB</strong></div>
-        <div class="cache-detail-row"><span><i data-lucide="file-text"></i>日志与临时文件</span><strong>17.5 MB</strong></div>
+        <div class="cache-detail-row"><span>图片与缩略图</span><strong>68.4 MB</strong></div>
+        <div class="cache-detail-row"><span>模型预览数据</span><strong>42.1 MB</strong></div>
+        <div class="cache-detail-row"><span>日志与临时文件</span><strong>17.5 MB</strong></div>
       </div>
-      <button class="btn cache-clear-button" type="button" data-clear-cache><i data-lucide="trash-2"></i>清理缓存</button>
+      <button class="btn cache-clear-button" type="button" data-clear-cache>清理缓存</button>
       <p class="cache-clear-hint">建议定期清理以释放设备存储空间</p>
     </section>
 
     <!-- ============ 设备校准 Panel ============ -->
     <section data-page="device-calibration" class="page settings-page settings-detail-page calibration-page">
       <header class="page-header subpage-header">
-        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="chevron-left"></i></button>
+        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置">←</button>
         <h2>设备校准</h2>
         <span class="header-spacer" aria-hidden="true"></span>
       </header>
       <p class="settings-detail-hint">选择需要启用的设备校准项目</p>
       <div class="settings-group calibration-list" aria-label="设备校准选项">
         <label class="calibration-option">
-          <span class="calibration-option__icon calibration-option__icon--blue"><i data-lucide="focus"></i></span>
           <span class="calibration-option__copy"><strong>高精度喷嘴校准</strong><small>提升喷嘴定位与挤出精度</small></span>
           <span class="setting-switch"><input type="checkbox" data-calibration-toggle="nozzle" checked><span class="setting-switch__track" aria-hidden="true"></span></span>
         </label>
         <label class="calibration-option">
-          <span class="calibration-option__icon calibration-option__icon--violet"><i data-lucide="audio-waveform"></i></span>
           <span class="calibration-option__copy"><strong>震动补偿校准</strong><small>减少高速打印产生的振纹</small></span>
           <span class="setting-switch"><input type="checkbox" data-calibration-toggle="vibration"><span class="setting-switch__track" aria-hidden="true"></span></span>
         </label>
         <label class="calibration-option">
-          <span class="calibration-option__icon calibration-option__icon--amber"><i data-lucide="grid-3x3"></i></span>
           <span class="calibration-option__copy"><strong>热床校准</strong><small>检测并补偿热床平整度</small></span>
           <span class="setting-switch"><input type="checkbox" data-calibration-toggle="bed" checked><span class="setting-switch__track" aria-hidden="true"></span></span>
         </label>
       </div>
-      <p class="settings-detail-note"><i data-lucide="info"></i>开启的项目将在下次执行设备校准时自动运行</p>
+      <p class="settings-detail-note">开启的项目将在下次执行设备校准时自动运行</p>
     </section>
 
     <!-- ============ 关于本机 Panel ============ -->
     <section data-page="about-device" class="page settings-page settings-detail-page about-device-page">
       <header class="page-header subpage-header">
-        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="chevron-left"></i></button>
+        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置">←</button>
         <h2>关于本机</h2>
         <span class="header-spacer" aria-hidden="true"></span>
       </header>
       <article class="device-identity-card">
-        <span class="device-identity-card__icon"><i data-lucide="printer"></i></span>
         <strong data-device-name-display>XK1 Carbon</strong>
         <span>在线</span>
       </article>
@@ -784,17 +754,17 @@
           <span class="device-info-row__label">设备名称</span>
           <span class="device-name-editor">
             <input type="text" maxlength="24" value="XK1 Carbon" aria-label="设备名称" data-device-name-input readonly>
-            <button type="button" aria-label="编辑设备名称" data-device-name-edit><i data-lucide="pencil"></i><span>编辑</span></button>
+            <button type="button" aria-label="编辑设备名称" data-device-name-edit><span>编辑</span></button>
           </span>
         </div>
         <div class="device-info-row"><span class="device-info-row__label">设备型号</span><strong>XK-X1C-2026</strong></div>
         <div class="device-info-row"><span class="device-info-row__label">设备序列号</span><strong class="device-info-row__mono">XK1C-2607-A8F3</strong></div>
         <button class="device-info-row device-info-row--link" type="button" data-nav="software-version">
-          <span class="device-info-row__label">软件版本</span><span class="device-info-row__value">v1.4.2</span><i data-lucide="chevron-right"></i>
+          <span class="device-info-row__label">软件版本</span><span class="device-info-row__value">v1.4.2</span>
         </button>
       </div>
       <article class="device-storage-card" aria-label="储存容量">
-        <div class="device-storage-card__heading"><span><i data-lucide="hard-drive"></i>储存容量</span><strong>18.6 GB / 32 GB</strong></div>
+        <div class="device-storage-card__heading"><span>储存容量</span><strong>18.6 GB / 32 GB</strong></div>
         <div class="device-storage-card__bar" role="progressbar" aria-label="储存空间已使用" aria-valuemin="0" aria-valuemax="32" aria-valuenow="18.6"><span></span></div>
         <div class="device-storage-card__meta"><span>已使用 58%</span><span>剩余 13.4 GB</span></div>
       </article>
@@ -803,52 +773,44 @@
     <!-- ============ 软件版本 Panel ============ -->
     <section data-page="software-version" class="page settings-page settings-detail-page software-version-page">
       <header class="page-header subpage-header">
-        <button class="icon-btn" type="button" data-nav="about-device" aria-label="返回关于本机"><i data-lucide="chevron-left"></i></button>
+        <button class="icon-btn" type="button" data-nav="about-device" aria-label="返回关于本机">←</button>
         <h2>软件版本</h2>
         <span class="header-spacer" aria-hidden="true"></span>
       </header>
       <article class="software-version-card">
-        <span class="software-version-card__icon"><i data-lucide="badge-check"></i></span>
         <span>当前版本</span>
         <strong data-current-software-version>v1.4.2</strong>
         <p data-software-version-status>当前已是最新版本</p>
       </article>
       <div class="software-update-actions" aria-label="软件更新操作">
-        <button class="btn btn-primary software-update-button" type="button" data-check-update><i data-lucide="refresh-cw"></i>检查更新</button>
+        <button class="btn btn-primary software-update-button" type="button" data-check-update>检查更新</button>
       </div>
     </section>
 
     <!-- ============ 关于应用 Panel ============ -->
     <section data-page="about-app" class="page settings-page settings-detail-page about-app-page">
       <header class="page-header subpage-header">
-        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="chevron-left"></i></button>
+        <button class="icon-btn" type="button" data-nav="settings" aria-label="返回设置">←</button>
         <h2>关于应用</h2>
         <span class="header-spacer" aria-hidden="true"></span>
       </header>
       <article class="about-app-hero">
-        <span class="app-brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 64 64" fill="none"><path d="M17 43 31.1 17.5a2 2 0 0 1 3.5 0L48 43" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M22.5 35h20" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><circle cx="49" cy="18" r="5" fill="currentColor"/></svg>
-        </span>
         <strong>Axiloop</strong>
         <span>让创意稳定成型</span>
         <small>版本 <span data-current-app-version>v1.0.0</span></small>
       </article>
       <div class="settings-group about-app-menu" aria-label="关于应用选项">
         <button class="settings-row" type="button" data-nav="app-terms">
-          <span class="settings-row__icon settings-row__icon--blue"><i data-lucide="file-check-2"></i></span>
-          <span class="settings-row__label">服务条款</span><i data-lucide="chevron-right" class="chevron"></i>
+          <span class="settings-row__label">服务条款</span>
         </button>
         <button class="settings-row" type="button" data-nav="app-privacy">
-          <span class="settings-row__icon settings-row__icon--green"><i data-lucide="shield-check"></i></span>
-          <span class="settings-row__label">隐私政策</span><i data-lucide="chevron-right" class="chevron"></i>
+          <span class="settings-row__label">隐私政策</span>
         </button>
         <button class="settings-row" type="button" data-nav="app-contact">
-          <span class="settings-row__icon settings-row__icon--violet"><i data-lucide="messages-square"></i></span>
-          <span class="settings-row__label">联系我们</span><i data-lucide="chevron-right" class="chevron"></i>
+          <span class="settings-row__label">联系我们</span>
         </button>
         <button class="settings-row" type="button" data-nav="device-compatibility">
-          <span class="settings-row__icon settings-row__icon--amber"><i data-lucide="cpu"></i></span>
-          <span class="settings-row__label">设备版本兼容</span><i data-lucide="chevron-right" class="chevron"></i>
+          <span class="settings-row__label">设备版本兼容</span>
         </button>
       </div>
       <p class="about-app-copyright">© 2026 Axiloop. All rights reserved.</p>
@@ -857,7 +819,7 @@
     <!-- ============ 服务条款 Panel ============ -->
     <section data-page="app-terms" class="page settings-page settings-detail-page legal-page">
       <header class="page-header subpage-header">
-        <button class="icon-btn" type="button" data-nav="about-app" aria-label="返回关于应用"><i data-lucide="chevron-left"></i></button>
+        <button class="icon-btn" type="button" data-nav="about-app" aria-label="返回关于应用">←</button>
         <h2>服务条款</h2><span class="header-spacer" aria-hidden="true"></span>
       </header>
       <article class="legal-document">
@@ -874,7 +836,7 @@
     <!-- ============ 隐私政策 Panel ============ -->
     <section data-page="app-privacy" class="page settings-page settings-detail-page legal-page">
       <header class="page-header subpage-header">
-        <button class="icon-btn" type="button" data-nav="about-app" aria-label="返回关于应用"><i data-lucide="chevron-left"></i></button>
+        <button class="icon-btn" type="button" data-nav="about-app" aria-label="返回关于应用">←</button>
         <h2>隐私政策</h2><span class="header-spacer" aria-hidden="true"></span>
       </header>
       <article class="legal-document">
@@ -891,46 +853,38 @@
     <!-- ============ 联系我们 Panel ============ -->
     <section data-page="app-contact" class="page settings-page settings-detail-page contact-page">
       <header class="page-header subpage-header">
-        <button class="icon-btn" type="button" data-nav="about-app" aria-label="返回关于应用"><i data-lucide="chevron-left"></i></button>
+        <button class="icon-btn" type="button" data-nav="about-app" aria-label="返回关于应用">←</button>
         <h2>联系我们</h2><span class="header-spacer" aria-hidden="true"></span>
       </header>
       <article class="contact-brand-card">
-        <!-- Lucide Messages Square icon, ISC License: https://lucide.dev/license -->
-        <span class="contact-brand-card__logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/><path d="M8 9h8M8 13h5"/></svg></span>
         <strong>Axiloop 客户支持</strong>
         <p>工作日 09:00–18:00，我们会尽快回复你的问题。</p>
       </article>
       <div class="settings-group contact-list" aria-label="联系信息">
-        <a class="contact-row" href="tel:+864008208888"><span class="contact-row__icon"><i data-lucide="phone"></i></span><span><small>电话</small><strong>400-820-8888</strong></span><i data-lucide="external-link"></i></a>
-        <a class="contact-row" href="mailto:support@axiloop.com"><span class="contact-row__icon"><i data-lucide="mail"></i></span><span><small>邮箱</small><strong>support@axiloop.com</strong></span><i data-lucide="external-link"></i></a>
-        <div class="contact-row"><span class="contact-row__icon"><i data-lucide="map-pin"></i></span><span><small>地址</small><strong>中国上海市浦东新区张江路 88 号</strong></span></div>
+        <a class="contact-row" href="tel:+864008208888"><span><small>电话</small><strong>400-820-8888</strong></span></a>
+        <a class="contact-row" href="mailto:support@axiloop.com"><span><small>邮箱</small><strong>support@axiloop.com</strong></span></a>
+        <div class="contact-row"><span><small>地址</small><strong>中国上海市浦东新区张江路 88 号</strong></span></div>
       </div>
-      <p class="settings-detail-note"><i data-lucide="info"></i>以上信息为产品原型模拟数据。</p>
+      <p class="settings-detail-note">以上信息为产品原型模拟数据。</p>
     </section>
 
     <!-- ============ 设备版本兼容 Panel ============ -->
     <section data-page="device-compatibility" class="page settings-page settings-detail-page compatibility-page">
       <header class="page-header subpage-header">
-        <button class="icon-btn" type="button" data-nav="about-app" aria-label="返回关于应用"><i data-lucide="chevron-left"></i></button>
+        <button class="icon-btn" type="button" data-nav="about-app" aria-label="返回关于应用">←</button>
         <h2>设备版本兼容</h2><span class="header-spacer" aria-hidden="true"></span>
       </header>
       <p class="settings-detail-hint">设备最低版本要求</p>
       <article class="compatibility-device-card">
-        <figure class="compatibility-device-card__image">
-          <!-- Lucide Printer icon, ISC License: https://lucide.dev/license -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Axiloop MC 8 产品占位图"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14" rx="1"/><path d="M18 12h.01"/></svg>
-        </figure>
         <div class="compatibility-device-card__copy"><span>兼容设备</span><strong>Axiloop MC 8</strong><small>最低版本要求</small><b>1.0.0</b></div>
       </article>
       <article class="firmware-guide">
-        <span class="firmware-guide__icon"><i data-lucide="circle-help"></i></span>
         <div><h3>如何升级固件？</h3><ol><li>从设备屏幕进入“设备设置—关于本机”页面，点击“设备固件”。</li><li>按照屏幕上的提示完成固件升级。</li></ol></div>
       </article>
     </section>
 
     <dialog class="logout-confirm-dialog" data-logout-confirm aria-labelledby="logout-confirm-title">
       <div class="logout-confirm-dialog__panel">
-        <span class="logout-confirm-dialog__icon"><i data-lucide="log-out"></i></span>
         <h2 id="logout-confirm-title">是否退出登录？</h2>
         <p>退出后将无法继续查看账号相关信息，设备连接状态不会受到影响。</p>
         <div class="logout-confirm-dialog__actions">
@@ -941,30 +895,25 @@
     </dialog>
 
     <div class="settings-toast" role="status" aria-live="polite" aria-hidden="true" data-cache-toast>
-      <span><i data-lucide="check"></i></span>缓存已清理
+      缓存已清理
     </div>
 
     <!-- ============ 用户与安全 Panel ============ -->
     <section data-page="account-security" class="page account-page">
       <header class="page-header subpage-header">
-        <button class="icon-btn" type="button" data-nav="profile" aria-label="返回我的"><i data-lucide="chevron-left"></i></button>
+        <button class="icon-btn" type="button" data-nav="profile" aria-label="返回我的">←</button>
         <h2>用户与安全</h2>
         <span class="header-spacer" aria-hidden="true"></span>
       </header>
       <div class="account-menu-group">
         <div class="account-info-row">
-          <span class="account-row-icon"><i data-lucide="smartphone"></i></span>
           <div><span>账号</span><strong>138****5678</strong></div>
         </div>
         <button class="account-action-row" type="button" data-nav="change-password">
-          <span class="account-row-icon"><i data-lucide="key-round"></i></span>
           <span>修改密码</span>
-          <i data-lucide="chevron-right" class="chevron"></i>
         </button>
         <button class="account-action-row account-action-row--danger" type="button" data-nav="delete-account">
-          <span class="account-row-icon"><i data-lucide="user-round-x"></i></span>
           <span>注销账户</span>
-          <i data-lucide="chevron-right" class="chevron"></i>
         </button>
       </div>
     </section>
@@ -972,25 +921,25 @@
     <!-- ============ 修改密码 Panel ============ -->
     <section data-page="change-password" class="page account-page">
       <header class="page-header subpage-header">
-        <button class="icon-btn" type="button" data-nav="account-security" aria-label="返回用户与安全"><i data-lucide="chevron-left"></i></button>
+        <button class="icon-btn" type="button" data-nav="account-security" aria-label="返回用户与安全">←</button>
         <h2>修改密码</h2>
         <span class="header-spacer" aria-hidden="true"></span>
       </header>
       <form class="account-form" data-password-form>
         <label class="account-field" for="password-phone">
           <span>手机号</span>
-          <div class="account-input-wrap"><i data-lucide="smartphone"></i><input id="password-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="请输入手机号"></div>
+          <div class="account-input-wrap"><input id="password-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="请输入手机号"></div>
         </label>
         <label class="account-field" for="password-code">
           <span>验证码</span>
           <div class="verification-row">
-            <div class="account-input-wrap"><i data-lucide="shield-check"></i><input id="password-code" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="请输入验证码"></div>
+            <div class="account-input-wrap"><input id="password-code" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="请输入验证码"></div>
             <button class="verification-button" type="button">获取验证码</button>
           </div>
         </label>
         <label class="account-field" for="password-new">
           <span>新密码</span>
-          <div class="account-input-wrap"><i data-lucide="lock-keyhole"></i><input id="password-new" type="password" autocomplete="new-password" placeholder="请输入新密码"></div>
+          <div class="account-input-wrap"><input id="password-new" type="password" autocomplete="new-password" placeholder="请输入新密码"></div>
           <small>建议使用 8–20 位字母、数字或符号组合</small>
         </label>
         <button class="btn btn-primary account-submit" type="button">完成</button>
@@ -1000,12 +949,11 @@
     <!-- ============ 注销账户 Panel ============ -->
     <section data-page="delete-account" class="page account-page">
       <header class="page-header subpage-header">
-        <button class="icon-btn" type="button" data-nav="account-security" aria-label="返回用户与安全"><i data-lucide="chevron-left"></i></button>
+        <button class="icon-btn" type="button" data-nav="account-security" aria-label="返回用户与安全">←</button>
         <h2>注销账户</h2>
         <span class="header-spacer" aria-hidden="true"></span>
       </header>
       <article class="delete-notice">
-        <div class="delete-notice__icon"><i data-lucide="triangle-alert"></i></div>
         <h3>注销前请确认以下事项</h3>
         <p>账户注销后将无法恢复。你的个人资料、打印记录、收藏模型及相关服务数据将被永久删除，同时所有已登录设备会自动退出。</p>
         <ul>
@@ -1016,7 +964,7 @@
       </article>
       <label class="delete-agreement">
         <input type="checkbox" data-delete-agreement>
-        <span class="delete-checkbox"><i data-lucide="check"></i></span>
+        <span class="delete-checkbox" aria-hidden="true"></span>
         <span>我已阅读并同意<strong>《账户删除条款》</strong></span>
       </label>
       <button class="btn delete-account-button" type="button" data-delete-submit disabled>注销账户</button>
@@ -1110,22 +1058,19 @@
     </dialog>
     <dialog class="software-update-dialog" data-update-dialog aria-labelledby="update-dialog-title">
       <div class="software-update-dialog__panel">
-        <button class="icon-btn software-update-dialog__close" type="button" data-update-close aria-label="关闭更新窗口"><i data-lucide="x"></i></button>
+        <button class="icon-btn software-update-dialog__close" type="button" data-update-close aria-label="关闭更新窗口">×</button>
         <section class="software-update-view" data-update-view="checking">
-          <span class="software-update-state-icon software-update-state-icon--checking"><i data-lucide="loader-circle"></i></span>
           <h2 id="update-dialog-title">正在检查更新</h2>
           <p>正在连接更新服务，请稍候…</p>
         </section>
         <section class="software-update-view" data-update-view="available" hidden>
-          <span class="software-update-state-icon"><i data-lucide="package-check"></i></span>
           <span class="software-update-eyebrow">发现新版本</span>
           <h2>v1.5.0</h2>
           <p class="software-update-meta">安装包 128 MB · 建议使用稳定网络</p>
           <div class="software-update-notes"><strong>本次更新</strong><ul><li>优化设备连接稳定性</li><li>新增打印任务预览体验</li><li>修复若干已知问题</li></ul></div>
-          <div class="software-update-dialog__actions"><button class="btn btn-secondary" type="button" data-update-later>稍后更新</button><button class="btn btn-primary" type="button" data-update-start><i data-lucide="cloud-download"></i>在线升级</button></div>
+          <div class="software-update-dialog__actions"><button class="btn btn-secondary" type="button" data-update-later>稍后更新</button><button class="btn btn-primary" type="button" data-update-start>在线升级</button></div>
         </section>
         <section class="software-update-view" data-update-view="upgrading" hidden>
-          <span class="software-update-state-icon"><i data-lucide="download"></i></span>
           <h2>正在升级</h2>
           <p data-update-stage>正在下载更新包，请保持设备在线</p>
           <div class="software-upgrade-progress" role="progressbar" aria-label="软件升级进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-update-progress><span data-update-progress-fill></span></div>
@@ -1133,7 +1078,6 @@
           <button class="btn btn-secondary software-update-cancel" type="button" data-update-cancel>取消升级</button>
         </section>
         <section class="software-update-view" data-update-view="complete" hidden>
-          <span class="software-update-state-icon software-update-state-icon--success"><i data-lucide="check"></i></span>
           <h2>升级完成</h2>
           <p>软件已成功升级至 v1.5.0</p>
           <button class="btn btn-primary software-update-done" type="button" data-update-done>完成</button>
@@ -1142,7 +1086,6 @@
     </dialog>
     <dialog class="software-update-dialog software-update-confirm" data-update-confirm aria-labelledby="update-confirm-title">
       <div class="software-update-dialog__panel">
-        <span class="software-update-state-icon software-update-state-icon--warning"><i data-lucide="triangle-alert"></i></span>
         <h2 id="update-confirm-title">确认取消升级？</h2>
         <p>取消后，本次下载进度将不会保留。</p>
         <div class="software-update-dialog__actions"><button class="btn btn-secondary" type="button" data-update-continue>继续升级</button><button class="btn software-update-danger" type="button" data-update-confirm-cancel>确认取消</button></div>

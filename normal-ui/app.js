@@ -1046,8 +1046,7 @@
     dialog.querySelector('[data-update-done]').addEventListener('click', function () {
       currentVersion.textContent = 'v1.5.0';
       versionStatus.textContent = '当前已是最新版本';
-      checkButton.innerHTML = '<i data-lucide="refresh-cw"></i>再次检查';
-      if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+      checkButton.textContent = '再次检查';
       dialog.close();
     });
     dialog.querySelector('[data-update-close]').addEventListener('click', function () {
