@@ -98,6 +98,30 @@
       scanButton.blur();
     });
   }
+  function initDevicePicker() {
+    var trigger = document.querySelector('[data-device-picker-trigger]');
+    var menu = document.querySelector('[data-device-picker-menu]');
+    if (!trigger || !menu) return;
+    trigger.addEventListener('click', function () {
+      var isOpen = !menu.hidden;
+      menu.hidden = isOpen;
+      trigger.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+    });
+  }
+
+  function initDeviceBinding() {
+    var page = document.querySelector('[data-page="bind-device"]');
+    if (!page) return;
+    var tabs = page.querySelectorAll('[data-bind-method]');
+    var panels = page.querySelectorAll('[data-bind-panel]');
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var method = tab.dataset.bindMethod;
+        tabs.forEach(function (item) { var selected = item === tab; item.classList.toggle('is-active', selected); item.setAttribute('aria-selected', selected ? 'true' : 'false'); });
+        panels.forEach(function (panel) { var active = panel.dataset.bindPanel === method; panel.hidden = !active; panel.classList.toggle('is-active', active); });
+      });
+    });
+  }
 
   /* ----- Theme ----- */
 
@@ -123,7 +147,7 @@
 
     function updateTheme(theme) {
       if (metaTheme) {
-        metaTheme.setAttribute('content', theme === 'dark' ? '#1A1A1E' : '#F5F0EB');
+        metaTheme.setAttribute('content', theme === 'dark' ? '#1A1A1E' : '#FFFFFF');
       }
       document.querySelectorAll('[data-theme-option]').forEach(function (option) {
         var selected = option.getAttribute('data-theme-option') === theme;
@@ -1062,6 +1086,57 @@
     confirmDialog.addEventListener('cancel', function (event) { event.preventDefault(); confirmDialog.close(); closeAfterCancel = false; runUpgrade(); });
   }
 
+  /* ----- Model cards ----- */
+  function initModelCards() {
+    var detailPage = document.querySelector('[data-page="model-detail"]');
+    var backButton = document.querySelector('[data-model-detail-back]');
+    var previousPage = 'models';
+    if (!detailPage || !backButton || detailPage.dataset.initialized) return;
+    detailPage.dataset.initialized = 'true';
+
+    var fields = {
+      title: detailPage.querySelector('[data-model-detail-title]'),
+      author: detailPage.querySelector('[data-model-detail-author]'),
+      description: detailPage.querySelector('[data-model-detail-description]'),
+      format: detailPage.querySelector('[data-model-detail-format]'),
+      size: detailPage.querySelector('[data-model-detail-size]'),
+      estimate: detailPage.querySelector('[data-model-detail-estimate]'),
+      status: detailPage.querySelector('[data-model-detail-status]')
+    };
+
+    function showPage(target) {
+      document.querySelectorAll('[data-page]').forEach(function (page) { page.classList.toggle('active', page.dataset.page === target); });
+      document.querySelectorAll('.bottom-nav [data-nav]').forEach(function (button) { button.classList.toggle('active', button.dataset.nav === target); });
+      window.scrollTo(0, 0);
+    }
+
+    document.querySelectorAll('[data-favorite]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var selected = button.getAttribute('aria-pressed') !== 'true';
+        button.setAttribute('aria-pressed', String(selected));
+        var name = button.closest('[data-model-card]').dataset.modelTitle;
+        button.setAttribute('aria-label', (selected ? '取消收藏' : '收藏') + name);
+      });
+    });
+
+    document.querySelectorAll('[data-model-open]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var card = button.closest('[data-model-card]');
+        previousPage = card.closest('[data-page]').dataset.page;
+        fields.title.textContent = card.dataset.modelTitle;
+        fields.author.textContent = '作者 · ' + card.dataset.modelAuthor;
+        fields.description.textContent = card.dataset.modelDescription;
+        fields.format.textContent = card.dataset.modelFormat;
+        fields.size.textContent = card.dataset.modelSize;
+        fields.estimate.textContent = card.dataset.modelEstimate;
+        fields.status.textContent = card.dataset.modelStatus;
+        showPage('model-detail');
+      });
+    });
+
+    backButton.addEventListener('click', function () { showPage(previousPage); });
+  }
+
   /* ----- Logout confirmation demo ----- */
   function initLogoutConfirmation() {
     var trigger = document.querySelector('[data-settings-logout]');
@@ -1079,6 +1154,34 @@
     dialog.querySelector('[data-logout-submit]').addEventListener('click', closeDialog);
     dialog.addEventListener('cancel', function (event) { event.preventDefault(); closeDialog(); });
     dialog.addEventListener('click', function (event) { if (event.target === dialog) closeDialog(); });
+  }
+
+  /* ----- Help and feedback ----- */
+  function initHelpFeedback() {
+    var page = document.querySelector('[data-page="help-feedback"]');
+    if (!page || page.dataset.initialized) return;
+    page.dataset.initialized = 'true';
+
+    var search = page.querySelector('[data-help-search]');
+    var items = Array.from(page.querySelectorAll('[data-help-faq]'));
+    var list = page.querySelector('[data-help-faq-list]');
+    var empty = page.querySelector('[data-help-empty]');
+
+    search.addEventListener('input', function () {
+      var query = search.value.trim().toLocaleLowerCase('zh-CN');
+      var visibleCount = 0;
+
+      items.forEach(function (item) {
+        var searchableText = (item.textContent + ' ' + item.dataset.helpKeywords).toLocaleLowerCase('zh-CN');
+        var matches = !query || searchableText.includes(query);
+        item.hidden = !matches;
+        if (!matches) item.open = false;
+        if (matches) visibleCount += 1;
+      });
+
+      list.hidden = visibleCount === 0;
+      empty.hidden = visibleCount !== 0;
+    });
   }
 
   
@@ -1101,6 +1204,8 @@
     initNotifications();
     initFileBrowser();
     initDevicePairing();
+    initDeviceBinding();
+    initDevicePicker();
     initDeviceControlTabs();
     initDeviceControlDialogs();
     initToolheadSelector();
@@ -1111,6 +1216,8 @@
     initDeviceSettings();
     initSoftwareUpdate();
     initLogoutConfirmation();
+    initHelpFeedback();
+    initModelCards();
     initModelScene();
     initDeviceFloatActions();
   }

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" id="theme-color" content="#F5F0EB">
+  <meta name="theme-color" id="theme-color" content="#FFFFFF">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <title>XKPrint</title>
-  <link rel="stylesheet" href="styles.css?v=20260728-profile-no-svg-contact">
+  <link rel="stylesheet" href="styles.css?v=20260729-design-theme">
   <script type="importmap">
   {
     "imports": {
@@ -20,7 +20,7 @@
   <div class="app-shell">
 
     <!-- ============ 设备 Panel ============ -->
-    <section data-page="device" class="page no-device">
+    <section data-page="device" class="page">
       <div class="device-empty-state">
         <div class="device-empty-icon">
           <i data-lucide="scan-line"></i>
@@ -33,21 +33,28 @@
         </button>
       </div>
 
-      <header class="page-header" data-device-content>
+      <header class="page-header device-page-header" data-device-content>
         <div class="header-left">
           <h1 class="greeting">下午好，Alex</h1>
-          <span class="status-pill online">
-            <i data-lucide="check-circle" class="icon-sm"></i>
-            XK1 Carbon · 在线
-          </span>
+          <div class="device-picker-wrap">
+            <button class="device-picker-trigger" type="button" data-device-picker-trigger aria-expanded="false" aria-controls="device-picker-menu">
+              <span class="status-pill online"><i data-lucide="check-circle" class="icon-sm"></i>XK1 Carbon · 在线</span>
+              <i data-lucide="chevron-down" class="device-picker-chevron" aria-hidden="true"></i>
+            </button>
+            <div class="device-picker-menu" id="device-picker-menu" data-device-picker-menu hidden>
+              <label class="device-picker-search"><i data-lucide="search" aria-hidden="true"></i><input type="search" placeholder="搜索设备" aria-label="搜索设备" data-device-picker-search></label>
+              <button class="device-picker-add" type="button" data-nav="bind-device"><span class="device-picker-add__icon"><i data-lucide="plus" aria-hidden="true"></i></span><span><strong>添加设备</strong><small>绑定新的 3D 打印机</small></span></button>
+              <div class="device-picker-list" data-device-picker-list>
+                <button class="device-picker-item is-selected" type="button" data-device-option="XK1 Carbon"><span class="device-picker-item__icon"><i data-lucide="printer" aria-hidden="true"></i></span><span><strong>XK1 Carbon</strong><small>客厅 · 192.168.1.108</small></span><i data-lucide="check" class="device-picker-item__check" aria-hidden="true"></i></button>
+                <button class="device-picker-item" type="button" data-device-option="XK1 Mini"><span class="device-picker-item__icon"><i data-lucide="printer" aria-hidden="true"></i></span><span><strong>XK1 Mini</strong><small>工作室 · 192.168.1.114</small></span><i data-lucide="chevron-right" class="device-picker-item__check" aria-hidden="true"></i></button>
+              </div>
+              <p class="device-picker-empty" data-device-picker-empty hidden>没有找到匹配的设备</p>
+            </div>
+          </div>
         </div>
         <div class="header-actions">
-          <button class="icon-btn notification-trigger notification-trigger--unread" type="button" data-nav="notifications" aria-label="通知，3 条未读">
-            <i data-lucide="bell"></i>
-          </button>
-          <button class="icon-btn" type="button" data-nav="settings" aria-label="打开设置">
-            <i data-lucide="settings"></i>
-          </button>
+          <button class="icon-btn notification-trigger notification-trigger--unread" type="button" data-nav="notifications" aria-label="通知，3 条未读"><i data-lucide="bell"></i></button>
+          <button class="icon-btn" type="button" data-nav="settings" aria-label="打开设置"><i data-lucide="menu"></i></button>
         </div>
       </header>
 
@@ -65,7 +72,6 @@
           </div>
           <div class="hero-overlay">
             <div class="device-status-heading">
-              <span>设备状态</span>
               <span class="status-tag printing">正在打印</span>
             </div>
             <div class="preview-float-actions" aria-label="设备快捷操作">
@@ -183,6 +189,34 @@
       </section>
 
 
+    </section>
+    <!-- ============ 绑定设备 Panel ============ -->
+    <section data-page="bind-device" class="page bind-device-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-nav="device" aria-label="返回设备页"><i data-lucide="chevron-left"></i></button>
+        <h2>绑定设备</h2>
+        <span class="header-spacer" aria-hidden="true"></span>
+      </header>
+      <p class="bind-device-intro">选择一种方式，将 3D 打印机添加到你的设备列表</p>
+      <div class="bind-method-tabs" role="tablist" aria-label="绑定方式">
+        <button class="bind-method-tab is-active" type="button" data-bind-method="scan" role="tab" aria-selected="true" aria-controls="bind-scan-panel"><i data-lucide="scan-line"></i><span>扫一扫</span></button>
+        <button class="bind-method-tab" type="button" data-bind-method="nearby" role="tab" aria-selected="false" aria-controls="bind-nearby-panel"><i data-lucide="radar"></i><span>附近设备</span></button>
+      </div>
+      <section class="bind-panel is-active" id="bind-scan-panel" data-bind-panel="scan" role="tabpanel">
+        <div class="bind-scan-visual"><span class="bind-scan-visual__corner bind-scan-visual__corner--tl"></span><span class="bind-scan-visual__corner bind-scan-visual__corner--tr"></span><span class="bind-scan-visual__corner bind-scan-visual__corner--bl"></span><span class="bind-scan-visual__corner bind-scan-visual__corner--br"></span><i data-lucide="qr-code"></i><span class="bind-scan-line" aria-hidden="true"></span></div>
+        <h3>扫描打印机二维码</h3>
+        <p>打开打印机屏幕上的二维码，用手机对准扫描框即可绑定</p>
+        <button class="btn btn-primary bind-scan-button" type="button" data-bind-scan><i data-lucide="scan"></i><span>开始扫描</span></button>
+        <p class="bind-feedback" data-bind-feedback aria-live="polite"></p>
+      </section>
+      <section class="bind-panel" id="bind-nearby-panel" data-bind-panel="nearby" role="tabpanel" hidden>
+        <div class="nearby-heading"><span class="nearby-heading__icon"><i data-lucide="wifi"></i></span><div><h3>搜索附近设备</h3><p>确保打印机已开机并连接到 Wi-Fi</p></div><button class="icon-btn nearby-refresh" type="button" data-nearby-search aria-label="搜索附近设备"><i data-lucide="refresh-cw"></i></button></div>
+        <label class="bind-pin-field"><span>设备 PIN 码</span><input type="text" inputmode="numeric" maxlength="8" placeholder="请输入 6 位 PIN 码" data-bind-pin aria-label="设备 PIN 码"></label>
+        <p class="bind-pin-hint"><i data-lucide="shield-check"></i>PIN 码可在打印机屏幕的“设备绑定”中找到</p>
+        <div class="nearby-results" data-nearby-results aria-label="附近设备搜索结果"><div class="nearby-device-list" data-nearby-list><button class="nearby-device-item is-selected" type="button" data-nearby-device="XK1 Mini"><span class="device-picker-item__icon"><i data-lucide="printer"></i></span><span><strong>XK1 Mini</strong><small>在线 · 信号良好 · 192.168.1.114</small></span><i data-lucide="check"></i></button><button class="nearby-device-item" type="button" data-nearby-device="XK1 Carbon Pro"><span class="device-picker-item__icon"><i data-lucide="printer"></i></span><span><strong>XK1 Carbon Pro</strong><small>在线 · 信号一般 · 192.168.1.121</small></span><i data-lucide="chevron-right"></i></button></div></div>
+        <ul class="bind-notes"><li>仅能发现同一局域网内的打印机</li><li>设备支持使用 2.4GHz Wi-Fi 连接</li><li>以上都不是？尝试手动输入 IP 码连接</li></ul>
+        <button class="btn btn-primary bind-connect-button" type="button">连接设备</button>
+      </section>
     </section>
     <!-- ============ 通知 Panel ============ -->
     <section data-page="notifications" class="page notifications-page">
@@ -345,88 +379,31 @@
         </div>
       </header>
 
-      <!-- Add model card -->
-      <div class="add-model-card">
-        <i data-lucide="plus" class="add-icon"></i>
-        <span class="add-label">添加模型</span>
-        <span class="add-hint">支持 STL、OBJ、3MF</span>
-      </div>
 
       <!-- Filter chips -->
       <div class="filter-row">
         <button class="chip active">全部</button>
-        <button class="chip">已切片</button>
         <button class="chip">收藏</button>
       </div>
 
       <!-- Model grid -->
-      <div class="model-grid">
-        <div class="model-card">
-          <div class="model-thumb spiral-vase"></div>
-          <div class="model-meta">
-            <span class="model-name">螺旋花器</span>
-            <div class="model-tags">
-              <span class="tag">3MF</span>
-              <span class="tag">98 × 98 × 180 mm</span>
-            </div>
-            <div class="model-est">
-              <span>~5h 28m</span>
-              <span>~128 g</span>
-            </div>
-            <span class="model-status printing">正在打印</span>
-            <span class="share-badge">来自 Kai 的分享</span>
-          </div>
-        </div>
-
-        <div class="model-card">
-          <div class="model-thumb tray"></div>
-          <div class="model-meta">
-            <span class="model-name">桌面收纳托盘</span>
-            <div class="model-tags">
-              <span class="tag">STL</span>
-              <span class="tag">220 × 150 × 40 mm</span>
-            </div>
-            <div class="model-est">
-              <span>~3h 12m</span>
-              <span>~72 g</span>
-            </div>
-            <span class="model-status ready">可打印</span>
-            <span class="share-badge">来自 Kai 的分享</span>
-          </div>
-        </div>
-
-        <div class="model-card">
-          <div class="model-thumb dragon"></div>
-          <div class="model-meta">
-            <span class="model-name">机械龙</span>
-            <div class="model-tags">
-              <span class="tag">STL</span>
-              <span class="tag">140 × 80 × 220 mm</span>
-            </div>
-            <div class="model-est">
-              <span>~12h 45m</span>
-              <span>~310 g</span>
-            </div>
-            <span class="model-status slicing">待切片</span>
-          </div>
-        </div>
-
-        <div class="model-card">
-          <div class="model-thumb lamp-shade"></div>
-          <div class="model-meta">
-            <span class="model-name">参数化灯罩</span>
-            <div class="model-tags">
-              <span class="tag">3MF</span>
-              <span class="tag">ø120 × 160 mm</span>
-            </div>
-            <div class="model-est">
-              <span>~8h 05m</span>
-              <span>~195 g</span>
-            </div>
-            <span class="model-status ready">可打印</span>
-            <span class="share-badge">来自 Kai 的分享</span>
-          </div>
-        </div>
+      <div class="model-grid" aria-label="我的模型">
+        <article class="model-card" data-model-card data-model-title="螺旋花器.3mf" data-model-author="Kai" data-model-format="3MF" data-model-size="98 × 98 × 180 mm" data-model-estimate="约 5 小时 28 分钟 · 128 g" data-model-status="正在打印" data-model-description="带有连续螺旋纹理的花器模型，适合以丝绸或哑光 PLA 打印。">
+          <button class="model-card__open" type="button" data-model-open aria-label="查看螺旋花器.3mf详情"><img class="model-card__image" src="model-placeholder.svg" alt="" aria-hidden="true"><span class="model-card__summary"><strong>螺旋花器.3mf</strong><span>作者 · Kai</span></span></button>
+          <button class="favorite-button" type="button" data-favorite aria-pressed="false" aria-label="收藏螺旋花器.3mf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"></path></svg></button>
+        </article>
+        <article class="model-card" data-model-card data-model-title="桌面收纳托盘.stl" data-model-author="Kai" data-model-format="STL" data-model-size="220 × 150 × 40 mm" data-model-estimate="约 3 小时 12 分钟 · 72 g" data-model-status="可打印" data-model-description="分隔式桌面收纳托盘，适合收纳办公小物与常用工具。">
+          <button class="model-card__open" type="button" data-model-open aria-label="查看桌面收纳托盘.stl详情"><img class="model-card__image" src="model-placeholder.svg" alt="" aria-hidden="true"><span class="model-card__summary"><strong>桌面收纳托盘.stl</strong><span>作者 · Kai</span></span></button>
+          <button class="favorite-button" type="button" data-favorite aria-pressed="false" aria-label="收藏桌面收纳托盘.stl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"></path></svg></button>
+        </article>
+        <article class="model-card" data-model-card data-model-title="机械龙.stl" data-model-author="Alex Chen" data-model-format="STL" data-model-size="140 × 80 × 220 mm" data-model-estimate="约 12 小时 45 分钟 · 310 g" data-model-status="待切片" data-model-description="关节可动的机械龙摆件，推荐使用高强度 PLA 或 PETG 打印。">
+          <button class="model-card__open" type="button" data-model-open aria-label="查看机械龙.stl详情"><img class="model-card__image" src="model-placeholder.svg" alt="" aria-hidden="true"><span class="model-card__summary"><strong>机械龙.stl</strong><span>作者 · Alex Chen</span></span></button>
+          <button class="favorite-button" type="button" data-favorite aria-pressed="false" aria-label="收藏机械龙.stl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"></path></svg></button>
+        </article>
+        <article class="model-card" data-model-card data-model-title="参数化灯罩.3mf" data-model-author="Kai" data-model-format="3MF" data-model-size="ø120 × 160 mm" data-model-estimate="约 8 小时 05 分钟 · 195 g" data-model-status="可打印" data-model-description="可通过参数调整开孔比例与高度的氛围灯罩模型。">
+          <button class="model-card__open" type="button" data-model-open aria-label="查看参数化灯罩.3mf详情"><img class="model-card__image" src="model-placeholder.svg" alt="" aria-hidden="true"><span class="model-card__summary"><strong>参数化灯罩.3mf</strong><span>作者 · Kai</span></span></button>
+          <button class="favorite-button" type="button" data-favorite aria-pressed="false" aria-label="收藏参数化灯罩.3mf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"></path></svg></button>
+        </article>
       </div>
     </section>
 
@@ -453,75 +430,24 @@
         <button class="chip">工具</button>
       </div>
 
-      <div class="featured-card">
-        <div class="featured-thumb"></div>
-        <div class="featured-info">
-          <span class="featured-label">本周编辑精选</span>
-          <span class="featured-title">折纸氛围灯</span>
-          <span class="featured-desc">几何切面设计，光影层次丰富</span>
-          <div class="featured-meta">
-            <span class="price">¥12</span>
-            <span class="downloads">2.4k 下载</span>
-          </div>
-          <div class="creator verified">
-            <i data-lucide="badge-check"></i>
-            XK Official
-          </div>
-        </div>
-      </div>
 
-      <div class="market-grid">
-        <div class="market-item">
-          <div class="item-thumb origami-lamp"></div>
-          <div class="item-info">
-            <span class="item-name">折纸氛围灯</span>
-            <span class="item-price">¥12</span>
-            <span class="item-downloads">2.4k 下载</span>
-            <div class="creator verified">
-              <i data-lucide="badge-check"></i>
-              XK Official
-            </div>
-          </div>
-        </div>
-
-        <div class="market-item">
-          <div class="item-thumb modular-holder"></div>
-          <div class="item-info">
-            <span class="item-name">模块化笔筒</span>
-            <span class="item-price free">免费</span>
-            <span class="item-downloads">8.7k 下载</span>
-            <div class="creator verified">
-              <i data-lucide="badge-check"></i>
-              XK Official
-            </div>
-          </div>
-        </div>
-
-        <div class="market-item">
-          <div class="item-thumb mini-moon"></div>
-          <div class="item-info">
-            <span class="item-name">迷你月球灯</span>
-            <span class="item-price">¥18</span>
-            <span class="item-downloads">5.1k 下载</span>
-            <div class="creator verified">
-              <i data-lucide="badge-check"></i>
-              XK Official
-            </div>
-          </div>
-        </div>
-
-        <div class="market-item">
-          <div class="item-thumb gear-box"></div>
-          <div class="item-info">
-            <span class="item-name">齿轮收纳盒</span>
-            <span class="item-price">¥9</span>
-            <span class="item-downloads">3.2k 下载</span>
-            <div class="creator verified">
-              <i data-lucide="badge-check"></i>
-              XK Official
-            </div>
-          </div>
-        </div>
+      <div class="market-grid" aria-label="商城模型">
+        <article class="market-item" data-model-card data-model-title="折纸氛围灯" data-model-author="XK Official" data-model-format="3MF" data-model-size="150 × 150 × 210 mm" data-model-estimate="约 6 小时 40 分钟 · 180 g" data-model-status="¥12 · 2.4k 下载" data-model-description="以几何切面营造层次光影的折纸风氛围灯模型。">
+          <button class="model-card__open" type="button" data-model-open aria-label="查看折纸氛围灯详情"><img class="market-card__image" src="model-placeholder.svg" alt="" aria-hidden="true"><span class="model-card__summary"><strong>折纸氛围灯</strong><span>作者 · XK Official</span></span></button>
+          <button class="favorite-button" type="button" data-favorite aria-pressed="false" aria-label="收藏折纸氛围灯"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"></path></svg></button>
+        </article>
+        <article class="market-item" data-model-card data-model-title="模块化笔筒" data-model-author="XK Official" data-model-format="STL" data-model-size="90 × 90 × 120 mm" data-model-estimate="约 2 小时 10 分钟 · 64 g" data-model-status="免费 · 8.7k 下载" data-model-description="可自由组合的模块化笔筒，适合桌面分类收纳。">
+          <button class="model-card__open" type="button" data-model-open aria-label="查看模块化笔筒详情"><img class="market-card__image" src="model-placeholder.svg" alt="" aria-hidden="true"><span class="model-card__summary"><strong>模块化笔筒</strong><span>作者 · XK Official</span></span></button>
+          <button class="favorite-button" type="button" data-favorite aria-pressed="false" aria-label="收藏模块化笔筒"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"></path></svg></button>
+        </article>
+        <article class="market-item" data-model-card data-model-title="迷你月球灯" data-model-author="XK Official" data-model-format="3MF" data-model-size="120 × 120 × 120 mm" data-model-estimate="约 4 小时 20 分钟 · 96 g" data-model-status="¥18 · 5.1k 下载" data-model-description="月面细节纹理的迷你氛围灯，内置 LED 灯座安装位。">
+          <button class="model-card__open" type="button" data-model-open aria-label="查看迷你月球灯详情"><img class="market-card__image" src="model-placeholder.svg" alt="" aria-hidden="true"><span class="model-card__summary"><strong>迷你月球灯</strong><span>作者 · XK Official</span></span></button>
+          <button class="favorite-button" type="button" data-favorite aria-pressed="false" aria-label="收藏迷你月球灯"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"></path></svg></button>
+        </article>
+        <article class="market-item" data-model-card data-model-title="齿轮收纳盒" data-model-author="XK Official" data-model-format="STL" data-model-size="140 × 140 × 68 mm" data-model-estimate="约 3 小时 55 分钟 · 118 g" data-model-status="¥9 · 3.2k 下载" data-model-description="带有转动齿轮开合结构的桌面收纳盒。">
+          <button class="model-card__open" type="button" data-model-open aria-label="查看齿轮收纳盒详情"><img class="market-card__image" src="model-placeholder.svg" alt="" aria-hidden="true"><span class="model-card__summary"><strong>齿轮收纳盒</strong><span>作者 · XK Official</span></span></button>
+          <button class="favorite-button" type="button" data-favorite aria-pressed="false" aria-label="收藏齿轮收纳盒"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"></path></svg></button>
+        </article>
       </div>
     </section>
 
@@ -529,9 +455,6 @@
     <section data-page="profile" class="page">
       <header class="page-header">
         <h2>我的</h2>
-        <div class="header-actions">
-          <button class="icon-btn" type="button" data-nav="settings" aria-label="打开设置">设置</button>
-        </div>
       </header>
 
       <!-- Profile card -->
@@ -587,13 +510,70 @@
         <button class="menu-row" type="button" data-nav="account-security">
           <span>用户与安全</span>
         </button>
-        <button class="menu-row">
+        <button class="menu-row" type="button" data-nav="help-feedback">
           <span>帮助与反馈</span>
         </button>
         <button class="menu-row" type="button" data-nav="settings">
           <span>设置</span>
         </button>
       </div>
+    </section>
+
+    <!-- ============ 帮助与反馈 Panel ============ -->
+    <section data-page="help-feedback" class="page settings-page settings-detail-page help-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-nav="profile" aria-label="返回我的"><i data-lucide="chevron-left"></i></button>
+        <h2>帮助与反馈</h2>
+        <span class="header-spacer" aria-hidden="true"></span>
+      </header>
+
+      <section class="help-hero" aria-labelledby="help-hero-title">
+        <span class="help-hero__icon" aria-hidden="true"><i data-lucide="life-buoy"></i></span>
+        <div><h3 id="help-hero-title">遇到什么问题？</h3><p>搜索常见问题，或向我们提交反馈</p></div>
+      </section>
+
+      <label class="help-search" for="help-search-input">
+        <i data-lucide="search" aria-hidden="true"></i>
+        <input id="help-search-input" type="search" placeholder="搜索设备、打印或账号问题" autocomplete="off" data-help-search>
+      </label>
+
+      <section class="help-faq" aria-labelledby="help-faq-title">
+        <div class="help-section-heading"><h3 id="help-faq-title">常见问题</h3><span>6 个问题</span></div>
+        <div class="help-faq-list" data-help-faq-list>
+          <details class="help-faq-item" data-help-faq data-help-keywords="设备 打印机 连接 离线 wifi 网络">
+            <summary><span>打印机一直显示离线怎么办？</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+            <div class="help-faq-answer"><p>请确认打印机与手机连接到同一网络，并检查设备屏幕上的网络状态。仍然离线时，可重启打印机和路由器后重新添加设备。</p></div>
+          </details>
+          <details class="help-faq-item" data-help-faq data-help-keywords="打印 失败 翘边 热床 首层 模型">
+            <summary><span>模型打印时出现翘边如何处理？</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+            <div class="help-faq-answer"><p>先清洁热床表面并重新执行热床校准。可适当提高首层热床温度、降低首层速度，并为大尺寸模型添加裙边。</p></div>
+          </details>
+          <details class="help-faq-item" data-help-faq data-help-keywords="耗材 卡住 进料 退料 喷嘴">
+            <summary><span>耗材无法正常进料怎么办？</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+            <div class="help-faq-answer"><p>剪平耗材末端后重新插入，并确认料盘可以顺畅转动。如果挤出齿轮打滑，请先停止打印，再按照设备引导执行退料和喷嘴检查。</p></div>
+          </details>
+          <details class="help-faq-item" data-help-faq data-help-keywords="摄像头 画面 加载 监控 网络 权限">
+            <summary><span>摄像头画面无法加载是什么原因？</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+            <div class="help-faq-answer"><p>请确认打印机在线且摄像头未被其他设备占用，同时检查应用的本地网络权限。弱网环境下画面可能需要数秒才能显示。</p></div>
+          </details>
+          <details class="help-faq-item" data-help-faq data-help-keywords="固件 更新 升级 失败 版本">
+            <summary><span>固件升级失败后会影响使用吗？</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+            <div class="help-faq-answer"><p>一般不会影响当前版本使用。请保持设备通电并连接稳定网络，然后在“设置—关于本机—软件版本”中重新检查更新。</p></div>
+          </details>
+          <details class="help-faq-item" data-help-faq data-help-keywords="账号 密码 验证码 登录 安全">
+            <summary><span>收不到登录验证码怎么办？</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+            <div class="help-faq-answer"><p>请检查手机号和短信拦截设置，等待一分钟后再次获取。多次尝试仍未收到时，可通过下方反馈入口联系支持人员。</p></div>
+          </details>
+        </div>
+        <p class="help-empty" data-help-empty hidden>没有找到相关问题，换个关键词试试</p>
+      </section>
+
+      <section class="help-feedback-card" aria-labelledby="help-feedback-title">
+        <span class="help-feedback-card__icon" aria-hidden="true"><i data-lucide="message-square-text"></i></span>
+        <div><h3 id="help-feedback-title">没有解决你的问题？</h3><p>提交问题描述和设备信息，我们会尽快回复</p></div>
+        <button class="btn btn-primary" type="button" data-nav="app-contact">提交反馈</button>
+      </section>
+      <p class="settings-detail-note"><i data-lucide="clock-3" aria-hidden="true"></i>在线支持时间：工作日 09:00–18:00</p>
     </section>
 
     <!-- ============ 设置 Panel ============ -->
@@ -1091,6 +1071,32 @@
         <div class="software-update-dialog__actions"><button class="btn btn-secondary" type="button" data-update-continue>继续升级</button><button class="btn software-update-danger" type="button" data-update-confirm-cancel>确认取消</button></div>
       </div>
     </dialog>
+    <!-- ============ 模型详情 Panel ============ -->
+    <section data-page="model-detail" class="page model-detail-page">
+      <header class="page-header subpage-header">
+        <button class="icon-btn" type="button" data-model-detail-back aria-label="返回模型列表"><i data-lucide="chevron-left"></i></button>
+        <h2>模型详情</h2>
+        <span class="header-spacer" aria-hidden="true"></span>
+      </header>
+      <div class="model-detail-page__image-wrap">
+        <img class="model-detail-page__image" src="model-placeholder.svg" alt="模型预览占位图" data-model-detail-image>
+      </div>
+      <article class="model-detail-page__hero">
+        <span class="model-detail-page__eyebrow">模型文件</span>
+        <h1 data-model-detail-title></h1>
+        <p data-model-detail-author></p>
+      </article>
+      <article class="model-detail-page__content">
+        <h3>简介</h3>
+        <p data-model-detail-description></p>
+        <dl class="model-detail-page__facts">
+          <div><dt>文件格式</dt><dd data-model-detail-format></dd></div>
+          <div><dt>模型尺寸</dt><dd data-model-detail-size></dd></div>
+          <div><dt>打印估算</dt><dd data-model-detail-estimate></dd></div>
+          <div><dt>当前状态</dt><dd data-model-detail-status></dd></div>
+        </dl>
+      </article>
+    </section>
     <!-- ============ Bottom Navigation ============ -->
     <nav class="bottom-nav">
       <button data-nav="models" class="nav-item active">
@@ -1098,7 +1104,7 @@
         <span>模型</span>
       </button>
       <button data-nav="device" class="nav-item">
-        <i data-lucide="printer"></i>
+        <svg class="device-nav-icon" viewBox="0 0 1024 1024" aria-hidden="true" focusable="false"><path d="M250.70592 724.92544c22.656 0 41.02656-18.36544 41.02656-41.02656a41.02656 41.02656 0 1 0-82.05824 0 41.03168 41.03168 0 0 0 41.03168 41.02656z m0-56.28928a15.26272 15.26272 0 1 1 0 30.53056 15.26272 15.26272 0 0 1 0-30.53056z m106.42432 56.28928c22.656 0 41.02656-18.36544 41.02656-41.02656a41.02656 41.02656 0 1 0-82.05312 0 41.02656 41.02656 0 0 0 41.02656 41.02656z m0-56.28928a15.26272 15.26272 0 1 1 0 30.53056 15.26272 15.26272 0 0 1 0-30.53056z m106.55232 56.28928a41.02656 41.02656 0 1 0 0-82.05824 41.03168 41.03168 0 0 0 0 82.05824z m0-56.28928a15.26784 15.26784 0 1 1 0 30.53056 15.26784 15.26784 0 0 1 0-30.53056z m107.14624 56.28928a41.02656 41.02656 0 1 0-41.02656-41.02656 41.02656 41.02656 0 0 0 41.02656 41.02656z m0-56.28928a15.26784 15.26784 0 1 1 0 30.53056 15.26784 15.26784 0 0 1 0-30.53056z m106.86464 56.28928c22.66112 0 41.02656-18.36544 41.02656-41.02656a41.02656 41.02656 0 1 0-82.05824 0 41.03168 41.03168 0 0 0 41.03168 41.02656z m0-56.28928a15.26272 15.26272 0 1 1 0 30.53056 15.26272 15.26272 0 0 1 0-30.53056z m106.42432 56.28928c22.66112 0 41.02656-18.36544 41.02656-41.02656a41.02656 41.02656 0 1 0-82.05312 0 41.02656 41.02656 0 0 0 41.02656 41.02656z m0-56.28928a15.26272 15.26272 0 1 1 0 30.53056 15.26272 15.26272 0 0 1 0-30.53056z"/><path d="M886.36416 774.84544a23.02976 23.02976 0 0 0 23.02976-23.02976v-134.26688a23.02464 23.02464 0 0 0-23.02976-23.02464h-1.34144v-57.33888a23.02976 23.02976 0 0 0-23.02464-23.02464h-4.24448V161.06496c0-12.71296-10.42944-23.02464-23.30112-23.02464h-56.96c-12.87168 0-23.30112 10.30656-23.30112 23.02464v35.46112H596.5312v-35.456a23.02464 23.02464 0 0 0-23.02464-23.02464H462.7968a23.02464 23.02464 0 0 0-23.02464 23.02464v35.456H282.68032v-35.46112c0-12.71296-10.42944-23.02464-23.296-23.02464H202.42432c-12.86656 0-23.30112 10.30656-23.30112 23.02464v353.1008h-6.15936a23.02464 23.02464 0 0 0-23.02464 23.02464v57.33888h-1.34144a23.02464 23.02464 0 0 0-23.02464 23.02464v134.272a23.02464 23.02464 0 0 0 23.02464 23.02464h19.968v79.60064h-24.78592a18.35008 18.35008 0 1 0 0 36.70016h746.32192a18.34496 18.34496 0 0 0 0-36.70016h-24.2944v-79.60064h20.5568v-0.00512z m-96.22528-593.5616c0-3.8144 3.09248-6.90688 6.90688-6.90688h17.86368a6.912 6.912 0 0 1 6.90688 6.90688v332.8768h-31.67744V181.28384z m-35.9424 50.70848v26.8032h-157.66016v-26.8032h157.66016z m-278.528-51.10272c0-3.8144 3.04128-6.90688 6.78912-6.90688h71.3472c3.74272 0 6.78912 3.09248 6.78912 6.90688v130.36544c0 3.8144-3.0464 6.90688-6.78912 6.90688H482.4576a6.85056 6.85056 0 0 1-6.78912-6.90688V180.8896z m52.63872 204.0064a10.15296 10.15296 0 0 1-20.3008 0v-27.55072h20.30592v27.55072z m-46.70464-27.55072v28.9024a36.56192 36.56192 0 0 0 24.00256 34.33984v30.6176a12.544 12.544 0 0 0 25.09312 0v-30.6176a36.56704 36.56704 0 0 0 24.00256-34.33984v-28.9024h18.80576a23.02464 23.02464 0 0 0 23.02464-23.02464v-40.05888h157.66016v219.89888H282.68032V294.26688h157.09184v40.05888a23.02464 23.02464 0 0 0 23.02464 23.02464h18.80576z m-41.8304-125.35296v26.8032H282.68032v-26.8032h157.09184z m-224.70656-50.70848c0-3.8144 3.09248-6.90688 6.90688-6.90688h17.86368c3.8144 0 6.90688 3.09248 6.90688 6.90688v332.8768h-31.67744V181.28384z m-30.0544 381.09184a11.50464 11.50464 0 0 1 11.50976-11.50976H839.7312a11.51488 11.51488 0 0 1 11.51488 11.50976v32.14848H185.0112v-32.14848z m-24.3712 164.25472v-83.8912a11.50976 11.50976 0 0 1 11.51488-11.51488H864.1024a11.50976 11.50976 0 0 1 11.50464 11.51488v83.8912a11.50464 11.50464 0 0 1-11.50464 11.50976H172.15488a11.50976 11.50976 0 0 1-11.51488-11.50976z m590.3104 48.21504v79.60064H283.42784v-79.60064h467.52256z m-546.14528 0h42.38848v79.60064h-42.38848v-79.60064z m624.768 79.60064h-42.38848v-79.60064h42.38848v79.60064z"/></svg>
         <span>设备</span>
       </button>
       <button data-nav="market" class="nav-item">
