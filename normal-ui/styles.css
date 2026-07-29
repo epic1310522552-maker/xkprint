@@ -2190,7 +2190,6 @@ a.contact-row:active { color: var(--accent); background: var(--accent-dim); }
   font-family: var(--font-mono);
   font-weight: 600;
 }
-.control-range-label,
 .control-switch {
   display: flex;
   align-items: center;
@@ -2200,24 +2199,6 @@ a.contact-row:active { color: var(--accent); background: var(--accent-dim); }
   color: var(--text-secondary);
   font-size: 0.9rem;
   font-weight: 500;
-}
-.control-range-label {
-  flex-wrap: wrap;
-}
-.control-range-label output {
-  color: var(--text-primary);
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-}
-.control-range-label + input[type="range"] {
-  width: 100%;
-  height: 44px;
-  accent-color: var(--accent);
-  cursor: pointer;
-}
-.control-range-label + input[type="range"]:disabled {
-  cursor: not-allowed;
-  opacity: 0.45;
 }
 .control-switch input {
   position: absolute;
@@ -2274,16 +2255,15 @@ a.contact-row:active { color: var(--accent); background: var(--accent-dim); }
 .fan-control-group + .fan-control-group {
   border-top: 1px solid var(--border);
 }
-.fan-control-group .control-range-label {
-  min-height: 26px;
+.fan-control-group .control-number-label {
+  min-height: 34px;
   font-size: 0.78rem;
 }
-.fan-control-group input[type="range"] {
-  width: 100%;
-  height: 30px;
-  accent-color: var(--accent);
+.fan-control-group .control-number-field input {
+  width: 72px;
+  height: 34px;
 }
-.fan-control-group input[type="range"]:disabled {
+.fan-control-group .control-number-field:has(input:disabled) {
   opacity: 0.45;
 }
 .control-dialog__actions {

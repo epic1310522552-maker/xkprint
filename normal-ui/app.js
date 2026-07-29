@@ -416,8 +416,6 @@
     var home = detail.querySelector('[data-toolhead-action="home"]');
     var temperatureDialog = document.querySelector('[data-toolhead-temperature-dialog]');
     var temperatureNumber = temperatureDialog && temperatureDialog.querySelector('[data-toolhead-temperature-input="number"]');
-    var temperatureRange = temperatureDialog && temperatureDialog.querySelector('[data-toolhead-temperature-input="range"]');
-    var temperatureOutput = temperatureDialog && temperatureDialog.querySelector('[data-toolhead-temperature-output]');
     var invokingTemperatureButton = null;
     var editingToolheadId = null;
 
@@ -449,8 +447,6 @@
 
     function stageTemperature(value) {
       temperatureNumber.value = value;
-      temperatureRange.value = value;
-      temperatureOutput.value = value + '°C';
       temperatureNumber.removeAttribute('aria-invalid');
     }
 
@@ -485,7 +481,7 @@
         var action = button.getAttribute('data-toolhead-action');
         if (!toolhead) return;
         if (action === 'temperature') {
-          if (!temperatureDialog || !temperatureNumber || !temperatureRange || !temperatureOutput) return;
+          if (!temperatureDialog || !temperatureNumber) return;
           editingToolheadId = selectedId;
           invokingTemperatureButton = button;
           stageTemperature(toolhead.targetTemperature === null ? toolhead.suggestedTemperature : toolhead.targetTemperature);
@@ -498,18 +494,13 @@
       });
     });
 
-    if (temperatureDialog && temperatureNumber && temperatureRange && temperatureOutput) {
+    if (temperatureDialog && temperatureNumber) {
       temperatureNumber.addEventListener('input', function () {
         if (temperatureNumber.value !== '' && temperatureNumber.validity.valid) {
-          temperatureRange.value = temperatureNumber.value;
-          temperatureOutput.value = temperatureNumber.value + '°C';
           temperatureNumber.removeAttribute('aria-invalid');
         } else {
           temperatureNumber.setAttribute('aria-invalid', 'true');
         }
-      });
-      temperatureRange.addEventListener('input', function () {
-        stageTemperature(temperatureRange.value);
       });
       temperatureNumber.addEventListener('focus', updateKeyboardOffset);
       temperatureNumber.addEventListener('blur', updateKeyboardOffset);
@@ -580,18 +571,14 @@
     }
 
     function updateBedControls(dialog, value) {
-      var range = inputFor(dialog, 'bed');
-      var number = inputFor(dialog, 'bed-number');
-      var output = dialog.querySelector('[data-control-output="bed"]');
-      range.value = value;
+      var number = inputFor(dialog, 'bed');
       number.value = value;
       number.removeAttribute('aria-invalid');
-      output.value = value + '°C';
     }
 
     function updateKeyboardOffset(dialog) {
       var viewport = window.visualViewport;
-      var number = inputFor(dialog, 'bed-number');
+      var number = inputFor(dialog, 'bed');
       if (!viewport || !dialog.open || document.activeElement !== number) {
         dialog.style.removeProperty('--keyboard-offset');
         dialog.style.removeProperty('--visible-viewport-height');
@@ -604,19 +591,13 @@
       dialog.style.setProperty('--visible-viewport-height', viewport.height + 'px');
     }
 
-    function updateOutput(dialog, name, suffix) {
-      var output = dialog.querySelector('[data-control-output="' + name + '"]');
-      var input = inputFor(dialog, name);
-      if (output && input) output.value = input.value + suffix;
-    }
-
     function updateFanControl(dialog, type, enabled, value) {
+      var input = inputFor(dialog, 'fan-' + type);
       var checkbox = inputFor(dialog, 'fan-' + type + '-enabled');
-      var range = inputFor(dialog, 'fan-' + type);
       checkbox.checked = enabled;
-      range.value = value;
-      range.disabled = !enabled;
-      updateOutput(dialog, 'fan-' + type, '%');
+      input.value = value;
+      input.disabled = !enabled;
+      input.removeAttribute('aria-invalid');
     }
 
 
@@ -649,10 +630,7 @@
 
     function stageState(dialog, name) {
       if (name === 'bed') updateBedControls(dialog, state.bed);
-      if (name === 'speed') {
-        inputFor(dialog, 'speed').value = state.speed;
-        updateOutput(dialog, 'speed', '%');
-      }
+      if (name === 'speed') inputFor(dialog, 'speed').value = state.speed;
       if (name === 'fan') {
         updateFanControl(dialog, 'part', state.fanPartEnabled, state.fanPart);
         updateFanControl(dialog, 'auxiliary', state.fanAuxiliaryEnabled, state.fanAuxiliary);
@@ -666,8 +644,8 @@
 
     function commitDialog(dialog, name) {
       if (name === 'bed') {
-        var bed = inputFor(dialog, 'bed-number');
-        if (!bed.validity.valid) {
+        var bed = inputFor(dialog, 'bed');
+        if (bed.value === '' || !bed.validity.valid) {
           bed.setAttribute('aria-invalid', 'true');
           bed.reportValidity();
           return false;
@@ -729,21 +707,16 @@
         invokingCard = null;
       });
 
-      if (name === 'bed' || name === 'speed') {
-        var range = inputFor(dialog, name);
-        range.addEventListener('input', function () {
-          if (name === 'bed') updateBedControls(dialog, range.value);
-          else updateOutput(dialog, name, '%');
+      if (name === 'speed') {
+        var input = inputFor(dialog, name);
+        input.addEventListener('input', function () {
+          input.toggleAttribute('aria-invalid', input.value === '' || !input.validity.valid);
         });
       }
       if (name === 'bed') {
-        var bedNumber = inputFor(dialog, 'bed-number');
+        var bedNumber = inputFor(dialog, 'bed');
         bedNumber.addEventListener('input', function () {
-          if (bedNumber.validity.valid && bedNumber.value !== '') {
-            updateBedControls(dialog, bedNumber.value);
-          } else {
-            bedNumber.setAttribute('aria-invalid', 'true');
-          }
+          bedNumber.toggleAttribute('aria-invalid', bedNumber.value === '' || !bedNumber.validity.valid);
         });
         dialog.querySelectorAll('[data-bed-preset]').forEach(function (button) {
           button.addEventListener('click', function () {
@@ -761,16 +734,18 @@
         dialog.querySelectorAll('[data-speed-preset]').forEach(function (button) {
           button.addEventListener('click', function () {
             inputFor(dialog, 'speed').value = button.getAttribute('data-speed-preset');
-            updateOutput(dialog, 'speed', '%');
-          });
+            inputFor(dialog, 'speed').removeAttribute('aria-invalid');
         });
+          });
       }
       if (name === 'fan') {
         ['part', 'auxiliary', 'chamber'].forEach(function (type) {
-          var fanRange = inputFor(dialog, 'fan-' + type);
+          var fanInput = inputFor(dialog, 'fan-' + type);
           var fanEnabled = inputFor(dialog, 'fan-' + type + '-enabled');
-          fanRange.addEventListener('input', function () { updateOutput(dialog, 'fan-' + type, '%'); });
-          fanEnabled.addEventListener('change', function () { fanRange.disabled = !fanEnabled.checked; });
+          fanInput.addEventListener('input', function () {
+            fanInput.toggleAttribute('aria-invalid', fanInput.value === '' || !fanInput.validity.valid);
+          });
+          fanEnabled.addEventListener('change', function () { fanInput.disabled = !fanEnabled.checked; });
         });
       }
     });

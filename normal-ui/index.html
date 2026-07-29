@@ -953,7 +953,7 @@
     <dialog class="control-dialog" data-control-dialog-panel="bed" aria-labelledby="bed-dialog-title">
       <div class="control-dialog__header"><h2 id="bed-dialog-title">热床温度</h2><button class="icon-btn" type="button" data-control-close aria-label="关闭"><i data-lucide="x"></i></button></div>
       <div class="control-dialog__body">
-        <label class="control-number-label" for="bed-number-input"><span>目标温度</span><span class="control-number-field"><input id="bed-number-input" type="number" inputmode="numeric" enterkeyhint="done" data-control-input="bed-number" min="0" max="120" step="1" value="60" required aria-describedby="bed-temperature-hint"><span aria-hidden="true">°C</span></span></label>
+        <label class="control-number-label" for="bed-number-input"><span>目标温度</span><span class="control-number-field"><input id="bed-number-input" type="number" inputmode="numeric" enterkeyhint="done" data-control-input="bed" min="0" max="120" step="1" value="60" required aria-describedby="bed-temperature-hint"><span aria-hidden="true">°C</span></span></label>
         <span class="control-input-hint" id="bed-temperature-hint">请输入 0–120 之间的整数</span>
         <div class="control-presets" aria-label="常用温度">
           <button type="button" data-bed-preset="35">35°C</button>
@@ -962,8 +962,6 @@
           <button type="button" data-bed-preset="95">95°C</button>
           <button type="button" data-bed-preset="100">100°C</button>
         </div>
-        <label class="control-range-label" for="bed-control-input">滑动调节 <output data-control-output="bed">60°C</output></label>
-        <input id="bed-control-input" type="range" data-control-input="bed" min="0" max="120" step="1" value="60">
       </div>
       <div class="control-dialog__actions"><button class="btn btn-secondary" type="button" data-control-cancel>取消</button><button class="btn btn-primary" type="button" data-control-apply>应用</button></div>
     </dialog>
@@ -976,8 +974,7 @@
           <button type="button" data-speed-preset="100"><strong>标准模式</strong><span>100%</span></button>
           <button type="button" data-speed-preset="50"><strong>静音模式</strong><span>50%</span></button>
         </div>
-        <label class="control-range-label" for="speed-control-input">速度 <output data-control-output="speed">100%</output></label>
-        <input id="speed-control-input" type="range" data-control-input="speed" min="10" max="200" step="1" value="100">
+        <label class="control-number-label" for="speed-control-input"><span>速度</span><span class="control-number-field"><input id="speed-control-input" type="number" inputmode="numeric" enterkeyhint="done" data-control-input="speed" min="10" max="200" step="1" value="100" required><span aria-hidden="true">%</span></span></label>
       </div>
       <div class="control-dialog__actions"><button class="btn btn-secondary" type="button" data-control-cancel>取消</button><button class="btn btn-primary" type="button" data-control-apply>应用</button></div>
     </dialog>
@@ -986,18 +983,15 @@
       <div class="control-dialog__body control-dialog__body--fans">
         <section class="fan-control-group" data-fan-control="part">
           <label class="control-switch"><span>部件风扇</span><input type="checkbox" data-control-input="fan-part-enabled" checked><span class="control-switch__track" aria-hidden="true"></span></label>
-          <label class="control-range-label" for="fan-part-input">速度 <output data-control-output="fan-part">80%</output></label>
-          <input id="fan-part-input" type="range" data-control-input="fan-part" min="0" max="100" step="10" value="80">
+          <label class="control-number-label" for="fan-part-input"><span>速度</span><span class="control-number-field"><input id="fan-part-input" type="number" inputmode="numeric" enterkeyhint="done" data-control-input="fan-part" min="0" max="100" step="10" value="80" required><span aria-hidden="true">%</span></span></label>
         </section>
         <section class="fan-control-group" data-fan-control="auxiliary">
           <label class="control-switch"><span>辅助风扇</span><input type="checkbox" data-control-input="fan-auxiliary-enabled"><span class="control-switch__track" aria-hidden="true"></span></label>
-          <label class="control-range-label" for="fan-auxiliary-input">速度 <output data-control-output="fan-auxiliary">0%</output></label>
-          <input id="fan-auxiliary-input" type="range" data-control-input="fan-auxiliary" min="0" max="100" step="10" value="0" disabled>
+          <label class="control-number-label" for="fan-auxiliary-input"><span>速度</span><span class="control-number-field"><input id="fan-auxiliary-input" type="number" inputmode="numeric" enterkeyhint="done" data-control-input="fan-auxiliary" min="0" max="100" step="10" value="0" required disabled><span aria-hidden="true">%</span></span></label>
         </section>
         <section class="fan-control-group" data-fan-control="chamber">
           <label class="control-switch"><span>机箱风扇</span><input type="checkbox" data-control-input="fan-chamber-enabled"><span class="control-switch__track" aria-hidden="true"></span></label>
-          <label class="control-range-label" for="fan-chamber-input">速度 <output data-control-output="fan-chamber">0%</output></label>
-          <input id="fan-chamber-input" type="range" data-control-input="fan-chamber" min="0" max="100" step="10" value="0" disabled>
+          <label class="control-number-label" for="fan-chamber-input"><span>速度</span><span class="control-number-field"><input id="fan-chamber-input" type="number" inputmode="numeric" enterkeyhint="done" data-control-input="fan-chamber" min="0" max="100" step="10" value="0" required disabled><span aria-hidden="true">%</span></span></label>
         </section>
       </div>
       <div class="control-dialog__actions"><button class="btn btn-secondary" type="button" data-control-cancel>取消</button><button class="btn btn-primary" type="button" data-control-apply>应用</button></div>
@@ -1012,8 +1006,6 @@
       <div class="control-dialog__body">
         <label class="control-number-label" for="toolhead-temperature-number"><span>目标温度</span><span class="control-number-field"><input id="toolhead-temperature-number" type="number" inputmode="numeric" enterkeyhint="done" data-toolhead-temperature-input="number" min="0" max="300" step="1" required aria-describedby="toolhead-temperature-hint"><span aria-hidden="true">°C</span></span></label>
         <span class="control-input-hint" id="toolhead-temperature-hint">请输入 0–300 之间的整数</span>
-        <label class="control-range-label" for="toolhead-temperature-range">滑动调节 <output data-toolhead-temperature-output>0°C</output></label>
-        <input id="toolhead-temperature-range" type="range" data-toolhead-temperature-input="range" min="0" max="300" step="1" value="0">
       </div>
       <div class="control-dialog__actions"><button class="btn btn-secondary" type="button" data-toolhead-temperature-cancel>取消</button><button class="btn btn-primary" type="button" data-toolhead-temperature-apply>应用</button></div>
     </dialog>
