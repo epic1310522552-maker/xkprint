@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>XKPrint 设备控制台</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="width-notice">请使用宽度至少 1024px 的桌面窗口</div>
+  <div class="console">
+    <header class="top-nav">
+      <a class="brand" href="index.html" aria-label="XKPrint 设备控制台">XKPrint</a>
+      <nav class="main-nav" aria-label="主导航">
+        <button type="button" aria-current="page">设备</button>
+        <button type="button" disabled>模型</button>
+        <button type="button" disabled>商城</button>
+        <button type="button" disabled>我的</button>
+      </nav>
+      <div class="device-identity">
+        <span data-active-device aria-live="polite"><i aria-hidden="true"></i><b>XK1 Carbon</b> · <em>在线</em></span>
+        <span class="avatar" aria-label="用户 AC">AC</span>
+      </div>
+    </header>
+    <main class="content">
+      <section data-page="device" aria-label="设备控制">
+        <div class="device-workspace">
+          <aside class="device-sidebar" aria-label="设备菜单">
+            <nav class="sidebar-menu" aria-label="设备功能">
+              <button class="sidebar-menu-item" type="button" data-device-menu aria-expanded="false" aria-controls="my-device-menu">
+                <i data-lucide="printer" aria-hidden="true"></i>
+                <span>我的设备</span>
+                <i class="menu-chevron" data-lucide="chevron-down" aria-hidden="true"></i>
+              </button>
+              <div id="my-device-menu" class="device-submenu" hidden>
+                <div class="device-list" role="listbox" aria-label="选择设备">
+                  <button class="device-list-item" type="button" role="option" data-device-name="XK1 Carbon" data-device-status="在线" aria-selected="true">
+                    <i aria-hidden="true"></i><span>XK1 Carbon</span><small>在线</small>
+                  </button>
+                  <button class="device-list-item" type="button" role="option" data-device-name="XK1 Mini" data-device-status="空闲" aria-selected="false">
+                    <i aria-hidden="true"></i><span>XK1 Mini</span><small>空闲</small>
+                  </button>
+                  <button class="device-list-item is-offline" type="button" role="option" data-device-name="工作室 XK1" data-device-status="离线" aria-selected="false">
+                    <i aria-hidden="true"></i><span>工作室 XK1</span><small>离线</small>
+                  </button>
+                </div>
+                <button class="add-device-item" type="button" aria-label="添加设备">
+                  <i data-lucide="plus" aria-hidden="true"></i><span>添加设备</span>
+                </button>
+              </div>
+              <button class="sidebar-menu-item is-active" type="button" aria-current="page">
+                <i data-lucide="sliders-horizontal" aria-hidden="true"></i>
+                <span>设备控制</span>
+              </button>
+            </nav>
+          </aside>
+        <div class="device-dashboard">
+          <section class="dashboard-panel camera-panel">
+            <header class="panel-titlebar">
+              <h2>设备画面</h2>
+              <span class="live-indicator"><i aria-hidden="true"></i>实时</span>
+            </header>
+            <div class="camera-view">
+              <p class="camera-fallback">摄像头画面暂不可用</p>
+              <img src="https://images.pexels.com/photos/12698667/pexels-photo-12698667.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" alt="3D 打印机工作画面">
+              <div class="camera-status-overlay" aria-label="画面状态">
+                <span><i data-lucide="video" aria-hidden="true"></i>CAM 01</span>
+                <span><i data-lucide="wifi" aria-hidden="true"></i>稳定</span>
+              </div>
+              <div class="camera-tool-overlay" aria-label="画面工具展示">
+                <button type="button" aria-label="截图" title="截图"><i data-lucide="camera" aria-hidden="true"></i></button>
+                <button type="button" aria-label="声音" title="声音"><i data-lucide="volume-2" aria-hidden="true"></i></button>
+                <button type="button" aria-label="全屏" title="全屏"><i data-lucide="maximize" aria-hidden="true"></i></button>
+              </div>
+              <div class="camera-meta-overlay" aria-label="画面信息">
+                <span><i data-lucide="clock-3" aria-hidden="true"></i>14:32:08</span>
+                <span>1080P</span>
+              </div>
+            </div>
+          </section>
+          <section class="dashboard-panel motion-panel">
+            <header class="panel-titlebar">
+              <h2>设备控制</h2>
+              <span class="control-ready"><i aria-hidden="true"></i>设备就绪</span>
+            </header>
+            <div class="motion-content">
+              <dl class="device-stats">
+                <div><dt><i data-lucide="thermometer"></i>执行头 1</dt><dd><strong>218</strong> / 220°C</dd></div>
+                <div><dt><i data-lucide="thermometer"></i>执行头 2</dt><dd><strong>32</strong> / 0°C</dd></div>
+                <div><dt><i data-lucide="thermometer"></i>执行头 3</dt><dd><strong>31</strong> / 0°C</dd></div>
+                <div>
+                  <dt><i data-lucide="fan"></i>部件风扇</dt>
+                  <dd><button class="stat-popup-trigger" type="button" aria-label="部件风扇，当前 80%"><strong>80%</strong><i data-lucide="chevron-right" aria-hidden="true"></i></button></dd>
+                </div>
+                <div><dt><i data-lucide="gauge"></i>打印速度</dt><dd><strong>100%</strong></dd></div>
+                <div>
+                  <dt><i data-lucide="lightbulb"></i>照明</dt>
+                  <dd><button class="stat-switch" type="button" role="switch" aria-checked="true" aria-label="照明"><span>开启</span><i aria-hidden="true"></i></button></dd>
+                </div>
+              </dl>
+              <div class="jog-controls">
+                <div class="jog-toolbar">
+                  <span>移动距离</span>
+                  <div class="jog-step-options" role="group" aria-label="移动距离展示">
+                    <button type="button">0.1</button>
+                    <button type="button">1</button>
+                    <button class="is-active" type="button">10 mm</button>
+                  </div>
+                </div>
+                <div class="jog-layout">
+                  <section class="axis-control-group" aria-labelledby="xy-axis-title">
+                    <span id="xy-axis-title" class="axis-title">XY 轴</span>
+                    <div class="xy-pad" aria-label="XY 轴点动控制">
+                      <button type="button" data-control="y-plus" aria-label="Y 轴正向"><i data-lucide="chevron-up"></i><span>Y+</span></button>
+                      <button type="button" data-control="x-minus" aria-label="X 轴负向"><i data-lucide="chevron-left"></i><span>X−</span></button>
+                      <button class="axis-home" type="button" data-control="home" aria-label="XY 轴归位"><i data-lucide="crosshair"></i><small>原点</small></button>
+                      <button type="button" data-control="x-plus" aria-label="X 轴正向"><span>X+</span><i data-lucide="chevron-right"></i></button>
+                      <button type="button" data-control="y-minus" aria-label="Y 轴负向"><span>Y−</span><i data-lucide="chevron-down"></i></button>
+                    </div>
+                  </section>
+                  <section class="axis-control-group z-axis-group" aria-labelledby="z-axis-title">
+                    <span id="z-axis-title" class="axis-title">Z 轴</span>
+                    <div class="z-pad" aria-label="Z 轴点动控制">
+                      <button type="button" data-control="z-plus"><i data-lucide="chevron-up"></i><span>Z+</span></button>
+                      <div class="z-heated-bed" aria-label="热床">热床</div>
+                      <button type="button" data-control="z-minus"><span>Z−</span><i data-lucide="chevron-down"></i></button>
+                    </div>
+                  </section>
+                </div>
+                <div class="control-actions">
+                  <button type="button" data-control="load-head"><i data-lucide="package-plus"></i><span>加载执行头</span></button>
+                  <button class="danger-action" type="button" data-control="unload-head"><i data-lucide="package-minus"></i><span>取出执行头</span></button>
+                </div>
+              </div>
+            </div>
+            <p class="control-status" data-control-status role="status">控制待命</p>
+          </section>
+          <section class="dashboard-panel tasks-panel">
+            <header class="panel-titlebar">
+              <h2>打印任务</h2>
+              <div class="task-view-options" role="group" aria-label="任务视图">
+                <button class="task-alert-option" type="button" data-task-view="tasks" aria-pressed="true" aria-label="打印任务" title="打印任务"><i data-lucide="circle-alert" aria-hidden="true"></i></button>
+                <button class="task-icon-option" type="button" data-task-view="files" aria-pressed="false" aria-label="本地文件" title="本地文件"><i data-lucide="folder-open" aria-hidden="true"></i></button>
+              </div>
+            </header>
+            <div class="tasks-content">
+              <div class="task-view-panel active-print-view" data-task-view-panel="tasks">
+                <article class="active-print-task">
+                  <img src="model-placeholder.svg" alt="螺旋花器模型预览">
+                  <div class="active-print-details">
+                    <span class="task-state printing">正在打印</span>
+                    <h3>螺旋花器.3mf</h3>
+                    <small>预计剩余 2 小时 37 分</small>
+                  </div>
+                  <strong class="active-print-percent">43%</strong>
+                  <div class="active-print-progress" role="progressbar" aria-label="螺旋花器打印进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="43">
+                    <i style="width: 43%"></i>
+                  </div>
+                </article>
+              </div>
+              <div class="task-view-panel" data-task-view-panel="files" hidden>
+                <div class="task-tabs" role="tablist" aria-label="打印任务来源">
+                  <button id="task-tab-local" type="button" role="tab" data-task-tab="local" aria-selected="true" aria-controls="task-panel-local" tabindex="0">本地文件</button>
+                  <button id="task-tab-usb" type="button" role="tab" data-task-tab="usb" aria-selected="false" aria-controls="task-panel-usb" tabindex="-1">U 盘文件</button>
+                </div>
+                <div id="task-panel-local" class="task-tabpanel" role="tabpanel" aria-labelledby="task-tab-local" data-task-panel="local">
+                  <div class="task-cards">
+                    <article class="task-card">
+                      <img src="model-placeholder.svg" alt="螺旋花器模型预览">
+                      <div class="task-card-body">
+                        <span class="task-state printing">正在打印</span>
+                        <h3>螺旋花器.3mf</h3>
+                        <small>预计打印 4 小时 36 分</small>
+                      </div>
+                    </article>
+                    <article class="task-card">
+                      <img src="model-placeholder.svg" alt="桌面收纳托盘模型预览">
+                      <div class="task-card-body">
+                        <span class="task-state ready">可打印</span>
+                        <h3>桌面收纳托盘.stl</h3>
+                        <small>预计打印 3 小时 12 分</small>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+                <div id="task-panel-usb" class="task-tabpanel usb-empty" role="tabpanel" aria-labelledby="task-tab-usb" data-task-panel="usb" hidden>
+                  <i data-lucide="usb"></i>
+                  <p>未检测到 U 盘文件</p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="dashboard-panel material-panel">
+            <header class="panel-titlebar">
+              <h2>耗材</h2>
+              <button class="title-icon" type="button" aria-label="耗材帮助" title="耗材帮助"><i data-lucide="circle-help"></i></button>
+            </header>
+            <div class="material-content">
+              <div class="material-head-section">
+                <span class="material-section-label">执行头位置</span>
+                <div class="material-head-grid" role="group" aria-label="执行头位置">
+                  <button class="material-head" type="button" data-material-head="执行头 1" data-material-type="PLA Matte" data-color-name="深蓝" data-color-value="#064a87" aria-pressed="false"><i style="--head-color: #064a87" aria-hidden="true"></i><span><strong>执行头 1</strong><small>PLA Matte · 深蓝</small></span></button>
+                  <button class="material-head" type="button" data-material-head="执行头 2" data-material-type="PLA Basic" data-color-name="红色" data-color-value="#e52222" aria-pressed="false"><i style="--head-color: #e52222" aria-hidden="true"></i><span><strong>执行头 2</strong><small>PLA Basic · 红色</small></span></button>
+                  <button class="material-head" type="button" data-material-head="执行头 3" data-material-type="PLA Matte" data-color-name="黄色" data-color-value="#ffc400" aria-pressed="false"><i style="--head-color: #ffc400" aria-hidden="true"></i><span><strong>执行头 3</strong><small>PLA Matte · 黄色</small></span></button>
+                  <button class="material-head" type="button" data-material-head="执行头 4" data-material-type="PETG" data-color-name="绿色" data-color-value="#49a66b" aria-pressed="false"><i style="--head-color: #49a66b" aria-hidden="true"></i><span><strong>执行头 4</strong><small>PETG · 绿色</small></span></button>
+                  <button class="material-head" type="button" data-material-head="执行头 5" data-material-type="PLA Basic" data-color-name="白色" data-color-value="#ffffff" aria-pressed="false"><i style="--head-color: #ffffff" aria-hidden="true"></i><span><strong>执行头 5</strong><small>PLA Basic · 白色</small></span></button>
+                  <button class="material-head" type="button" data-material-head="执行头 6" data-material-type="ABS" data-color-name="黑色" data-color-value="#111111" aria-pressed="false"><i style="--head-color: #111111" aria-hidden="true"></i><span><strong>执行头 6</strong><small>ABS · 黑色</small></span></button>
+                  <button class="material-head" type="button" data-material-head="执行头 7" data-material-type="PLA Silk" data-color-name="橙色" data-color-value="#ff8a00" aria-pressed="false"><i style="--head-color: #ff8a00" aria-hidden="true"></i><span><strong>执行头 7</strong><small>PLA Silk · 橙色</small></span></button>
+                  <button class="material-head" type="button" data-material-head="执行头 8" data-material-type="TPU" data-color-name="灰色" data-color-value="#a9adaf" aria-pressed="false"><i style="--head-color: #a9adaf" aria-hidden="true"></i><span><strong>执行头 8</strong><small>TPU · 灰色</small></span></button>
+                </div>
+              </div>
+              <div class="material-details" role="dialog" aria-modal="false" aria-labelledby="material-dialog-title" hidden>
+                <header class="material-dialog-header">
+                  <strong id="material-dialog-title"><span data-selected-head>执行头 1</span>耗材设置</strong>
+                  <button type="button" data-close-material aria-label="关闭耗材设置" title="关闭"><i data-lucide="x" aria-hidden="true"></i></button>
+                </header>
+                <div class="material-detail-body">
+                  <section class="material-option-section" aria-labelledby="material-type-title">
+                    <div class="material-option-heading">
+                      <span id="material-type-title">耗材类型</span>
+                      <small>当前：PLA Matte</small>
+                    </div>
+                    <div class="material-type-options" role="group" aria-label="耗材类型展示">
+                      <button class="is-active" type="button">PLA Matte</button>
+                      <button type="button">PLA Basic</button>
+                      <button type="button">PLA Silk</button>
+                      <button type="button">PETG</button>
+                      <button type="button">ABS</button>
+                      <button type="button">TPU</button>
+                    </div>
+                  </section>
+                  <section class="material-option-section material-color-section" aria-labelledby="material-color-title">
+                    <div class="material-option-heading">
+                      <span id="material-color-title">耗材颜色</span>
+                      <small><i class="current-color-dot" aria-hidden="true"></i>当前：深蓝</small>
+                    </div>
+                    <div class="swatch-grid" role="group" aria-label="耗材颜色展示">
+                      <button type="button" style="--swatch: #ffffff"><i aria-hidden="true"></i><span>白色</span></button>
+                      <button type="button" style="--swatch: #111111"><i aria-hidden="true"></i><span>黑色</span></button>
+                      <button type="button" style="--swatch: #ff8a00"><i aria-hidden="true"></i><span>橙色</span></button>
+                      <button type="button" style="--swatch: #ffc400"><i aria-hidden="true"></i><span>黄色</span></button>
+                      <button type="button" style="--swatch: #bdc9a8"><i aria-hidden="true"></i><span>鼠尾草绿</span></button>
+                      <button type="button" style="--swatch: #49a66b"><i aria-hidden="true"></i><span>绿色</span></button>
+                      <button type="button" style="--swatch: #e52222"><i aria-hidden="true"></i><span>红色</span></button>
+                      <button type="button" style="--swatch: #67c5e3"><i aria-hidden="true"></i><span>天蓝</span></button>
+                      <button type="button" style="--swatch: #efd6e4"><i aria-hidden="true"></i><span>浅粉</span></button>
+                      <button type="button" style="--swatch: #202124"><i aria-hidden="true"></i><span>深灰</span></button>
+                      <button class="is-active" type="button" style="--swatch: #064a87"><i aria-hidden="true"></i><span>深蓝</span></button>
+                      <button type="button" style="--swatch: #6657b5"><i aria-hidden="true"></i><span>紫色</span></button>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
