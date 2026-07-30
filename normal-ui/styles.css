@@ -1865,7 +1865,7 @@ a.contact-row:active { color: var(--accent); background: var(--accent-dim); }
   height: 24px;
   stroke-width: 1;
 }
-.device-nav-icon { width: 22px !important; height: 22px !important; fill: currentColor; stroke-width: 0; }
+.device-nav-icon { width: 24px !important; height: 24px !important; fill: currentColor; stroke-width: 0; }
 .nav-item span {
   font-size: 0.75rem;
   font-weight: 500;

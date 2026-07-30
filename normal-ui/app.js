@@ -441,7 +441,7 @@
       currentTemperature.textContent = toolhead.currentTemperature;
       targetTemperature.textContent = toolhead.targetTemperature === null ? '室温' : toolhead.targetTemperature + '°C';
       unload.textContent = toolhead.loaded ? '放回执行头' : '取消执行头';
-      home.setAttribute('aria-label', toolhead.label + '归零');
+      if (home) home.setAttribute('aria-label', toolhead.label + '归零');
       feedback.textContent = '';
     }
 
