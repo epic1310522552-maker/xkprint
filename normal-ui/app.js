@@ -385,6 +385,16 @@
     });
   }
 
+  function initDeviceMoveControls() {
+    var button = document.querySelector('[data-move-home]');
+    if (!button || button.dataset.initialized) return;
+    button.dataset.initialized = 'true';
+    button.addEventListener('click', function () {
+      button.classList.add('is-complete');
+      button.setAttribute('aria-pressed', 'true');
+      button.textContent = '已归零';
+    });
+  }
   function initToolheadSelector() {
     var selector = document.querySelector('[data-toolhead-selector]');
     var detail = document.querySelector('[data-toolhead-detail]');
@@ -858,7 +868,8 @@
 
     triggers.forEach(function (trigger) { trigger.addEventListener('click', function () { openMaterialDrawer(Number(trigger.dataset.materialId), trigger); }); });
     dialog.querySelectorAll('[data-material-edit]').forEach(function (button) { button.addEventListener('click', function () { openMaterialPicker(button.dataset.materialEdit); }); });
-    picker.querySelector('[data-material-picker-close]').addEventListener('click', function () { picker.close(); });
+    var pickerCloseButton = picker.querySelector('[data-material-picker-close]');
+    if (pickerCloseButton) pickerCloseButton.addEventListener('click', function () { picker.close(); });
     picker.addEventListener('cancel', function (event) { event.preventDefault(); picker.close(); });
     picker.addEventListener('click', function (event) { if (event.target === picker) picker.close(); });
     dialog.querySelectorAll('[data-material-close], [data-material-cancel]').forEach(function (button) { button.addEventListener('click', function () { dialog.close(); }); });
@@ -1076,8 +1087,21 @@
       format: detailPage.querySelector('[data-model-detail-format]'),
       size: detailPage.querySelector('[data-model-detail-size]'),
       estimate: detailPage.querySelector('[data-model-detail-estimate]'),
-      status: detailPage.querySelector('[data-model-detail-status]')
+      status: detailPage.querySelector('[data-model-detail-status]'),
+      printButton: detailPage.querySelector('[data-model-detail-print]')
     };
+    if (fields.printButton) {
+      fields.printButton.addEventListener('click', function () {
+        fields.printButton.disabled = true;
+        fields.printButton.innerHTML = '<i data-lucide="loader-circle" aria-hidden="true"></i><span>准备中...</span>';
+        if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+        window.setTimeout(function () {
+          fields.printButton.disabled = false;
+          fields.printButton.innerHTML = '<i data-lucide="check" aria-hidden="true"></i><span>已加入打印</span>';
+          if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+        }, 700);
+      });
+    }
 
     function showPage(target) {
       document.querySelectorAll('[data-page]').forEach(function (page) { page.classList.toggle('active', page.dataset.page === target); });
@@ -1183,6 +1207,7 @@
     initDevicePicker();
     initDeviceControlTabs();
     initDeviceControlDialogs();
+    initDeviceMoveControls();
     initToolheadSelector();
     initMaterialDrawer();
     initTheme();

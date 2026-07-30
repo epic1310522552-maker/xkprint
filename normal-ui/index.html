@@ -76,7 +76,7 @@
             </div>
             <div class="preview-float-actions" aria-label="设备快捷操作">
               <button class="preview-float-action" type="button" data-float-cam aria-label="拍摄" title="拍摄">
-                <i data-lucide="camera"></i>
+                <i data-lucide="video"></i>
               </button>
               <button class="preview-float-action" type="button" data-float-file aria-label="本地文件" title="本地文件">
                 <i data-lucide="folder-open"></i>
@@ -158,7 +158,7 @@
         </div>
 
         <div class="tab-panel" id="device-move-panel" data-tab-panel="move" role="tabpanel" aria-labelledby="device-move-tab" hidden>
-          <div class="filter-row" style="justify-content: center; margin-bottom: 12px;"><button class="chip active" type="button">10mm</button><button class="chip" type="button">1mm</button><button class="chip" type="button">0.1mm</button></div>
+          <div class="filter-row move-filter-row" role="group" aria-label="移动步进与归零"><button class="chip active" type="button">10mm</button><button class="chip" type="button">1mm</button><button class="chip" type="button">0.1mm</button><button class="move-home-button" type="button" data-move-home aria-pressed="false">归零</button></div>
           <div class="move-controls">
             <div class="dpad-grid" aria-label="X/Y 轴移动控制"><div></div><button class="dpad-btn" type="button" aria-label="Y 轴正向"><i data-lucide="chevron-up"></i></button><div></div><button class="dpad-btn" type="button" aria-label="X 轴负向"><i data-lucide="chevron-left"></i></button><div class="dpad-center" aria-hidden="true">X/Y</div><button class="dpad-btn" type="button" aria-label="X 轴正向"><i data-lucide="chevron-right"></i></button><div></div><button class="dpad-btn" type="button" aria-label="Y 轴负向"><i data-lucide="chevron-down"></i></button><div></div></div>
             <div class="bed-controls" aria-label="热床移动控制"><button class="dpad-btn" type="button" aria-label="热床上移"><i data-lucide="chevron-up"></i></button><span class="bed-controls__label">热床</span><button class="dpad-btn" type="button" aria-label="热床下移"><i data-lucide="chevron-down"></i></button></div>
@@ -404,11 +404,6 @@
     <section data-page="market" class="page">
       <header class="page-header">
         <h2>模型商城</h2>
-        <div class="header-actions">
-          <button class="icon-btn" type="button" data-nav="settings" aria-label="打开设置">
-            <i data-lucide="settings"></i>
-          </button>
-        </div>
       </header>
 
       <div class="search-field">
@@ -944,7 +939,7 @@
     </section>
 
     <dialog class="control-dialog" data-control-dialog-panel="bed" aria-labelledby="bed-dialog-title">
-      <div class="control-dialog__header"><h2 id="bed-dialog-title">热床温度</h2><button class="icon-btn" type="button" data-control-close aria-label="关闭"><i data-lucide="x"></i></button></div>
+      <div class="control-dialog__header"><h2 id="bed-dialog-title">热床温度</h2></div>
       <div class="control-dialog__body">
         <label class="control-number-label" for="bed-number-input"><span>目标温度</span><span class="control-number-field"><input id="bed-number-input" type="number" inputmode="numeric" enterkeyhint="done" data-control-input="bed" min="0" max="120" step="1" value="60" required aria-describedby="bed-temperature-hint"><span aria-hidden="true">°C</span></span></label>
         <span class="control-input-hint" id="bed-temperature-hint">请输入 0–120 之间的整数</span>
@@ -959,7 +954,7 @@
       <div class="control-dialog__actions"><button class="btn btn-secondary" type="button" data-control-cancel>取消</button><button class="btn btn-primary" type="button" data-control-apply>应用</button></div>
     </dialog>
     <dialog class="control-dialog" data-control-dialog-panel="speed" aria-labelledby="speed-dialog-title">
-      <div class="control-dialog__header"><h2 id="speed-dialog-title">打印速度</h2><button class="icon-btn" type="button" data-control-close aria-label="关闭"><i data-lucide="x"></i></button></div>
+      <div class="control-dialog__header"><h2 id="speed-dialog-title">打印速度</h2></div>
       <div class="control-dialog__body">
         <div class="control-presets control-presets--modes" aria-label="打印速度模式">
           <button type="button" data-speed-preset="166"><strong>狂暴模式</strong><span>166%</span></button>
@@ -972,7 +967,7 @@
       <div class="control-dialog__actions"><button class="btn btn-secondary" type="button" data-control-cancel>取消</button><button class="btn btn-primary" type="button" data-control-apply>应用</button></div>
     </dialog>
     <dialog class="control-dialog" data-control-dialog-panel="fan" aria-labelledby="fan-dialog-title">
-      <div class="control-dialog__header"><h2 id="fan-dialog-title">风扇</h2><button class="icon-btn" type="button" data-control-close aria-label="关闭"><i data-lucide="x"></i></button></div>
+      <div class="control-dialog__header"><h2 id="fan-dialog-title">风扇</h2></div>
       <div class="control-dialog__body control-dialog__body--fans">
         <section class="fan-control-group" data-fan-control="part">
           <label class="control-switch"><span>部件风扇</span><input type="checkbox" data-control-input="fan-part-enabled" checked><span class="control-switch__track" aria-hidden="true"></span></label>
@@ -990,12 +985,12 @@
       <div class="control-dialog__actions"><button class="btn btn-secondary" type="button" data-control-cancel>取消</button><button class="btn btn-primary" type="button" data-control-apply>应用</button></div>
     </dialog>
     <dialog class="control-dialog" data-control-dialog-panel="lighting" aria-labelledby="lighting-dialog-title">
-      <div class="control-dialog__header"><h2 id="lighting-dialog-title">照明和 RGB 灯</h2><button class="icon-btn" type="button" data-control-close aria-label="关闭"><i data-lucide="x"></i></button></div>
+      <div class="control-dialog__header"><h2 id="lighting-dialog-title">照明和 RGB 灯</h2></div>
       <div class="control-dialog__body"><label class="control-switch"><span>照明灯</span><input type="checkbox" data-control-input="light-enabled"><span class="control-switch__track" aria-hidden="true"></span></label><label class="control-switch"><span>RGB 灯</span><input type="checkbox" data-control-input="rgb-enabled"><span class="control-switch__track" aria-hidden="true"></span></label></div>
       <div class="control-dialog__actions"><button class="btn btn-secondary" type="button" data-control-cancel>取消</button><button class="btn btn-primary" type="button" data-control-apply>应用</button></div>
     </dialog>
     <dialog class="control-dialog" data-toolhead-temperature-dialog aria-labelledby="toolhead-temperature-dialog-title">
-      <div class="control-dialog__header"><h2 id="toolhead-temperature-dialog-title">设置执行头温度</h2><button class="icon-btn" type="button" data-toolhead-temperature-close aria-label="关闭"><i data-lucide="x"></i></button></div>
+      <div class="control-dialog__header"><h2 id="toolhead-temperature-dialog-title">设置执行头温度</h2></div>
       <div class="control-dialog__body">
         <label class="control-number-label" for="toolhead-temperature-number"><span>目标温度</span><span class="control-number-field"><input id="toolhead-temperature-number" type="number" inputmode="numeric" enterkeyhint="done" data-toolhead-temperature-input="number" min="0" max="300" step="1" required aria-describedby="toolhead-temperature-hint"><span aria-hidden="true">°C</span></span></label>
         <span class="control-input-hint" id="toolhead-temperature-hint">请输入 0–300 之间的整数</span>
@@ -1004,7 +999,7 @@
     </dialog>
     <dialog class="control-dialog material-drawer" data-material-drawer aria-labelledby="material-drawer-title">
       <div class="material-drawer__handle" aria-hidden="true"></div>
-      <div class="control-dialog__header"><h2 id="material-drawer-title">耗材详情</h2><button class="icon-btn" type="button" data-material-close aria-label="关闭"><i data-lucide="x"></i></button></div>
+      <div class="control-dialog__header"><h2 id="material-drawer-title">耗材详情</h2></div>
       <div class="control-dialog__body material-drawer__body">
         <div class="material-drawer__details">
           <button type="button" data-material-edit="type"><span class="material-drawer__label">耗材种类</span><span class="material-drawer__value"><strong data-material-type></strong><i data-lucide="chevron-right"></i></span></button>
@@ -1015,7 +1010,7 @@
     </dialog>
     <dialog class="control-dialog material-picker" data-material-picker aria-labelledby="material-picker-title">
       <div class="material-drawer__handle" aria-hidden="true"></div>
-      <div class="control-dialog__header"><h2 id="material-picker-title">选择耗材种类</h2><button class="icon-btn" type="button" data-material-picker-close aria-label="关闭"><i data-lucide="x"></i></button></div>
+      <div class="control-dialog__header"><h2 id="material-picker-title">选择耗材种类</h2></div>
       <div class="control-dialog__body material-picker__body">
         <div data-material-picker-view="type"><div class="material-type-options" data-material-type-options></div></div>
         <div data-material-picker-view="color" hidden><div class="material-color-options" data-material-color-options></div></div>
@@ -1067,8 +1062,11 @@
         <img class="model-detail-page__image" src="model-placeholder.svg" alt="模型预览占位图" data-model-detail-image>
       </div>
       <article class="model-detail-page__hero">
-        <h1 data-model-detail-title></h1>
-        <p data-model-detail-author></p>
+        <div class="model-detail-page__hero-copy">
+          <h1 data-model-detail-title></h1>
+          <p data-model-detail-author></p>
+        </div>
+        <button class="btn btn-primary model-detail-page__print-button" type="button" data-model-detail-print aria-label="开始打印"><i data-lucide="printer" aria-hidden="true"></i><span>开始打印</span></button>
       </article>
       <article class="model-detail-page__content">
         <h3>简介</h3>
@@ -1088,7 +1086,7 @@
         <span>模型</span>
       </button>
       <button data-nav="device" class="nav-item">
-        <svg t="1785373721256" class="device-nav-icon icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6942" width="200" height="200" aria-hidden="true" focusable="false"><path d="M995.55 0H28.45A28.47 28.47 0 0 0 8.323 8.323 28.47 28.47 0 0 0 0.001 28.448v967.101c0 7.552 2.99 14.782 8.323 20.126a28.471 28.471 0 0 0 20.125 8.322h967.102c7.552 0 14.781-2.989 20.125-8.322a28.471 28.471 0 0 0 8.323-20.126V28.448c0-7.552-2.99-14.781-8.323-20.125A28.47 28.47 0 0 0 995.551 0z m-28.437 227.551h-369.78v-56.885h56.885c47.115-0.053 85.28-38.229 85.333-85.333V56.885h227.562zM512 284.447c-15.707-0.01-28.437-12.738-28.448-28.448v-85.333h56.896V256c-0.01 15.707-12.739 28.438-28.448 28.448zM682.666 56.885v28.448c-0.01 15.707-12.738 28.437-28.448 28.448H369.782c-15.707-0.01-28.438-12.739-28.448-28.448V56.885z m-398.217 0v28.448c0.053 47.104 38.218 85.28 85.333 85.333h56.885v56.885H56.887V56.885zM56.887 967.112V284.447h375.02a85.232 85.232 0 0 0 51.645 51.645v33.688c0 15.707 12.739 28.438 28.448 28.438s28.448-12.728 28.448-28.438v-33.688a85.232 85.232 0 0 0 51.645-51.645h375.02v682.665z m0 0" p-id="6943"></path><path d="M722.3 542.748l-199.103-85.333a28.533 28.533 0 0 0-22.394 0l-199.104 85.333a28.4 28.4 0 0 0-17.25 26.136v227.562a28.4 28.4 0 0 0 17.25 26.133l199.104 85.333a28.357 28.357 0 0 0 22.394 0l199.104-85.333a28.4 28.4 0 0 0 17.25-26.133V568.884a28.4 28.4 0 0 0-17.25-26.133zM512 514.498l126.917 54.386L512 623.278l-126.917-54.394z m-170.666 97.52l142.218 60.948v165.68l-142.218-60.952z m199.114 226.625V672.966l142.218-60.946v165.677z m284.437-667.977h56.895c15.707 0 28.438-12.738 28.438-28.448s-12.728-28.437-28.438-28.437h-56.895c-15.707 0-28.438 12.728-28.438 28.437s12.728 28.448 28.438 28.448z m-682.665 0h56.895c15.707 0 28.438-12.738 28.438-28.448s-12.728-28.437-28.438-28.437H142.22c-15.707 0-28.438 12.728-28.438 28.437s12.728 28.448 28.438 28.448z m0 0" p-id="6944"></path></svg>
+        <img class="device-nav-icon" src="device-nav-icon.svg" alt="" aria-hidden="true" width="24" height="24">
         <span>设备</span>
       </button>
       <button data-nav="market" class="nav-item">
