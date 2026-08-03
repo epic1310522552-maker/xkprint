@@ -968,9 +968,9 @@ a:focus-visible {
 .control-popup {
   position: absolute;
   top: 42px;
-  right: 12px;
+  left: 200px;
   bottom: 42px;
-  width: 280px;
+  width: 278px;
   z-index: 5;
   display: flex;
   flex-direction: column;

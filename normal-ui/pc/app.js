@@ -73,22 +73,36 @@
 
   const controlPopups = [...document.querySelectorAll('.control-popup')];
   const popupTriggers = [...document.querySelectorAll('[data-popup-trigger]')];
+  const motionPanel = document.querySelector('.motion-panel');
   let openPopupName = null;
 
-  const setPopup = (name) => {
+  const setPopup = (name, trigger = null) => {
     controlPopups.forEach((popup) => {
       popup.hidden = popup.dataset.popup !== name;
     });
-    popupTriggers.forEach((trigger) => {
-      trigger.setAttribute('aria-expanded', String(trigger.dataset.popupTrigger === name));
+    popupTriggers.forEach((t) => {
+      t.setAttribute('aria-expanded', String(t.dataset.popupTrigger === name));
     });
     openPopupName = name;
+
+    const popup = name ? controlPopups.find((p) => p.dataset.popup === name) : null;
+    if (popup && trigger && motionPanel) {
+      popup.style.top = 'auto';
+      popup.style.height = 'auto';
+      const panelRect = motionPanel.getBoundingClientRect();
+      const rowRect = trigger.getBoundingClientRect();
+      const rowTop = rowRect.top - panelRect.top;
+      const naturalHeight = popup.offsetHeight;
+      const maxTop = panelRect.height - 42 - naturalHeight;
+      popup.style.top = `${Math.max(42, Math.min(rowTop, maxTop))}px`;
+      popup.style.height = `${naturalHeight}px`;
+    }
   };
 
   popupTriggers.forEach((trigger) => {
     trigger.addEventListener('click', () => {
       const name = trigger.dataset.popupTrigger;
-      setPopup(openPopupName === name ? null : name);
+      setPopup(openPopupName === name ? null : name, trigger);
     });
   });
 
