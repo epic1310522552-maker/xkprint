@@ -88,20 +88,38 @@
   });
 
   const materialHeads = [...document.querySelectorAll('[data-material-head]')];
+  const statsCells = [...document.querySelectorAll('.stat-cell')];
   const materialDetails = document.querySelector('.material-details');
   const selectedHeadLabel = document.querySelector('[data-selected-head]');
   const closeMaterialButton = document.querySelector('[data-close-material]');
 
   if (materialHeads.length && materialDetails && selectedHeadLabel) {
+    const selectMaterialHead = (head) => {
+      materialHeads.forEach((option) => {
+        const isSelected = option === head;
+        option.classList.toggle('is-selected', isSelected);
+        option.setAttribute('aria-pressed', String(isSelected));
+      });
+      statsCells.forEach((cell) => {
+        cell.classList.toggle('is-selected', cell.dataset.materialHead === head.dataset.materialHead);
+      });
+      selectedHeadLabel.textContent = head.dataset.materialHead;
+      materialDetails.hidden = false;
+      materialDetails.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    };
+
     materialHeads.forEach((head) => {
-      head.addEventListener('click', () => {
-        materialHeads.forEach((option) => {
-          const isSelected = option === head;
-          option.classList.toggle('is-selected', isSelected);
-          option.setAttribute('aria-pressed', String(isSelected));
-        });
-        selectedHeadLabel.textContent = head.dataset.materialHead;
-        materialDetails.hidden = false;
+      head.addEventListener('click', () => selectMaterialHead(head));
+    });
+
+    statsCells.forEach((cell) => {
+      const head = materialHeads.find((option) => option.dataset.materialHead === cell.dataset.materialHead);
+      if (!head) return;
+      cell.addEventListener('click', () => selectMaterialHead(head));
+      cell.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        selectMaterialHead(head);
       });
     });
 
@@ -111,6 +129,7 @@
         head.classList.remove('is-selected');
         head.setAttribute('aria-pressed', 'false');
       });
+      statsCells.forEach((cell) => cell.classList.remove('is-selected'));
     });
   }
 
