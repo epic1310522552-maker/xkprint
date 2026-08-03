@@ -198,6 +198,14 @@
   const materialDetails = document.querySelector('.material-details');
   const selectedHeadLabel = document.querySelector('[data-selected-head]');
   const closeMaterialButton = document.querySelector('[data-close-material]');
+  const colorWheelTrigger = document.querySelector('[data-color-wheel-trigger]');
+  const colorWheelPicker = document.querySelector('#custom-color-picker');
+
+  const setColorWheelExpanded = (isExpanded) => {
+    if (!colorWheelTrigger || !colorWheelPicker) return;
+    colorWheelTrigger.setAttribute('aria-expanded', String(isExpanded));
+    colorWheelPicker.hidden = !isExpanded;
+  };
 
   if (materialHeads.length && materialDetails && selectedHeadLabel) {
     const selectMaterialHead = (head) => {
@@ -209,6 +217,7 @@
       selectedHeadLabel.textContent = head.dataset.materialHead;
       materialDetails.hidden = false;
       materialDetails.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      setColorWheelExpanded(false);
     };
 
     materialHeads.forEach((head) => {
@@ -216,8 +225,15 @@
     });
 
 
+    colorWheelTrigger?.addEventListener('click', () => {
+      const isExpanded = colorWheelTrigger.getAttribute('aria-expanded') === 'true';
+      setColorWheelExpanded(!isExpanded);
+      if (!isExpanded) colorWheelPicker?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    });
+
     closeMaterialButton?.addEventListener('click', () => {
       materialDetails.hidden = true;
+      setColorWheelExpanded(false);
       materialHeads.forEach((head) => {
         head.classList.remove('is-selected');
         head.setAttribute('aria-pressed', 'false');

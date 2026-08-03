@@ -14,17 +14,16 @@
     <symbol id="mdi-printer-3d-nozzle" viewBox="0 0 24 24">
       <path d="M7,2H17V8H19V13H16.5L13,17H11L7.5,13H5V8H7V2M10,22H2V20H10A1,1 0 0,0 11,19V18H13V19A3,3 0 0,1 10,22Z"></path>
     </symbol>
+    <symbol id="pzv-head" viewBox="0 0 30.05 44.16">
+      <path fill="currentColor" stroke="#333a42" stroke-miterlimit="10" d="m.5.5h29.05v29.85c0,1.71-1.39,3.1-3.1,3.1H3.6c-1.71,0-3.1-1.39-3.1-3.1V.5h0Z"></path>
+      <rect fill="currentColor" stroke="#333a42" stroke-miterlimit="10" x="9.64" y="33.45" width="10.78" height="3.89"></rect>
+      <rect fill="#333a42" x="13.6" y="37.34" width="2.86" height="6.81"></rect>
+    </symbol>
   </svg>
   <div class="width-notice">请使用宽度至少 1024px 的桌面窗口</div>
   <div class="console">
     <header class="top-nav">
       <a class="brand" href="index.html" aria-label="XKPrint 设备控制台">XKPrint</a>
-      <nav class="main-nav" aria-label="主导航">
-        <button type="button" aria-current="page">设备</button>
-        <button type="button" disabled>模型</button>
-        <button type="button" disabled>商城</button>
-        <button type="button" disabled>我的</button>
-      </nav>
       <div class="device-identity">
         <span data-active-device aria-live="polite"><i aria-hidden="true"></i><b>XK1 Carbon</b> · <em>在线</em></span>
         <span class="avatar" aria-label="用户 AC">AC</span>
@@ -33,8 +32,26 @@
     <main class="content">
       <section data-page="device" aria-label="设备控制">
         <div class="device-workspace">
-          <aside class="device-sidebar" aria-label="设备菜单">
-            <nav class="sidebar-menu" aria-label="设备功能">
+          <aside class="device-sidebar" aria-label="侧边栏导航">
+            <nav class="sidebar-menu sidebar-global-menu" aria-label="主导航">
+              <button class="sidebar-menu-item global-nav-item is-active" type="button" aria-current="page">
+                <i data-lucide="printer" aria-hidden="true"></i>
+                <span>设备</span>
+              </button>
+              <button class="sidebar-menu-item global-nav-item" type="button" disabled>
+                <i data-lucide="box" aria-hidden="true"></i>
+                <span>模型</span>
+              </button>
+              <button class="sidebar-menu-item global-nav-item" type="button" disabled>
+                <i data-lucide="shopping-bag" aria-hidden="true"></i>
+                <span>商城</span>
+              </button>
+              <button class="sidebar-menu-item global-nav-item" type="button" disabled>
+                <i data-lucide="user-round" aria-hidden="true"></i>
+                <span>我的</span>
+              </button>
+            </nav>
+            <nav class="sidebar-menu sidebar-device-menu" aria-label="设备功能">
               <button class="sidebar-menu-item" type="button" data-device-menu aria-expanded="false" aria-controls="my-device-menu">
                 <i data-lucide="printer" aria-hidden="true"></i>
                 <span>我的设备</span>
@@ -92,36 +109,44 @@
               <span class="control-ready"><i aria-hidden="true"></i>设备就绪</span>
             </header>
             <div class="motion-content">
+              <header class="summary-section-heading">
+                <span id="head-temperature-title">执行头温度</span>
+                <small>当前 / 目标</small>
+              </header>
+              <div class="jog-toolbar">
+                <span>移动距离</span>
+                <div class="jog-step-options" role="group" aria-label="移动距离展示">
+                  <button type="button">0.1</button>
+                  <button type="button">1</button>
+                  <button class="is-active" type="button">10 mm</button>
+                </div>
+              </div>
               <div class="device-control-summary">
                 <section class="head-temperature-summary" aria-labelledby="head-temperature-title">
-                  <header class="summary-section-heading">
-                    <span id="head-temperature-title">执行头温度</span>
-                    <small>当前 / 目标</small>
-                  </header>
                   <div class="head-temperature-strip" role="list" aria-label="八个执行头温度">
                     <div class="head-temperature-item is-heating" role="listitem" aria-label="执行头 1，当前 218°C，目标 220°C">
-                      <span class="head-number">1</span><strong>218°</strong><small>220°</small>
+                      <span class="head-icon" style="--head-color: #064a87; --head-number-color: #fff" aria-hidden="true"><svg viewBox="0 0 30.05 44.16"><use href="#pzv-head"></use></svg><span>1</span></span><strong>218°</strong><small>220°</small>
                     </div>
                     <div class="head-temperature-item" role="listitem" aria-label="执行头 2，当前 32°C，未设置目标温度">
-                      <span class="head-number">2</span><strong>32°</strong><small>—</small>
+                      <span class="head-icon" style="--head-color: #e52222; --head-number-color: #fff" aria-hidden="true"><svg viewBox="0 0 30.05 44.16"><use href="#pzv-head"></use></svg><span>2</span></span><strong>32°</strong><small>—</small>
                     </div>
                     <div class="head-temperature-item" role="listitem" aria-label="执行头 3，当前 31°C，未设置目标温度">
-                      <span class="head-number">3</span><strong>31°</strong><small>—</small>
+                      <span class="head-icon" style="--head-color: #ffc400; --head-number-color: #20242a" aria-hidden="true"><svg viewBox="0 0 30.05 44.16"><use href="#pzv-head"></use></svg><span>3</span></span><strong>31°</strong><small>—</small>
                     </div>
                     <div class="head-temperature-item" role="listitem" aria-label="执行头 4，当前 32°C，未设置目标温度">
-                      <span class="head-number">4</span><strong>32°</strong><small>—</small>
+                      <span class="head-icon" style="--head-color: #49a66b; --head-number-color: #17202a" aria-hidden="true"><svg viewBox="0 0 30.05 44.16"><use href="#pzv-head"></use></svg><span>4</span></span><strong>32°</strong><small>—</small>
                     </div>
                     <div class="head-temperature-item" role="listitem" aria-label="执行头 5，当前 32°C，未设置目标温度">
-                      <span class="head-number">5</span><strong>32°</strong><small>—</small>
+                      <span class="head-icon" style="--head-color: #fff; --head-number-color: #20242a" aria-hidden="true"><svg viewBox="0 0 30.05 44.16"><use href="#pzv-head"></use></svg><span>5</span></span><strong>32°</strong><small>—</small>
                     </div>
                     <div class="head-temperature-item" role="listitem" aria-label="执行头 6，当前 32°C，未设置目标温度">
-                      <span class="head-number">6</span><strong>32°</strong><small>—</small>
+                      <span class="head-icon" style="--head-color: #111; --head-number-color: #fff" aria-hidden="true"><svg viewBox="0 0 30.05 44.16"><use href="#pzv-head"></use></svg><span>6</span></span><strong>32°</strong><small>—</small>
                     </div>
                     <div class="head-temperature-item" role="listitem" aria-label="执行头 7，当前 32°C，未设置目标温度">
-                      <span class="head-number">7</span><strong>32°</strong><small>—</small>
+                      <span class="head-icon" style="--head-color: #ff8a00; --head-number-color: #20242a" aria-hidden="true"><svg viewBox="0 0 30.05 44.16"><use href="#pzv-head"></use></svg><span>7</span></span><strong>32°</strong><small>—</small>
                     </div>
                     <div class="head-temperature-item" role="listitem" aria-label="执行头 8，当前 32°C，未设置目标温度">
-                      <span class="head-number">8</span><strong>32°</strong><small>—</small>
+                      <span class="head-icon" style="--head-color: #a9adaf; --head-number-color: #20242a" aria-hidden="true"><svg viewBox="0 0 30.05 44.16"><use href="#pzv-head"></use></svg><span>8</span></span><strong>32°</strong><small>—</small>
                     </div>
                   </div>
                 </section>
@@ -141,14 +166,6 @@
                 </dl>
               </div>
               <div class="jog-controls">
-                <div class="jog-toolbar">
-                  <span>移动距离</span>
-                  <div class="jog-step-options" role="group" aria-label="移动距离展示">
-                    <button type="button">0.1</button>
-                    <button type="button">1</button>
-                    <button class="is-active" type="button">10 mm</button>
-                  </div>
-                </div>
                 <div class="jog-layout">
                   <section class="axis-control-group" aria-labelledby="xy-axis-title">
                     <span id="xy-axis-title" class="axis-title">XY 轴</span>
@@ -306,7 +323,6 @@
             </header>
             <div class="material-content">
               <div class="material-head-section">
-                <span class="material-section-label">执行头位置</span>
                 <div class="material-head-grid" role="group" aria-label="执行头位置">
                   <button class="material-head" type="button" data-material-head="执行头 1" data-material-type="PLA Matte" data-color-name="深蓝" data-color-value="#064a87" aria-pressed="false"><i style="--head-color: #064a87" aria-hidden="true"></i><span><strong>执行头 1</strong><small>PLA Matte · 深蓝</small></span></button>
                   <button class="material-head" type="button" data-material-head="执行头 2" data-material-type="PLA Basic" data-color-name="红色" data-color-value="#e52222" aria-pressed="false"><i style="--head-color: #e52222" aria-hidden="true"></i><span><strong>执行头 2</strong><small>PLA Basic · 红色</small></span></button>
@@ -356,6 +372,23 @@
                       <button type="button" style="--swatch: #202124"><i aria-hidden="true"></i><span>深灰</span></button>
                       <button class="is-active" type="button" style="--swatch: #064a87"><i aria-hidden="true"></i><span>深蓝</span></button>
                       <button type="button" style="--swatch: #6657b5"><i aria-hidden="true"></i><span>紫色</span></button>
+                    </div>
+                    <button class="custom-color-trigger" type="button" data-color-wheel-trigger aria-expanded="false" aria-controls="custom-color-picker">
+                      <i data-lucide="palette" aria-hidden="true"></i>
+                      <span><strong>自定义颜色</strong><small>使用色轮选择颜色</small></span>
+                      <i data-lucide="chevron-right" aria-hidden="true"></i>
+                    </button>
+                    <div id="custom-color-picker" class="color-wheel-picker" aria-label="自定义颜色选择" hidden>
+                      <div class="color-wheel-preview" aria-hidden="true">
+                        <span class="color-wheel"><i></i></span>
+                        <span class="color-lightness"><i></i></span>
+                      </div>
+                      <div class="color-wheel-values" aria-label="当前自定义颜色值">
+                        <span><small>HEX</small><strong>#064A87</strong></span>
+                        <span><small>R</small><strong>6</strong></span>
+                        <span><small>G</small><strong>74</strong></span>
+                        <span><small>B</small><strong>135</strong></span>
+                      </div>
                     </div>
                   </section>
                 </div>
