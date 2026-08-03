@@ -628,8 +628,15 @@ a:focus-visible {
 }
 
 .device-stats .stat-cell dt svg {
-  width: 12px;
-  height: 12px;
+  width: 18px;
+  height: 18px;
+  flex: none;
+  padding: 2px;
+  border-radius: 4px;
+  border: 1px solid rgba(33, 38, 44, 0.24);
+  background: var(--head-color, #e7eaed);
+  color: var(--head-icon, #ffffff);
+  stroke-width: 2.2;
 }
 
 .device-stats .stat-cell dd {
@@ -1528,7 +1535,7 @@ a:focus-visible {
   }
 
   .device-stats .stat-extra {
-    min-height: 34px;
+    min-height: 30px;
   }
 
   .jog-controls {
@@ -1559,7 +1566,7 @@ a:focus-visible {
   }
 
   .device-stats .stat-extra {
-    min-height: 34px;
+    min-height: 32px;
   }
 }
 
