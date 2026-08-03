@@ -965,6 +965,212 @@ a:focus-visible {
   font-size: 12px;
 }
 
+.control-popup {
+  position: absolute;
+  top: 42px;
+  right: 12px;
+  bottom: 42px;
+  width: 280px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 6px 24px rgba(23, 31, 42, 0.12);
+  overflow: hidden;
+}
+
+.control-popup[hidden] {
+  display: none;
+}
+
+.control-popup-header {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px 0 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.control-popup-header strong {
+  font-size: 13px;
+}
+
+.control-popup-header button {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.control-popup-header button:hover {
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+.control-popup-header svg {
+  width: 15px;
+  height: 15px;
+}
+
+.fan-list {
+  min-height: 0;
+  display: grid;
+  gap: 12px;
+  padding: 14px 16px;
+  overflow-y: auto;
+}
+
+.fan-item {
+  display: grid;
+  gap: 7px;
+}
+
+.fan-item > span {
+  color: #3f4852;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.fan-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fan-control input[type="range"] {
+  min-width: 0;
+  flex: 1;
+  accent-color: var(--blue);
+}
+
+.fan-control output {
+  min-width: 38px;
+  color: var(--blue-dark);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: right;
+}
+
+.speed-body {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 14px 16px;
+  overflow-y: auto;
+}
+
+.speed-modes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.speed-mode {
+  min-width: 0;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+}
+
+.speed-mode:hover {
+  border-color: #9fb9d8;
+  background: #f7faff;
+}
+
+.speed-mode span {
+  overflow: hidden;
+  color: #3f4852;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.speed-mode strong {
+  flex: none;
+  color: var(--blue);
+  font-size: 14px;
+}
+
+.speed-mode.is-active {
+  border-color: var(--blue);
+  background: #eef5fd;
+}
+
+.speed-mode.is-active span {
+  color: var(--blue-dark);
+  font-weight: 600;
+}
+
+.speed-custom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid #eaeced;
+}
+
+.speed-custom > span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.speed-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.speed-input-wrap input {
+  width: 64px;
+  height: 30px;
+  padding: 0 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: 5px;
+  background: #fff;
+  color: var(--text);
+  font-size: 13px;
+  text-align: right;
+}
+
+.speed-input-wrap input:focus-visible {
+  outline: 3px solid rgba(36, 116, 216, 0.3);
+  outline-offset: 1px;
+}
+
+.speed-input-wrap input::-webkit-outer-spin-button,
+.speed-input-wrap input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.speed-input-wrap input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.speed-unit {
+  color: var(--muted);
+  font-size: 12px;
+}
+
 .title-icon {
   width: 28px;
   height: 28px;

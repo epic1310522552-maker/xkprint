@@ -71,6 +71,83 @@
     lightSwitch.querySelector('span').textContent = isEnabled ? '关闭' : '开启';
   });
 
+  const controlPopups = [...document.querySelectorAll('.control-popup')];
+  const popupTriggers = [...document.querySelectorAll('[data-popup-trigger]')];
+  let openPopupName = null;
+
+  const setPopup = (name) => {
+    controlPopups.forEach((popup) => {
+      popup.hidden = popup.dataset.popup !== name;
+    });
+    popupTriggers.forEach((trigger) => {
+      trigger.setAttribute('aria-expanded', String(trigger.dataset.popupTrigger === name));
+    });
+    openPopupName = name;
+  };
+
+  popupTriggers.forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const name = trigger.dataset.popupTrigger;
+      setPopup(openPopupName === name ? null : name);
+    });
+  });
+
+  document.querySelectorAll('[data-close-popup]').forEach((button) => {
+    button.addEventListener('click', () => setPopup(null));
+  });
+
+  const fanStatsTrigger = document.querySelector('[data-popup-trigger="fan"]');
+
+  document.querySelectorAll('[data-fan]').forEach((slider) => {
+    const output = document.querySelector(`[data-fan-output="${slider.dataset.fan}"]`);
+    if (!output) return;
+    slider.addEventListener('input', () => {
+      output.textContent = `${slider.value}%`;
+      if (slider.dataset.fan === 'part' && fanStatsTrigger) {
+        fanStatsTrigger.querySelector('strong').textContent = `${slider.value}%`;
+        fanStatsTrigger.setAttribute('aria-label', `部件风扇，当前 ${slider.value}%`);
+      }
+    });
+  });
+
+  const speedButtons = [...document.querySelectorAll('.speed-mode')];
+  const speedInput = document.querySelector('[data-speed-input]');
+  const speedStatsTrigger = document.querySelector('[data-popup-trigger="speed"]');
+
+  const syncSpeedPresets = (value) => {
+    const match = speedButtons.find((button) => Number(button.dataset.speed) === value);
+    speedButtons.forEach((button) => {
+      const isActive = button === match;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
+    });
+  };
+
+  const applySpeed = (value) => {
+    if (speedStatsTrigger) {
+      speedStatsTrigger.querySelector('strong').textContent = `${value}%`;
+      speedStatsTrigger.setAttribute('aria-label', `打印速度，当前 ${value}%`);
+    }
+  };
+
+  speedButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const value = Number(button.dataset.speed);
+      syncSpeedPresets(value);
+      if (speedInput) speedInput.value = value;
+      applySpeed(value);
+    });
+  });
+
+  speedInput?.addEventListener('input', () => {
+    const raw = speedInput.value.trim();
+    if (raw === '') return;
+    const value = Math.min(400, Math.max(1, Number(raw)));
+    if (!Number.isFinite(value)) return;
+    syncSpeedPresets(value);
+    applySpeed(value);
+  });
+
   const taskViewButtons = [...document.querySelectorAll('[data-task-view]')];
   const taskViewPanels = [...document.querySelectorAll('[data-task-view-panel]')];
 

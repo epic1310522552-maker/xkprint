@@ -97,9 +97,12 @@
                 <div class="stat-cell" role="button" tabindex="0" data-material-head="执行头 8" aria-label="执行头 8，32 / 0°C，打开耗材设置" title="打开耗材设置"><dt style="--head-color: #a9adaf; --head-icon: #20242a"><i data-lucide="thermometer"></i>执行头 8</dt><dd><strong>32</strong> / 0°C</dd></div>
                 <div class="stat-extra">
                   <dt><i data-lucide="fan"></i>部件风扇</dt>
-                  <dd><button class="stat-popup-trigger" type="button" aria-label="部件风扇，当前 80%"><strong>80%</strong><i data-lucide="chevron-right" aria-hidden="true"></i></button></dd>
+                  <dd><button class="stat-popup-trigger" type="button" data-popup-trigger="fan" aria-expanded="false" aria-label="部件风扇，当前 80%"><strong>80%</strong><i data-lucide="chevron-right" aria-hidden="true"></i></button></dd>
                 </div>
-                <div class="stat-extra"><dt><i data-lucide="gauge"></i>打印速度</dt><dd><strong>100%</strong></dd></div>
+                <div class="stat-extra">
+                  <dt><i data-lucide="gauge"></i>打印速度</dt>
+                  <dd><button class="stat-popup-trigger" type="button" data-popup-trigger="speed" aria-expanded="false" aria-label="打印速度，当前 100%"><strong>100%</strong><i data-lucide="chevron-right" aria-hidden="true"></i></button></dd>
+                </div>
                 <div class="stat-extra">
                   <dt><i data-lucide="lightbulb"></i>照明</dt>
                   <dd><button class="stat-switch" type="button" role="switch" aria-checked="true" aria-label="照明"><span>开启</span><i aria-hidden="true"></i></button></dd>
@@ -137,6 +140,56 @@
                 <div class="control-actions">
                   <button type="button" data-control="load-head"><i data-lucide="package-plus"></i><span>加载执行头</span></button>
                   <button class="danger-action" type="button" data-control="unload-head"><i data-lucide="package-minus"></i><span>取出执行头</span></button>
+                </div>
+              </div>
+            </div>
+            <div class="control-popup" data-popup="fan" role="dialog" aria-label="风扇调整" hidden>
+              <header class="control-popup-header">
+                <strong>风扇调整</strong>
+                <button type="button" data-close-popup="fan" aria-label="关闭风扇调整" title="关闭"><i data-lucide="x" aria-hidden="true"></i></button>
+              </header>
+              <div class="fan-list">
+                <div class="fan-item">
+                  <span>部件风扇</span>
+                  <div class="fan-control">
+                    <input type="range" min="0" max="100" step="5" value="80" data-fan="part" aria-label="部件风扇速度">
+                    <output data-fan-output="part">80%</output>
+                  </div>
+                </div>
+                <div class="fan-item">
+                  <span>辅助风扇</span>
+                  <div class="fan-control">
+                    <input type="range" min="0" max="100" step="5" value="60" data-fan="aux" aria-label="辅助风扇速度">
+                    <output data-fan-output="aux">60%</output>
+                  </div>
+                </div>
+                <div class="fan-item">
+                  <span>机箱风扇</span>
+                  <div class="fan-control">
+                    <input type="range" min="0" max="100" step="5" value="40" data-fan="case" aria-label="机箱风扇速度">
+                    <output data-fan-output="case">40%</output>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="control-popup" data-popup="speed" role="dialog" aria-label="打印速度" hidden>
+              <header class="control-popup-header">
+                <strong>打印速度</strong>
+                <button type="button" data-close-popup="speed" aria-label="关闭打印速度" title="关闭"><i data-lucide="x" aria-hidden="true"></i></button>
+              </header>
+              <div class="speed-body">
+                <div class="speed-modes" role="group" aria-label="速度预设">
+                  <button class="speed-mode" type="button" data-speed="166" aria-pressed="false"><span>狂暴模式</span><strong>166%</strong></button>
+                  <button class="speed-mode" type="button" data-speed="124" aria-pressed="false"><span>运动模式</span><strong>124%</strong></button>
+                  <button class="speed-mode is-active" type="button" data-speed="100" aria-pressed="true"><span>标准模式</span><strong>100%</strong></button>
+                  <button class="speed-mode" type="button" data-speed="50" aria-pressed="false"><span>静音模式</span><strong>50%</strong></button>
+                </div>
+                <div class="speed-custom">
+                  <span>速度</span>
+                  <div class="speed-input-wrap">
+                    <input type="number" min="1" max="400" value="100" data-speed-input aria-label="打印速度百分比">
+                    <span class="speed-unit">%</span>
+                  </div>
                 </div>
               </div>
             </div>
