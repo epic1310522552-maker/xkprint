@@ -63,12 +63,28 @@
   }
 
 
-  const lightSwitch = document.querySelector('.stat-switch');
+  const lightSwitches = [...document.querySelectorAll('[data-light]')];
+  const lightSummary = document.querySelector('[data-light-summary]');
+  const lightStatsTrigger = document.querySelector('[data-popup-trigger="light"]');
 
-  lightSwitch?.addEventListener('click', () => {
-    const isEnabled = lightSwitch.getAttribute('aria-checked') === 'true';
-    lightSwitch.setAttribute('aria-checked', String(!isEnabled));
-    lightSwitch.querySelector('span').textContent = isEnabled ? '关闭' : '开启';
+  const syncLightSummary = () => {
+    const enabledLights = lightSwitches.filter((light) => light.getAttribute('aria-checked') === 'true');
+    const enabledNames = enabledLights.map((light) => light.dataset.light === 'rgb' ? 'RGB 灯' : '照明灯');
+    if (lightSummary) lightSummary.textContent = `${enabledLights.length} 路开启`;
+    if (lightStatsTrigger) {
+      lightStatsTrigger.setAttribute('aria-label', enabledNames.length ? `照明设置，${enabledNames.join('和')}开启` : '照明设置，灯光均关闭');
+      lightStatsTrigger.querySelector('.rgb-status-dot')?.classList.toggle('is-off', !enabledNames.includes('RGB 灯'));
+      lightStatsTrigger.querySelector('.white-status-dot')?.classList.toggle('is-off', !enabledNames.includes('照明灯'));
+    }
+  };
+
+  lightSwitches.forEach((lightSwitch) => {
+    lightSwitch.addEventListener('click', () => {
+      const isEnabled = lightSwitch.getAttribute('aria-checked') === 'true';
+      lightSwitch.setAttribute('aria-checked', String(!isEnabled));
+      lightSwitch.querySelector('span').textContent = isEnabled ? '关闭' : '开启';
+      syncLightSummary();
+    });
   });
 
   const controlPopups = [...document.querySelectorAll('.control-popup')];
@@ -179,7 +195,6 @@
   });
 
   const materialHeads = [...document.querySelectorAll('[data-material-head]')];
-  const statsCells = [...document.querySelectorAll('.stat-cell')];
   const materialDetails = document.querySelector('.material-details');
   const selectedHeadLabel = document.querySelector('[data-selected-head]');
   const closeMaterialButton = document.querySelector('[data-close-material]');
@@ -191,9 +206,6 @@
         option.classList.toggle('is-selected', isSelected);
         option.setAttribute('aria-pressed', String(isSelected));
       });
-      statsCells.forEach((cell) => {
-        cell.classList.toggle('is-selected', cell.dataset.materialHead === head.dataset.materialHead);
-      });
       selectedHeadLabel.textContent = head.dataset.materialHead;
       materialDetails.hidden = false;
       materialDetails.scrollIntoView({ block: 'nearest', inline: 'nearest' });
@@ -203,16 +215,6 @@
       head.addEventListener('click', () => selectMaterialHead(head));
     });
 
-    statsCells.forEach((cell) => {
-      const head = materialHeads.find((option) => option.dataset.materialHead === cell.dataset.materialHead);
-      if (!head) return;
-      cell.addEventListener('click', () => selectMaterialHead(head));
-      cell.addEventListener('keydown', (event) => {
-        if (event.key !== 'Enter' && event.key !== ' ') return;
-        event.preventDefault();
-        selectMaterialHead(head);
-      });
-    });
 
     closeMaterialButton?.addEventListener('click', () => {
       materialDetails.hidden = true;
@@ -220,7 +222,6 @@
         head.classList.remove('is-selected');
         head.setAttribute('aria-pressed', 'false');
       });
-      statsCells.forEach((cell) => cell.classList.remove('is-selected'));
     });
   }
 

@@ -9,6 +9,12 @@
   <script defer src="app.js"></script>
 </head>
 <body>
+  <!-- MDI printer-3d-nozzle, Apache-2.0: https://pictogrammers.com/library/mdi/icon/printer-3d-nozzle/ -->
+  <svg class="svg-defs" aria-hidden="true">
+    <symbol id="mdi-printer-3d-nozzle" viewBox="0 0 24 24">
+      <path d="M7,2H17V8H19V13H16.5L13,17H11L7.5,13H5V8H7V2M10,22H2V20H10A1,1 0 0,0 11,19V18H13V19A3,3 0 0,1 10,22Z"></path>
+    </symbol>
+  </svg>
   <div class="width-notice">请使用宽度至少 1024px 的桌面窗口</div>
   <div class="console">
     <header class="top-nav">
@@ -86,28 +92,54 @@
               <span class="control-ready"><i aria-hidden="true"></i>设备就绪</span>
             </header>
             <div class="motion-content">
-              <dl class="device-stats">
-                <div class="stat-cell" role="button" tabindex="0" data-material-head="执行头 1" aria-label="执行头 1，218 / 220°C，打开耗材设置" title="打开耗材设置"><dt style="--head-color: #064a87"><i data-lucide="thermometer"></i>执行头 1</dt><dd><strong>218</strong> / 220°C</dd></div>
-                <div class="stat-cell" role="button" tabindex="0" data-material-head="执行头 2" aria-label="执行头 2，32 / 0°C，打开耗材设置" title="打开耗材设置"><dt style="--head-color: #e52222"><i data-lucide="thermometer"></i>执行头 2</dt><dd><strong>32</strong> / 0°C</dd></div>
-                <div class="stat-cell" role="button" tabindex="0" data-material-head="执行头 3" aria-label="执行头 3，31 / 0°C，打开耗材设置" title="打开耗材设置"><dt style="--head-color: #ffc400; --head-icon: #20242a"><i data-lucide="thermometer"></i>执行头 3</dt><dd><strong>31</strong> / 0°C</dd></div>
-                <div class="stat-cell" role="button" tabindex="0" data-material-head="执行头 4" aria-label="执行头 4，32 / 0°C，打开耗材设置" title="打开耗材设置"><dt style="--head-color: #49a66b"><i data-lucide="thermometer"></i>执行头 4</dt><dd><strong>32</strong> / 0°C</dd></div>
-                <div class="stat-cell" role="button" tabindex="0" data-material-head="执行头 5" aria-label="执行头 5，32 / 0°C，打开耗材设置" title="打开耗材设置"><dt style="--head-color: #ffffff; --head-icon: #20242a"><i data-lucide="thermometer"></i>执行头 5</dt><dd><strong>32</strong> / 0°C</dd></div>
-                <div class="stat-cell" role="button" tabindex="0" data-material-head="执行头 6" aria-label="执行头 6，32 / 0°C，打开耗材设置" title="打开耗材设置"><dt style="--head-color: #111111"><i data-lucide="thermometer"></i>执行头 6</dt><dd><strong>32</strong> / 0°C</dd></div>
-                <div class="stat-cell" role="button" tabindex="0" data-material-head="执行头 7" aria-label="执行头 7，32 / 0°C，打开耗材设置" title="打开耗材设置"><dt style="--head-color: #ff8a00"><i data-lucide="thermometer"></i>执行头 7</dt><dd><strong>32</strong> / 0°C</dd></div>
-                <div class="stat-cell" role="button" tabindex="0" data-material-head="执行头 8" aria-label="执行头 8，32 / 0°C，打开耗材设置" title="打开耗材设置"><dt style="--head-color: #a9adaf; --head-icon: #20242a"><i data-lucide="thermometer"></i>执行头 8</dt><dd><strong>32</strong> / 0°C</dd></div>
-                <div class="stat-extra">
-                  <dt><i data-lucide="fan"></i>部件风扇</dt>
-                  <dd><button class="stat-popup-trigger" type="button" data-popup-trigger="fan" aria-expanded="false" aria-label="部件风扇，当前 80%"><strong>80%</strong><i data-lucide="chevron-right" aria-hidden="true"></i></button></dd>
-                </div>
-                <div class="stat-extra">
-                  <dt><i data-lucide="gauge"></i>打印速度</dt>
-                  <dd><button class="stat-popup-trigger" type="button" data-popup-trigger="speed" aria-expanded="false" aria-label="打印速度，当前 100%"><strong>100%</strong><i data-lucide="chevron-right" aria-hidden="true"></i></button></dd>
-                </div>
-                <div class="stat-extra">
-                  <dt><i data-lucide="lightbulb"></i>照明</dt>
-                  <dd><button class="stat-switch" type="button" role="switch" aria-checked="true" aria-label="照明"><span>开启</span><i aria-hidden="true"></i></button></dd>
-                </div>
-              </dl>
+              <div class="device-control-summary">
+                <section class="head-temperature-summary" aria-labelledby="head-temperature-title">
+                  <header class="summary-section-heading">
+                    <span id="head-temperature-title">执行头温度</span>
+                    <small>当前 / 目标</small>
+                  </header>
+                  <div class="head-temperature-strip" role="list" aria-label="八个执行头温度">
+                    <div class="head-temperature-item is-heating" role="listitem" aria-label="执行头 1，当前 218°C，目标 220°C">
+                      <span class="head-number">1</span><strong>218°</strong><small>220°</small>
+                    </div>
+                    <div class="head-temperature-item" role="listitem" aria-label="执行头 2，当前 32°C，未设置目标温度">
+                      <span class="head-number">2</span><strong>32°</strong><small>—</small>
+                    </div>
+                    <div class="head-temperature-item" role="listitem" aria-label="执行头 3，当前 31°C，未设置目标温度">
+                      <span class="head-number">3</span><strong>31°</strong><small>—</small>
+                    </div>
+                    <div class="head-temperature-item" role="listitem" aria-label="执行头 4，当前 32°C，未设置目标温度">
+                      <span class="head-number">4</span><strong>32°</strong><small>—</small>
+                    </div>
+                    <div class="head-temperature-item" role="listitem" aria-label="执行头 5，当前 32°C，未设置目标温度">
+                      <span class="head-number">5</span><strong>32°</strong><small>—</small>
+                    </div>
+                    <div class="head-temperature-item" role="listitem" aria-label="执行头 6，当前 32°C，未设置目标温度">
+                      <span class="head-number">6</span><strong>32°</strong><small>—</small>
+                    </div>
+                    <div class="head-temperature-item" role="listitem" aria-label="执行头 7，当前 32°C，未设置目标温度">
+                      <span class="head-number">7</span><strong>32°</strong><small>—</small>
+                    </div>
+                    <div class="head-temperature-item" role="listitem" aria-label="执行头 8，当前 32°C，未设置目标温度">
+                      <span class="head-number">8</span><strong>32°</strong><small>—</small>
+                    </div>
+                  </div>
+                </section>
+                <dl class="device-parameters">
+                  <div class="stat-extra">
+                    <dt><i data-lucide="fan"></i>部件风扇</dt>
+                    <dd><button class="stat-popup-trigger" type="button" data-popup-trigger="fan" aria-expanded="false" aria-label="部件风扇，当前 80%"><strong>80%</strong><i data-lucide="chevron-right" aria-hidden="true"></i></button></dd>
+                  </div>
+                  <div class="stat-extra">
+                    <dt><i data-lucide="gauge"></i>打印速度</dt>
+                    <dd><button class="stat-popup-trigger" type="button" data-popup-trigger="speed" aria-expanded="false" aria-label="打印速度，当前 100%"><strong>100%</strong><i data-lucide="chevron-right" aria-hidden="true"></i></button></dd>
+                  </div>
+                  <div class="stat-extra">
+                    <dt><i data-lucide="lightbulb"></i>照明</dt>
+                    <dd><button class="stat-popup-trigger light-popup-trigger" type="button" data-popup-trigger="light" aria-expanded="false" aria-label="照明设置，RGB 灯和照明灯均开启"><span class="light-status-dots" aria-hidden="true"><i class="rgb-status-dot"></i><i class="white-status-dot"></i></span><strong data-light-summary>2 路开启</strong><i data-lucide="chevron-right" aria-hidden="true"></i></button></dd>
+                  </div>
+                </dl>
+              </div>
               <div class="jog-controls">
                 <div class="jog-toolbar">
                   <span>移动距离</span>
@@ -193,7 +225,24 @@
                 </div>
               </div>
             </div>
-            <p class="control-status" data-control-status role="status">控制待命</p>
+            <div class="control-popup light-popup" data-popup="light" role="dialog" aria-label="照明控制" hidden>
+              <header class="control-popup-header">
+                <strong>照明控制</strong>
+                <button type="button" data-close-popup="light" aria-label="关闭照明控制" title="关闭"><i data-lucide="x" aria-hidden="true"></i></button>
+              </header>
+              <div class="light-control-list">
+                <div class="light-control-item">
+                  <span class="light-control-icon rgb-light-icon" aria-hidden="true"><i data-lucide="palette"></i></span>
+                  <span class="light-control-copy"><strong>RGB 灯</strong><small>氛围灯光</small></span>
+                  <button class="light-switch" type="button" role="switch" aria-checked="true" data-light="rgb" aria-label="RGB 灯"><span>开启</span><i aria-hidden="true"></i></button>
+                </div>
+                <div class="light-control-item">
+                  <span class="light-control-icon white-light-icon" aria-hidden="true"><i data-lucide="sun"></i></span>
+                  <span class="light-control-copy"><strong>照明灯</strong><small>工作区域照明</small></span>
+                  <button class="light-switch" type="button" role="switch" aria-checked="true" data-light="work" aria-label="照明灯"><span>开启</span><i aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
           </section>
           <section class="dashboard-panel tasks-panel">
             <header class="panel-titlebar">
