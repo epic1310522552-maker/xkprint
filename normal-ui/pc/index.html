@@ -19,6 +19,15 @@
       <rect fill="currentColor" stroke="#333a42" stroke-miterlimit="10" x="9.64" y="33.45" width="10.78" height="3.89"></rect>
       <rect fill="#333a42" x="13.6" y="37.34" width="2.86" height="6.81"></rect>
     </symbol>
+    <symbol id="sidebar-device-icon" viewBox="0 0 58.59 58.59">
+      <rect x="2" y="2" width="54.59" height="54.59" rx="4.19" fill="none" stroke="currentColor" stroke-width="4"></rect>
+      <rect x="9.71" y="14.26" width="39.16" height="35.04" rx=".08" fill="none" stroke="currentColor" stroke-width="4"></rect>
+      <rect x="21.48" y="14.26" width="15.63" height="14.21" rx="1.2" fill="none" stroke="currentColor" stroke-width="4"></rect>
+      <line x1="29.3" y1="28.47" x2="29.3" y2="36.12" stroke="currentColor" stroke-width="5"></line>
+      <rect x="7.88" y="5.53" width="9.59" height="5" fill="currentColor"></rect>
+      <line x1="20.35" y1="21.37" x2="10.75" y2="21.37" stroke="currentColor" stroke-width="4"></line>
+      <line x1="47.84" y1="21.37" x2="38.25" y2="21.37" stroke="currentColor" stroke-width="4"></line>
+    </symbol>
   </svg>
   <div class="width-notice">请使用宽度至少 1024px 的桌面窗口</div>
   <div class="console">
@@ -35,7 +44,7 @@
           <aside class="device-sidebar" aria-label="侧边栏导航">
             <nav class="sidebar-menu sidebar-global-menu" aria-label="主导航">
               <button class="sidebar-menu-item global-nav-item is-active" type="button" aria-current="page">
-                <i data-lucide="printer" aria-hidden="true"></i>
+                <svg class="sidebar-device-icon" aria-hidden="true"><use href="#sidebar-device-icon"></use></svg>
                 <span>设备</span>
               </button>
               <button class="sidebar-menu-item global-nav-item" type="button" disabled>
@@ -53,7 +62,7 @@
             </nav>
             <nav class="sidebar-menu sidebar-device-menu" aria-label="设备功能">
               <button class="sidebar-menu-item" type="button" data-device-menu aria-expanded="false" aria-controls="my-device-menu">
-                <i data-lucide="printer" aria-hidden="true"></i>
+                <svg class="sidebar-device-icon" aria-hidden="true"><use href="#sidebar-device-icon"></use></svg>
                 <span>我的设备</span>
                 <i class="menu-chevron" data-lucide="chevron-down" aria-hidden="true"></i>
               </button>
@@ -187,8 +196,8 @@
                   </section>
                 </div>
                 <div class="control-actions">
-                  <button type="button" data-control="load-head"><i data-lucide="package-plus"></i><span>加载执行头</span></button>
-                  <button class="danger-action" type="button" data-control="unload-head"><i data-lucide="package-minus"></i><span>取出执行头</span></button>
+                  <button type="button" data-control="load-head"><span>加载执行头</span></button>
+                  <button class="danger-action" type="button" data-control="unload-head"><span>取出执行头</span></button>
                 </div>
               </div>
             </div>
@@ -271,13 +280,14 @@
             </header>
             <div class="tasks-content">
               <div class="task-view-panel active-print-view" data-task-view-panel="tasks">
-                <article class="active-print-task">
+                <article class="active-print-task" data-print-task>
                   <img src="model-placeholder.svg" alt="螺旋花器模型预览">
                   <div class="active-print-details">
-                    <span class="task-state printing">正在打印</span>
+                    <span class="task-state printing" data-task-state>正在打印</span>
                     <h3>螺旋花器.3mf</h3>
                     <small>预计剩余 2 小时 37 分</small>
                   </div>
+                  <button class="task-control-button" type="button" data-print-toggle aria-pressed="false" aria-label="暂停螺旋花器打印"><i data-lucide="pause" aria-hidden="true"></i><span>暂停</span></button>
                   <strong class="active-print-percent">43%</strong>
                   <div class="active-print-progress" role="progressbar" aria-label="螺旋花器打印进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="43">
                     <i style="width: 43%"></i>

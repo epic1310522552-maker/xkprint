@@ -194,6 +194,24 @@
     });
   });
 
+  document.querySelectorAll('[data-print-toggle]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const task = button.closest('[data-print-task]');
+      const state = task?.querySelector('[data-task-state]');
+      if (!task || !state) return;
+
+      const isPaused = button.getAttribute('aria-pressed') === 'true';
+      const nextIsPaused = !isPaused;
+      button.setAttribute('aria-pressed', String(nextIsPaused));
+      button.setAttribute('aria-label', `${nextIsPaused ? '开始' : '暂停'}螺旋花器打印`);
+      button.innerHTML = `<i data-lucide="${nextIsPaused ? 'play' : 'pause'}" aria-hidden="true"></i><span>${nextIsPaused ? '开始' : '暂停'}</span>`;
+      state.textContent = nextIsPaused ? '已暂停' : '正在打印';
+      state.classList.toggle('printing', !nextIsPaused);
+      state.classList.toggle('ready', nextIsPaused);
+      window.lucide?.createIcons();
+    });
+  });
+
   const materialHeads = [...document.querySelectorAll('[data-material-head]')];
   const materialDetails = document.querySelector('.material-details');
   const selectedHeadLabel = document.querySelector('[data-selected-head]');
