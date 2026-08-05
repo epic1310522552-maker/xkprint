@@ -1,0 +1,82 @@
+/* ============================================
+   styles-account.css - account-security, change-password, delete-account pages
+   Split from styles.css (?v=20260729-design-theme); keep this file as the maintenance entry.
+   ============================================ */
+/* Account and security */
+.account-page { min-height: calc(100dvh - 64px); }
+
+.account-menu-group,
+.account-form,
+.delete-notice,
+.delete-agreement {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.account-menu-group { overflow: hidden; }
+.account-info-row,
+.account-action-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 68px;
+  padding: 12px 16px;
+}
+.account-action-row + .account-action-row,
+.account-info-row + .account-action-row { border-top: 1px solid var(--border); }
+.account-row-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  color: var(--text-muted);
+}
+.account-row-icon svg { width: 20px; height: 20px; }
+.account-info-row > div { display: flex; flex: 1; flex-direction: column; gap: 4px; }
+.account-info-row span,
+.account-action-row { font-size: 0.86rem; font-weight: 600; }
+.account-info-row strong { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.76rem; }
+.account-action-row > span:nth-child(2) { flex: 1; text-align: left; }
+.account-action-row--danger { color: var(--hot); }
+.account-action-row--danger .account-row-icon { color: var(--text-muted); background: transparent; }
+.account-menu-group .chevron { color: var(--text-muted); }
+.account-form { display: flex; flex-direction: column; gap: 18px; padding: 20px 16px; }
+.account-field { display: flex; flex-direction: column; gap: 8px; color: var(--text-secondary); font-size: 0.8rem; font-weight: 600; }
+.account-field small { color: var(--text-muted); font-size: 0.68rem; font-weight: 400; }
+.account-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  height: 48px;
+  padding: 0 13px;
+  color: var(--text-muted);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+}
+.account-input-wrap:focus-within { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.account-input-wrap svg { width: 18px; height: 18px; flex: 0 0 auto; }
+.account-input-wrap input { width: 100%; min-width: 0; color: var(--text-primary); font: inherit; background: transparent; border: 0; outline: 0; }
+.account-input-wrap input::placeholder { color: var(--text-muted); }
+.verification-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+.verification-button { min-width: 96px; padding: 0 12px; color: var(--accent); font-size: 0.76rem; font-weight: 600; background: var(--accent-soft); border: 1px solid var(--accent); border-radius: var(--radius-sm); }
+.account-submit { width: 100%; min-height: 48px; margin-top: 4px; }
+.delete-notice { padding: 22px 18px; }
+.delete-notice__icon { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin-bottom: 14px; color: var(--hot); background: rgba(224, 82, 82, 0.1); border-radius: 50%; }
+.delete-notice__icon svg { width: 23px; height: 23px; }
+.delete-notice h3 { margin-bottom: 10px; font-size: 1rem; }
+.delete-notice p,
+.delete-notice li { color: var(--text-secondary); font-size: 0.78rem; line-height: 1.7; }
+.delete-notice ul { display: flex; flex-direction: column; gap: 6px; margin: 12px 0 0; padding-left: 19px; }
+.delete-agreement { display: flex; align-items: flex-start; gap: 10px; padding: 14px 16px; color: var(--text-secondary); font-size: 0.76rem; line-height: 1.5; cursor: pointer; }
+.delete-agreement input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.delete-checkbox { display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; flex: 0 0 auto; color: transparent; border: 1px solid var(--border-strong); border-radius: 5px; }
+.delete-checkbox svg { width: 14px; height: 14px; }
+.delete-agreement input:checked + .delete-checkbox { color: white; background: var(--accent); border-color: var(--accent); }
+.delete-agreement strong { color: var(--accent); }
+.delete-account-button { width: 100%; min-height: 48px; flex: 0 0 48px; color: white; background: var(--hot); }
+.delete-account-button:disabled { cursor: not-allowed; opacity: 0.42; }

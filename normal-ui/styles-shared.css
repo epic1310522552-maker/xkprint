@@ -1,0 +1,91 @@
+/* ============================================
+   styles-shared.css - shared components: card, btn, status-pill, filter chips
+   Split from styles.css (?v=20260729-design-theme); keep this file as the maintenance entry.
+   ============================================ */
+/* ----- Status Pill ----- */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 2px 10px;
+  border-radius: 20px;
+}
+.status-pill.online {
+  background: var(--teal-bg);
+  color: var(--teal);
+}
+.status-pill svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* ----- Cards ----- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.card + .card {
+  margin-top: 0;
+}
+
+.btn {
+  flex: 1;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, opacity 0.2s;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:active {
+  opacity: 0.85;
+}
+.btn-secondary {
+  background: var(--border);
+  color: var(--text-secondary);
+}
+.btn-secondary:active {
+  background: var(--border-strong);
+}
+
+/* ============ 模型 Panel ============ */
+
+/* Filter Chips */
+.filter-row,
+.category-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.filter-row::-webkit-scrollbar,
+.category-row::-webkit-scrollbar { display: none; }
+.chip {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+.chip.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}

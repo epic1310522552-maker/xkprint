@@ -1,0 +1,56 @@
+/* ============================================
+   styles-overlays.css - global dialogs: logout, software update, toast
+   Split from styles.css (?v=20260729-design-theme); keep this file as the maintenance entry.
+   ============================================ */
+.logout-confirm-dialog { position: fixed; width: min(340px, calc(100% - 32px)); max-width: 340px; margin: auto; padding: 0; color: var(--text-primary); background: transparent; border: 0; overflow: visible; }
+.logout-confirm-dialog::backdrop { background: rgba(15, 18, 24, 0.52); backdrop-filter: blur(2px); }
+.logout-confirm-dialog[open] { animation: software-update-enter 180ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.logout-confirm-dialog__panel { display: flex; flex-direction: column; align-items: center; padding: 28px 22px 22px; text-align: center; background: var(--surface-raised); border: 1px solid var(--border-strong); border-radius: var(--radius-xl); box-shadow: 0 18px 60px rgba(0, 0, 0, 0.22); }
+.logout-confirm-dialog__icon { display: grid; width: 58px; height: 58px; margin-bottom: 14px; place-items: center; color: var(--hot); background: rgba(231, 76, 60, 0.1); border-radius: 18px; }
+.logout-confirm-dialog__icon svg { width: 28px; height: 28px; }
+.logout-confirm-dialog h2 { margin-bottom: 7px; font-size: 1.08rem; }
+.logout-confirm-dialog p { max-width: 270px; color: var(--text-secondary); font-size: 0.74rem; line-height: 1.6; }
+.logout-confirm-dialog__actions { display: grid; width: 100%; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 22px; }
+.logout-confirm-dialog__actions .btn { min-height: 44px; border-radius: 10px; }
+.logout-confirm-dialog__submit { color: white; background: var(--hot); }
+.logout-confirm-dialog__submit:active { filter: brightness(0.92); }
+.logout-confirm-dialog__submit:focus-visible { outline: 2px solid var(--hot); outline-offset: 2px; }
+/* Software update modal */
+.software-update-dialog { position: fixed; width: min(360px, calc(100% - 32px)); max-width: 360px; margin: auto; padding: 0; color: var(--text-primary); background: transparent; border: 0; overflow: visible; }
+.software-update-dialog::backdrop { background: rgba(15, 18, 24, 0.52); backdrop-filter: blur(2px); }
+.software-update-dialog[open] { animation: software-update-enter 180ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.software-update-dialog__panel { position: relative; display: flex; flex-direction: column; align-items: center; padding: 28px 24px 24px; text-align: center; background: var(--surface-raised); border: 1px solid var(--border-strong); border-radius: var(--radius-xl); box-shadow: 0 18px 60px rgba(0, 0, 0, 0.22); }
+.software-update-dialog__close { position: absolute; top: 10px; right: 10px; color: var(--text-muted); }
+.software-update-view { width: 100%; }
+.software-update-view[hidden] { display: none; }
+.software-update-view h2, .software-update-confirm h2 { margin: 12px 0 6px; font-size: 1.08rem; }
+.software-update-view > p, .software-update-confirm p { color: var(--text-secondary); font-size: 0.75rem; line-height: 1.55; }
+.software-update-state-icon { display: grid; width: 58px; height: 58px; margin: 0 auto; place-items: center; color: var(--accent); background: var(--accent-dim); border-radius: 18px; }
+.software-update-state-icon svg { width: 29px; height: 29px; }
+.software-update-state-icon--checking svg { animation: software-update-spin 0.9s linear infinite; }
+.software-update-state-icon--success { color: var(--success); background: var(--success-bg); }
+.software-update-state-icon--warning { color: var(--warning); background: var(--warning-bg); }
+.software-update-eyebrow { display: block; margin-top: 14px; color: var(--success); font-size: 0.7rem; font-weight: 700; }
+.software-update-view .software-update-eyebrow + h2 { margin-top: 1px; font-family: var(--font-mono); font-size: 1.45rem; }
+.software-update-meta { font-size: 0.68rem !important; }
+.software-update-notes { margin: 18px 0; padding: 14px 15px; text-align: left; background: var(--bg); border-radius: var(--radius-md); }
+.software-update-notes strong { display: block; margin-bottom: 7px; font-size: 0.78rem; }
+.software-update-notes ul { padding-left: 17px; color: var(--text-secondary); font-size: 0.7rem; line-height: 1.8; }
+.software-update-dialog__actions { display: grid; width: 100%; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+.software-update-dialog__actions .btn, .software-update-done, .software-update-cancel { min-height: 44px; border-radius: 10px; }
+.software-update-dialog__actions svg { width: 16px; height: 16px; }
+.software-upgrade-progress { width: 100%; height: 8px; margin: 22px 0 9px; overflow: hidden; background: var(--border-strong); border-radius: 999px; }
+.software-upgrade-progress span { display: block; width: 0; height: 100%; background: linear-gradient(90deg, var(--accent), var(--teal)); border-radius: inherit; transition: width 80ms linear; }
+.software-upgrade-percent { display: block; color: var(--accent); font: 700 1rem/1.4 var(--font-mono); }
+.software-update-cancel { width: 100%; margin-top: 20px; }
+.software-update-done { width: 100%; margin-top: 22px; }
+.software-update-danger { color: white; background: var(--hot); }
+@keyframes software-update-spin { to { transform: rotate(360deg); } }
+@keyframes software-update-enter { from { opacity: 0; transform: scale(0.96) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .software-update-dialog[open] { animation: none; } .software-update-state-icon--checking svg { animation-duration: 1.8s; } .software-upgrade-progress span { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .setting-switch__track, .setting-switch__track::after { transition: none; } }
+.settings-toast { position: fixed; z-index: 30; left: 50%; bottom: calc(82px + env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 9px; padding: 11px 16px; color: white; font-size: 0.8rem; font-weight: 650; white-space: nowrap; background: rgba(34, 34, 38, 0.92); border-radius: 999px; box-shadow: var(--shadow-lg); opacity: 0; pointer-events: none; transform: translate(-50%, 12px); transition: opacity 0.2s ease, transform 0.2s ease; }
+.settings-toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+.settings-toast span { display: grid; width: 20px; height: 20px; place-items: center; color: white; background: var(--success); border-radius: 50%; }
+.settings-toast svg { width: 13px; height: 13px; stroke-width: 3; }
+@media (prefers-reduced-motion: reduce) { .settings-toast { transition: none; } }

@@ -1,0 +1,193 @@
+/* ============================================
+   styles-profile.css - profile (我的) page
+   Split from styles.css (?v=20260729-design-theme); keep this file as the maintenance entry.
+   ============================================ */
+/* ============ 我的 Panel ============ */
+/* Profile Card */
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.profile-name {
+  font-size: 1rem;
+  font-weight: 700;
+}
+.profile-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-dim);
+  padding: 1px 8px;
+  border-radius: 10px;
+  align-self: flex-start;
+}
+.profile-id {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* Metrics */
+.metrics-row {
+  display: flex;
+  gap: 8px;
+}
+.metric {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.metric-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.metric-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* Printer Row */
+.printer-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: default;
+}
+.printer-icon svg {
+  width: 24px;
+  height: 24px;
+  color: var(--accent);
+}
+.printer-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.printer-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.printer-status {
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+.printer-status.online {
+  color: var(--teal);
+}
+.chevron svg {
+  width: 18px;
+  height: 18px;
+  color: var(--text-muted);
+}
+
+/* Material Summary */
+.material-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.mat-summary-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mat-summary-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.mat-summary-value {
+  font-size: 1rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.weekly-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 60px;
+}
+.bar {
+  flex: 1;
+  background: var(--accent);
+  border-radius: 4px 4px 0 0;
+  min-height: 8px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transition: height 0.3s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bar { transition: none; }
+}
+.bar span {
+  font-size: 0.55rem;
+  color: var(--text-muted);
+  margin-bottom: -14px;
+}
+
+/* Menu Group */
+.menu-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-top: 4px;
+}
+.menu-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+.menu-row + .menu-row {
+  border-top: 1px solid var(--border);
+}
+.menu-row:active {
+  background: var(--border);
+}
+.menu-row svg:first-child {
+  width: 20px;
+  height: 20px;
+  color: var(--text-muted);
+}
+.menu-row span {
+  flex: 1;
+  text-align: left;
+}
+

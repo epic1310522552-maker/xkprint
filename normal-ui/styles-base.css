@@ -1,0 +1,117 @@
+/* ============================================
+   styles-base.css - reset, app shell, page panels, page header, subpage header
+   Split from styles.css (?v=20260729-design-theme); keep this file as the maintenance entry.
+   ============================================ */
+/* ----- Reset & Base ----- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: var(--font-size-root);
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  font-family: var(--font-family-sans);
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+button {
+  font: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.hidden { display: none !important; }
+
+/* ----- App Shell ----- */
+.app-shell {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  min-height: 100vh;
+  padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
+  position: relative;
+  overflow-y: auto;
+}
+
+/* ----- Page Panels ----- */
+.page {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  animation: fadeIn 0.25s ease;
+}
+.page.active {
+  display: flex;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page.active { animation: none; }
+}
+
+/* ----- Page Header ----- */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0 4px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+}
+.page-header h1,
+.page-header h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.greeting {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text-secondary);
+  transition: background 0.2s, color 0.2s;
+}
+.icon-btn:active {
+  background: var(--border-strong);
+}
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+
+.subpage-header { display: grid; grid-template-columns: 40px 1fr 40px; }
+.subpage-header h2 { text-align: center; }
+.header-spacer { width: 40px; height: 40px; }

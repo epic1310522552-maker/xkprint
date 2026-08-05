@@ -1,0 +1,134 @@
+
+.top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 64px;
+  flex: 0 0 64px;
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  padding: 0 28px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 4px rgba(24, 30, 38, 0.05);
+}
+
+.brand {
+  width: max-content;
+  color: #17202a;
+  font-size: 22px;
+  font-weight: 750;
+  letter-spacing: 0;
+  text-decoration: none;
+}
+
+
+.device-identity {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-left: auto;
+  color: #4f5660;
+  white-space: nowrap;
+}
+
+.device-identity > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.device-identity b,
+.device-identity em {
+  font-style: normal;
+  font-weight: inherit;
+}
+
+.device-identity > span:first-child i,
+.live-indicator i,
+.control-ready i {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  flex: none;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #26313e;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.content {
+  width: 100%;
+  padding: 16px 20px 22px;
+}
+
+.device-workspace {
+  min-height: calc(100vh - 102px);
+  display: grid;
+  grid-template-columns: 248px minmax(0, 1fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+
+
+.device-dashboard {
+  min-height: calc(100vh - 102px);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+
+
+.dashboard-panel {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(23, 31, 42, 0.04);
+}
+
+
+.panel-titlebar {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 16px;
+  background: var(--surface-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-titlebar h2 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.live-indicator,
+.control-ready {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 12px;
+}

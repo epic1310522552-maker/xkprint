@@ -1,0 +1,143 @@
+/* ============================================
+   styles-market.css - market / store page
+   Split from styles.css (?v=20260729-design-theme); keep this file as the maintenance entry.
+   ============================================ */
+/* ============ 商城 Panel ============ */
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+}
+.search-icon svg {
+  width: 18px;
+  height: 18px;
+}
+.search-placeholder {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Featured Card */
+.featured-card.compact-model-card { min-height: 0; margin-bottom: 10px; }
+.featured-card .model-card__open {
+  display: grid;
+  grid-template-columns: minmax(112px, 36%) 1fr;
+  align-items: start;
+}
+.featured-card .featured-thumb { width: 100%; }
+.market-card__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  height: auto;
+  object-fit: cover;
+  background: var(--surface-raised);
+}
+.market-card__image--featured {
+  height: auto;
+  min-height: 0;
+}
+.featured-thumb::before {
+  content: '';
+  width: 50px;
+  height: 80px;
+  background: radial-gradient(ellipse 25px 10px at 50% 25%, var(--accent) 0%, transparent 100%);
+  border-radius: 50% 50% 40% 40% / 60% 60% 30% 30%;
+  opacity: 0.8;
+}
+.featured-card .model-card__summary { justify-content: center; padding-left: 14px; }
+.featured-card .favorite-button {
+  top: 14px;
+  right: 10px;
+  bottom: auto;
+  transform: none;
+}
+.featured-title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+.featured-desc {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+.featured-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 2px;
+}
+.price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.price.free {
+  color: var(--success);
+  font-size: 0.85rem;
+}
+.downloads {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+.creator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+.creator.verified { color: var(--text-secondary); }
+.creator svg {
+  width: 12px;
+  height: 12px;
+  color: var(--teal);
+}
+
+.market-grid { margin-bottom: 0; }
+.item-thumb {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-raised);
+}
+.origami-lamp::before {
+  content: '';
+  width: 50px;
+  height: 60px;
+  background: conic-gradient(from 45deg, var(--accent-dim) 0%, var(--accent) 25%, var(--accent-dim) 50%, var(--accent) 75%, var(--accent-dim) 100%);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+.modular-holder::before {
+  content: '';
+  width: 60px;
+  height: 50px;
+  background: var(--teal);
+  opacity: 0.5;
+  border-radius: 4px;
+  box-shadow: 6px 6px 0 var(--teal-bg), -4px -4px 0 rgba(42,157,143,0.15);
+}
+.mini-moon::before {
+  content: '';
+  width: 44px;
+  height: 44px;
+  background: radial-gradient(circle at 35% 35%, var(--warning) 0%, var(--warning-bg) 100%);
+  border-radius: 50%;
+  box-shadow: -8px -4px 0 var(--surface-raised);
+}
+.gear-box::before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: conic-gradient(from 0deg, var(--hot) 0deg, transparent 30deg, var(--hot) 60deg, transparent 90deg, var(--hot) 120deg, transparent 150deg, var(--hot) 180deg, transparent 210deg, var(--hot) 240deg, transparent 270deg, var(--hot) 300deg, transparent 330deg, var(--hot) 360deg);
+  clip-path: circle(50%);
+  opacity: 0.6;
+}
+.market-item .model-card__open { display: grid; }

@@ -1,0 +1,62 @@
+:root {
+  --bg: #eef0f2;
+  --surface: #ffffff;
+  --surface-muted: #f3f4f5;
+  --border: #d9dde2;
+  --border-strong: #c9ced5;
+  --text: #20242a;
+  --muted: #68707a;
+  --blue: #2474d8;
+  --blue-dark: #155cae;
+  --green: #2b9a66;
+  --danger: #c23c3c;
+  font-family: Inter, "Segoe UI", "Microsoft YaHei", system-ui, sans-serif;
+  color: var(--text);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  min-width: 1024px;
+  margin: 0;
+  background: var(--bg);
+  font-size: 14px;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid rgba(36, 116, 216, 0.3);
+  outline-offset: 2px;
+}
+
+.svg-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.width-notice {
+  display: none;
+}
+
+.console {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

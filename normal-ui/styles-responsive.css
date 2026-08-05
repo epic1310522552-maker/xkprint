@@ -1,0 +1,42 @@
+/* ============================================
+   styles-responsive.css - final responsive / edge-case rules - MUST load last
+   Split from styles.css (?v=20260729-design-theme); keep this file as the maintenance entry.
+   ============================================ */
+/* ============ Responsive / Edge Cases ============ */
+@media (max-width: 360px) {
+  .params-grid { grid-template-columns: repeat(2, 1fr); }
+  .model-grid { gap: 8px; }
+  .market-grid { gap: 8px; }
+  .model-thumb { height: 100px; }
+  .item-thumb { height: 80px; }
+  .control-card {
+    min-height: 96px;
+    gap: 7px;
+    padding: 10px;
+  }
+  .control-card svg {
+    width: 18px;
+    height: 18px;
+  }
+  .control-card .param-label { font-size: 0.65rem; }
+  .control-card .param-value { font-size: 0.76rem; }
+}
+@media (min-width: 420px) {
+  .page { padding: 0 20px calc(20px + env(safe-area-inset-bottom, 0px)); }
+  .hero-canvas-wrap { height: 240px; }
+  .model-thumb { height: 140px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .control-card,
+  .control-switch__track,
+  .control-switch__track::after {
+    transition: none;
+  }
+  .control-dialog[open],
+  .control-dialog[open]::backdrop {
+    animation: none;
+  }
+}
+/* Icon sizing utility */
+.icon-sm svg { width: 14px; height: 14px; }

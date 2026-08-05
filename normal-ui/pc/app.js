@@ -194,22 +194,25 @@
     });
   });
 
-  document.querySelectorAll('[data-print-toggle]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const task = button.closest('[data-print-task]');
-      const state = task?.querySelector('[data-task-state]');
-      if (!task || !state) return;
+  document.querySelectorAll('[data-print-task]').forEach((task) => {
+    const state = task.querySelector('[data-task-state]');
+    const startButton = task.querySelector('[data-print-action="start"]');
+    const pauseButton = task.querySelector('[data-print-action="pause"]');
+    if (!state || !startButton || !pauseButton) return;
 
-      const isPaused = button.getAttribute('aria-pressed') === 'true';
-      const nextIsPaused = !isPaused;
-      button.setAttribute('aria-pressed', String(nextIsPaused));
-      button.setAttribute('aria-label', `${nextIsPaused ? '开始' : '暂停'}螺旋花器打印`);
-      button.innerHTML = `<i data-lucide="${nextIsPaused ? 'play' : 'pause'}" aria-hidden="true"></i><span>${nextIsPaused ? '开始' : '暂停'}</span>`;
-      state.textContent = nextIsPaused ? '已暂停' : '正在打印';
-      state.classList.toggle('printing', !nextIsPaused);
-      state.classList.toggle('ready', nextIsPaused);
-      window.lucide?.createIcons();
-    });
+    const setPrintState = (nextState) => {
+      const isPrinting = nextState === 'printing';
+      task.dataset.printState = isPrinting ? 'printing' : 'paused';
+      state.textContent = isPrinting ? '正在打印' : '已暂停';
+      state.classList.toggle('printing', isPrinting);
+      state.classList.toggle('paused', !isPrinting);
+      startButton.disabled = isPrinting;
+      pauseButton.disabled = !isPrinting;
+    };
+
+    startButton.addEventListener('click', () => setPrintState('printing'));
+    pauseButton.addEventListener('click', () => setPrintState('paused'));
+    setPrintState(task.dataset.printState);
   });
 
   const materialHeads = [...document.querySelectorAll('[data-material-head]')];

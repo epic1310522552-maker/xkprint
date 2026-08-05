@@ -1,0 +1,44 @@
+/* ============================================
+   styles-navigation.css - bottom navigation
+   Split from styles.css (?v=20260729-design-theme); keep this file as the maintenance entry.
+   ============================================ */
+/* ============ Bottom Navigation ============ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  background: var(--nav-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+  z-index: 100;
+}
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 0;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+.nav-item.active {
+  color: var(--accent);
+}
+.nav-item svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 1.6;
+}
+.device-nav-icon { width: 24px !important; height: 24px !important; fill: currentColor; stroke-width: 0; }
+.nav-item span {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
