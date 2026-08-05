@@ -10,7 +10,8 @@
       page.hidden = page.dataset.page !== target;
     });
     globalNavItems.forEach((item) => {
-      const isActive = item.dataset.nav === target;
+      const activePage = targetPage.dataset.parentNav || target;
+      const isActive = item.dataset.nav === activePage;
       item.classList.toggle('is-active', isActive);
       if (isActive) {
         item.setAttribute('aria-current', 'page');
@@ -323,249 +324,59 @@
     });
   }
 
+  let modelDetailReturnPage = 'models';
+  const modelDetailPage = document.querySelector('[data-page="model-detail"]');
+  const modelDetailImage = modelDetailPage?.querySelector('[data-model-detail-image]');
+  const modelDetailFields = ['title', 'author', 'description', 'format', 'size', 'estimate', 'status'];
 
-  /* ----- 子页面交互（移植自根版 app.js） ----- */
-
-  const initAccountSecurity = () => {
-    const agreement = document.querySelector('[data-delete-agreement]');
-    const submitButton = document.querySelector('[data-delete-submit]');
-    if (!agreement || !submitButton) return;
-
-    agreement.addEventListener('change', () => {
-      submitButton.disabled = !agreement.checked;
-    });
-  };
-
-  const initSettingsPreviews = () => {
-    const clearButton = document.querySelector('[data-clear-cache]');
-    const toast = document.querySelector('[data-cache-toast]');
-    let toastTimer;
-    if (!clearButton || !toast) return;
-
-    clearButton.addEventListener('click', () => {
-      window.clearTimeout(toastTimer);
-      toast.classList.add('is-visible');
-      toast.setAttribute('aria-hidden', 'false');
-      toastTimer = window.setTimeout(() => {
-        toast.classList.remove('is-visible');
-        toast.setAttribute('aria-hidden', 'true');
-      }, 1800);
-    });
-  };
-
-  const initDeviceSettings = () => {
-    const nameInput = document.querySelector('[data-device-name-input]');
-    const editButton = document.querySelector('[data-device-name-edit]');
-    const nameDisplay = document.querySelector('[data-device-name-display]');
-    const editLabel = editButton && editButton.querySelector('span');
-    let previousName = '';
-
-    if (!nameInput || !editButton || !nameDisplay) return;
-
-    const setEditing = (editing) => {
-      nameInput.readOnly = !editing;
-      editButton.setAttribute('aria-label', editing ? '保存设备名称' : '编辑设备名称');
-      if (editLabel) editLabel.textContent = editing ? '保存' : '编辑';
-      if (editing) {
-        previousName = nameInput.value;
-        nameInput.focus();
-        nameInput.select();
-      }
-    };
-
-    const saveName = () => {
-      const name = nameInput.value.trim() || previousName;
-      nameInput.value = name;
-      nameDisplay.textContent = name;
-      setEditing(false);
-    };
-
-    editButton.addEventListener('click', () => {
-      if (nameInput.readOnly) setEditing(true);
-      else saveName();
-    });
-    nameInput.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        saveName();
-      }
-      if (event.key === 'Escape') {
-        nameInput.value = previousName;
-        setEditing(false);
-      }
-    });
-    nameInput.addEventListener('blur', (event) => {
-      if (!nameInput.readOnly && event.relatedTarget !== editButton) saveName();
-    });
-  };
-
-  const initSoftwareUpdate = () => {
-    const checkButton = document.querySelector('[data-check-update]');
-    const dialog = document.querySelector('[data-update-dialog]');
-    const confirmDialog = document.querySelector('[data-update-confirm]');
-    if (!checkButton || !dialog || !confirmDialog) return;
-
-    const views = [...dialog.querySelectorAll('[data-update-view]')];
-    const progress = dialog.querySelector('[data-update-progress]');
-    const progressFill = dialog.querySelector('[data-update-progress-fill]');
-    const percent = dialog.querySelector('[data-update-percent]');
-    const stage = dialog.querySelector('[data-update-stage]');
-    const currentVersion = document.querySelector('[data-current-software-version]');
-    const versionStatus = document.querySelector('[data-software-version-status]');
-    let checkTimer;
-    let upgradeTimer;
-    let upgradeStartedAt = 0;
-    let elapsedBeforePause = 0;
-    let activeView = 'checking';
-    let closeAfterCancel = false;
-
-    const showView = (name) => {
-      activeView = name;
-      views.forEach((view) => { view.hidden = view.dataset.updateView !== name; });
-    };
-
-    const stopUpgradeTimer = () => {
-      window.clearInterval(upgradeTimer);
-      upgradeTimer = null;
-      if (upgradeStartedAt) elapsedBeforePause += Date.now() - upgradeStartedAt;
-      upgradeStartedAt = 0;
-    };
-
-    const renderProgress = (value) => {
-      const rounded = Math.min(100, Math.round(value));
-      progressFill.style.width = `${rounded}%`;
-      percent.textContent = `${rounded}%`;
-      progress.setAttribute('aria-valuenow', String(rounded));
-      stage.textContent = rounded < 72 ? '正在下载更新包，请保持设备在线' : '正在安装更新，请勿关闭设备';
-    };
-
-    const runUpgrade = () => {
-      upgradeStartedAt = Date.now();
-      upgradeTimer = window.setInterval(() => {
-        const value = ((elapsedBeforePause + Date.now() - upgradeStartedAt) / 5000) * 100;
-        renderProgress(value);
-        if (value >= 100) {
-          stopUpgradeTimer();
-          showView('complete');
-        }
-      }, 80);
-    };
-
-    const requestCancelUpgrade = (shouldClose) => {
-      if (confirmDialog.open) return;
-      closeAfterCancel = shouldClose;
-      stopUpgradeTimer();
-      confirmDialog.showModal();
-    };
-
-    const closeUpdateDialog = () => {
-      window.clearTimeout(checkTimer);
-      if (activeView === 'upgrading') stopUpgradeTimer();
-      if (dialog.open) dialog.close();
-    };
-
-    checkButton.addEventListener('click', () => {
-      window.clearTimeout(checkTimer);
-      showView('checking');
-      dialog.showModal();
-      checkTimer = window.setTimeout(() => showView('available'), 1500);
-    });
-    dialog.querySelector('[data-update-start]').addEventListener('click', () => {
-      elapsedBeforePause = 0;
-      renderProgress(0);
-      showView('upgrading');
-      runUpgrade();
-    });
-    dialog.querySelector('[data-update-cancel]').addEventListener('click', () => {
-      requestCancelUpgrade(false);
-    });
-    confirmDialog.querySelector('[data-update-continue]').addEventListener('click', () => {
-      confirmDialog.close();
-      closeAfterCancel = false;
-      runUpgrade();
-    });
-    confirmDialog.querySelector('[data-update-confirm-cancel]').addEventListener('click', () => {
-      confirmDialog.close();
-      elapsedBeforePause = 0;
-      renderProgress(0);
-      showView('available');
-      if (closeAfterCancel && dialog.open) dialog.close();
-      closeAfterCancel = false;
-    });
-    dialog.querySelector('[data-update-done]').addEventListener('click', () => {
-      currentVersion.textContent = 'v1.5.0';
-      versionStatus.textContent = '当前已是最新版本';
-      checkButton.textContent = '再次检查';
-      dialog.close();
-    });
-    dialog.querySelector('[data-update-close]').addEventListener('click', () => {
-      if (activeView === 'upgrading') requestCancelUpgrade(true);
-      else closeUpdateDialog();
-    });
-    dialog.querySelector('[data-update-later]').addEventListener('click', closeUpdateDialog);
-    dialog.addEventListener('cancel', (event) => {
-      event.preventDefault();
-      if (activeView === 'upgrading') requestCancelUpgrade(true);
-      else closeUpdateDialog();
-    });
-    confirmDialog.addEventListener('cancel', (event) => {
-      event.preventDefault();
-      confirmDialog.close();
-      closeAfterCancel = false;
-      runUpgrade();
-    });
-  };
-
-  const initLogoutConfirmation = () => {
-    const trigger = document.querySelector('[data-settings-logout]');
-    const dialog = document.querySelector('[data-logout-confirm]');
-    if (!trigger || !dialog) return;
-
-    const closeDialog = () => {
-      dialog.close();
-      trigger.focus();
-    };
-
-    trigger.addEventListener('click', () => dialog.showModal());
-    dialog.querySelector('[data-logout-cancel]').addEventListener('click', closeDialog);
-    dialog.querySelector('[data-logout-submit]').addEventListener('click', closeDialog);
-    dialog.addEventListener('cancel', (event) => { event.preventDefault(); closeDialog(); });
-    dialog.addEventListener('click', (event) => { if (event.target === dialog) closeDialog(); });
-  };
-
-  const initHelpFeedback = () => {
-    const page = document.querySelector('[data-page="help-feedback"]');
-    if (!page) return;
-
-    const search = page.querySelector('[data-help-search]');
-    const items = [...page.querySelectorAll('[data-help-faq]')];
-    const list = page.querySelector('[data-help-faq-list]');
-    const empty = page.querySelector('[data-help-empty]');
-    if (!search || !list || !empty) return;
-
-    search.addEventListener('input', () => {
-      const query = search.value.trim().toLocaleLowerCase('zh-CN');
-      let visibleCount = 0;
-
-      items.forEach((item) => {
-        const searchableText = (item.textContent + ' ' + item.dataset.helpKeywords).toLocaleLowerCase('zh-CN');
-        const matches = !query || searchableText.includes(query);
-        item.hidden = !matches;
-        if (!matches) item.open = false;
-        if (matches) visibleCount += 1;
+  document.querySelectorAll('[data-model-card]').forEach((card) => {
+    card.querySelector('[data-model-open]')?.addEventListener('click', () => {
+      modelDetailReturnPage = card.closest('[data-page]')?.dataset.page || 'models';
+      modelDetailFields.forEach((field) => {
+        const target = modelDetailPage?.querySelector(`[data-model-detail-${field}]`);
+        if (!target) return;
+        target.textContent = field === 'author' ? `作者 · ${card.dataset.modelAuthor}` : card.dataset[`model${field[0].toUpperCase()}${field.slice(1)}`];
       });
-
-      list.hidden = visibleCount === 0;
-      empty.hidden = visibleCount !== 0;
+      const cardImage = card.querySelector('img');
+      if (modelDetailImage && cardImage) {
+        modelDetailImage.src = cardImage.src;
+        modelDetailImage.alt = `${card.dataset.modelTitle}预览`;
+      }
+      showGlobalPage('model-detail');
     });
-  };
+  });
 
-  initAccountSecurity();
-  initSettingsPreviews();
-  initDeviceSettings();
-  initSoftwareUpdate();
-  initLogoutConfirmation();
-  initHelpFeedback();
+  document.querySelector('[data-model-detail-back]')?.addEventListener('click', () => showGlobalPage(modelDetailReturnPage));
+
+  document.querySelectorAll('[data-favorite]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const isFavorite = button.getAttribute('aria-pressed') === 'true';
+      button.setAttribute('aria-pressed', String(!isFavorite));
+    });
+  });
+
+  document.querySelectorAll('[data-model-filter]').forEach((filter) => {
+    filter.addEventListener('click', () => {
+      document.querySelectorAll('[data-model-filter]').forEach((option) => {
+        const isSelected = option === filter;
+        option.classList.toggle('is-active', isSelected);
+        option.setAttribute('aria-pressed', String(isSelected));
+      });
+      document.querySelectorAll('[data-page="models"] [data-model-card]').forEach((card) => {
+        card.hidden = filter.dataset.modelFilter === 'favorite' && card.querySelector('[data-favorite]')?.getAttribute('aria-pressed') !== 'true';
+      });
+    });
+  });
+
+  document.querySelectorAll('.model-search input').forEach((input) => {
+    input.addEventListener('input', () => {
+      const page = input.closest('[data-page]');
+      const query = input.value.trim().toLocaleLowerCase('zh-CN');
+      page?.querySelectorAll('[data-model-card]').forEach((card) => {
+        card.hidden = !`${card.dataset.modelTitle} ${card.dataset.modelAuthor}`.toLocaleLowerCase('zh-CN').includes(query);
+      });
+    });
+  });
 
   window.lucide?.createIcons();
 })();

@@ -230,12 +230,26 @@
   }
 
   .profile-grid {
-    grid-template-columns: minmax(0, 1fr) 280px;
-    gap: 12px;
+    min-width: 0;
   }
 
   .profile-main {
     gap: 12px;
+  }
+  .profile-menu-grid {
+    gap: 8px;
+  }
+
+  .profile-menu-row {
+    min-height: 104px;
+    grid-template-columns: 36px minmax(0, 1fr) 16px;
+    gap: 8px;
+    padding: 14px 12px;
+  }
+
+  .profile-menu-icon {
+    width: 36px;
+    height: 36px;
   }
 
   .profile-detail-grid {
