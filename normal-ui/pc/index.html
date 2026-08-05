@@ -4,59 +4,109 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>XKPrint 设备控制台</title>
-  <link rel="stylesheet" href="styles.css">
+  <!-- 样式按功能拆分；顺序即级联顺序，responsive.css 必须最后 -->
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="sidebar.css">
+  <link rel="stylesheet" href="camera.css">
+  <link rel="stylesheet" href="tasks.css">
+  <link rel="stylesheet" href="motion.css">
+  <link rel="stylesheet" href="material.css">
+  <link rel="stylesheet" href="profile.css">
+  <link rel="stylesheet" href="settings.css">
+  <link rel="stylesheet" href="models.css">
+  <link rel="stylesheet" href="library.css">
+  <link rel="stylesheet" href="responsive.css">
   <script src="https://unpkg.com/lucide@latest"></script>
   <script defer src="app.js"></script>
 </head>
 <body>
+  <!-- MDI printer-3d-nozzle, Apache-2.0: https://pictogrammers.com/library/mdi/icon/printer-3d-nozzle/ -->
+  <svg class="svg-defs" aria-hidden="true">
+    <symbol id="mdi-printer-3d-nozzle" viewBox="0 0 24 24">
+      <path d="M7,2H17V8H19V13H16.5L13,17H11L7.5,13H5V8H7V2M10,22H2V20H10A1,1 0 0,0 11,19V18H13V19A3,3 0 0,1 10,22Z"></path>
+    </symbol>
+    <symbol id="pzv-head" viewBox="0 0 30.05 44.16">
+      <path fill="currentColor" stroke="#333a42" stroke-miterlimit="10" d="m.5.5h29.05v29.85c0,1.71-1.39,3.1-3.1,3.1H3.6c-1.71,0-3.1-1.39-3.1-3.1V.5h0Z"></path>
+      <rect fill="currentColor" stroke="#333a42" stroke-miterlimit="10" x="9.64" y="33.45" width="10.78" height="3.89"></rect>
+      <rect fill="#333a42" x="13.6" y="37.34" width="2.86" height="6.81"></rect>
+    </symbol>
+    <symbol id="sidebar-device-icon" viewBox="0 0 58.59 58.59">
+      <rect x="2" y="2" width="54.59" height="54.59" rx="4.19" fill="none" stroke="currentColor" stroke-width="4"></rect>
+      <rect x="9.71" y="14.26" width="39.16" height="35.04" rx=".08" fill="none" stroke="currentColor" stroke-width="4"></rect>
+      <rect x="21.48" y="14.26" width="15.63" height="14.21" rx="1.2" fill="none" stroke="currentColor" stroke-width="4"></rect>
+      <line x1="29.3" y1="28.47" x2="29.3" y2="36.12" stroke="currentColor" stroke-width="5"></line>
+      <rect x="7.88" y="5.53" width="9.59" height="5" fill="currentColor"></rect>
+      <line x1="20.35" y1="21.37" x2="10.75" y2="21.37" stroke="currentColor" stroke-width="4"></line>
+      <line x1="47.84" y1="21.37" x2="38.25" y2="21.37" stroke="currentColor" stroke-width="4"></line>
+    </symbol>
+  </svg>
   <div class="width-notice">请使用宽度至少 1024px 的桌面窗口</div>
   <div class="console">
     <header class="top-nav">
       <a class="brand" href="index.html" aria-label="XKPrint 设备控制台">XKPrint</a>
-      <nav class="main-nav" aria-label="主导航">
-        <button type="button" aria-current="page">设备</button>
-        <button type="button" disabled>模型</button>
-        <button type="button" disabled>商城</button>
-        <button type="button" disabled>我的</button>
-      </nav>
       <div class="device-identity">
         <span data-active-device aria-live="polite"><i aria-hidden="true"></i><b>XK1 Carbon</b> · <em>在线</em></span>
         <span class="avatar" aria-label="用户 AC">AC</span>
       </div>
     </header>
     <main class="content">
-      <section data-page="device" aria-label="设备控制">
-        <div class="device-workspace">
-          <aside class="device-sidebar" aria-label="设备菜单">
-            <nav class="sidebar-menu" aria-label="设备功能">
-              <button class="sidebar-menu-item" type="button" data-device-menu aria-expanded="false" aria-controls="my-device-menu">
-                <i data-lucide="printer" aria-hidden="true"></i>
-                <span>我的设备</span>
-                <i class="menu-chevron" data-lucide="chevron-down" aria-hidden="true"></i>
+      <div class="device-workspace">
+          <aside class="device-sidebar" aria-label="侧边栏导航">
+            <header class="sidebar-header">
+              <span class="sidebar-title">控制台</span>
+              <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-expanded="true" aria-controls="device-sidebar-content" aria-label="折叠侧边栏" data-tooltip="折叠侧边栏">
+                <i class="sidebar-toggle-collapse" data-lucide="panel-left-close" aria-hidden="true"></i>
+                <i class="sidebar-toggle-expand" data-lucide="panel-left-open" aria-hidden="true"></i>
               </button>
-              <div id="my-device-menu" class="device-submenu" hidden>
-                <div class="device-list" role="listbox" aria-label="选择设备">
-                  <button class="device-list-item" type="button" role="option" data-device-name="XK1 Carbon" data-device-status="在线" aria-selected="true">
-                    <i aria-hidden="true"></i><span>XK1 Carbon</span><small>在线</small>
-                  </button>
-                  <button class="device-list-item" type="button" role="option" data-device-name="XK1 Mini" data-device-status="空闲" aria-selected="false">
-                    <i aria-hidden="true"></i><span>XK1 Mini</span><small>空闲</small>
-                  </button>
-                  <button class="device-list-item is-offline" type="button" role="option" data-device-name="工作室 XK1" data-device-status="离线" aria-selected="false">
-                    <i aria-hidden="true"></i><span>工作室 XK1</span><small>离线</small>
+            </header>
+            <div id="device-sidebar-content" class="sidebar-content">
+              <nav class="sidebar-menu sidebar-global-menu" aria-label="主导航">
+                <span class="sidebar-section-title">工作台</span>
+                <button class="sidebar-menu-item global-nav-item is-active" type="button" data-nav="device" aria-current="page" data-tooltip="设备">
+                  <svg class="sidebar-device-icon" aria-hidden="true"><use href="#sidebar-device-icon"></use></svg>
+                  <span class="sidebar-item-label">设备</span>
+                </button>
+                <button class="sidebar-menu-item global-nav-item" type="button" data-nav="models" data-tooltip="模型">
+                  <i data-lucide="box" aria-hidden="true"></i>
+                  <span class="sidebar-item-label">模型</span>
+                </button>
+                <button class="sidebar-menu-item global-nav-item" type="button" data-nav="market" data-tooltip="商城">
+                  <i data-lucide="shopping-bag" aria-hidden="true"></i>
+                  <span class="sidebar-item-label">商城</span>
+                </button>
+                <button class="sidebar-menu-item global-nav-item" type="button" data-nav="profile" data-tooltip="我的">
+                  <i data-lucide="user-round" aria-hidden="true"></i>
+                  <span class="sidebar-item-label">我的</span>
+                </button>
+              </nav>
+              <nav class="sidebar-menu sidebar-device-menu" aria-label="设备功能">
+                <span class="sidebar-section-title">当前设备</span>
+                <button class="sidebar-menu-item" type="button" data-device-menu aria-expanded="false" aria-controls="my-device-menu" data-tooltip="我的设备">
+                  <svg class="sidebar-device-icon" aria-hidden="true"><use href="#sidebar-device-icon"></use></svg>
+                  <span class="sidebar-item-label">我的设备</span>
+                  <i class="menu-chevron" data-lucide="chevron-down" aria-hidden="true"></i>
+                </button>
+                <div id="my-device-menu" class="device-submenu" hidden>
+                  <div class="device-list" role="listbox" aria-label="选择设备">
+                    <button class="device-list-item" type="button" role="option" data-device-name="XK1 Carbon" data-device-status="在线" aria-selected="true">
+                      <i aria-hidden="true"></i><span>XK1 Carbon</span><small>在线</small>
+                    </button>
+                    <button class="device-list-item" type="button" role="option" data-device-name="XK1 Mini" data-device-status="空闲" aria-selected="false">
+                      <i aria-hidden="true"></i><span>XK1 Mini</span><small>空闲</small>
+                    </button>
+                    <button class="device-list-item is-offline" type="button" role="option" data-device-name="工作室 XK1" data-device-status="离线" aria-selected="false">
+                      <i aria-hidden="true"></i><span>工作室 XK1</span><small>离线</small>
+                    </button>
+                  </div>
+                  <button class="add-device-item" type="button" aria-label="添加设备">
+                    <i data-lucide="plus" aria-hidden="true"></i><span>添加设备</span>
                   </button>
                 </div>
-                <button class="add-device-item" type="button" aria-label="添加设备">
-                  <i data-lucide="plus" aria-hidden="true"></i><span>添加设备</span>
-                </button>
-              </div>
-              <button class="sidebar-menu-item is-active" type="button" aria-current="page">
-                <i data-lucide="sliders-horizontal" aria-hidden="true"></i>
-                <span>设备控制</span>
-              </button>
-            </nav>
+              </nav>
+            </div>
           </aside>
-        <div class="device-dashboard">
+        <section class="device-dashboard" data-page="device" aria-label="设备控制">
           <section class="dashboard-panel camera-panel">
             <header class="panel-titlebar">
               <h2>设备画面</h2>
@@ -80,63 +130,6 @@
               </div>
             </div>
           </section>
-          <section class="dashboard-panel motion-panel">
-            <header class="panel-titlebar">
-              <h2>设备控制</h2>
-              <span class="control-ready"><i aria-hidden="true"></i>设备就绪</span>
-            </header>
-            <div class="motion-content">
-              <dl class="device-stats">
-                <div><dt><i data-lucide="thermometer"></i>执行头 1</dt><dd><strong>218</strong> / 220°C</dd></div>
-                <div><dt><i data-lucide="thermometer"></i>执行头 2</dt><dd><strong>32</strong> / 0°C</dd></div>
-                <div><dt><i data-lucide="thermometer"></i>执行头 3</dt><dd><strong>31</strong> / 0°C</dd></div>
-                <div>
-                  <dt><i data-lucide="fan"></i>部件风扇</dt>
-                  <dd><button class="stat-popup-trigger" type="button" aria-label="部件风扇，当前 80%"><strong>80%</strong><i data-lucide="chevron-right" aria-hidden="true"></i></button></dd>
-                </div>
-                <div><dt><i data-lucide="gauge"></i>打印速度</dt><dd><strong>100%</strong></dd></div>
-                <div>
-                  <dt><i data-lucide="lightbulb"></i>照明</dt>
-                  <dd><button class="stat-switch" type="button" role="switch" aria-checked="true" aria-label="照明"><span>开启</span><i aria-hidden="true"></i></button></dd>
-                </div>
-              </dl>
-              <div class="jog-controls">
-                <div class="jog-toolbar">
-                  <span>移动距离</span>
-                  <div class="jog-step-options" role="group" aria-label="移动距离展示">
-                    <button type="button">0.1</button>
-                    <button type="button">1</button>
-                    <button class="is-active" type="button">10 mm</button>
-                  </div>
-                </div>
-                <div class="jog-layout">
-                  <section class="axis-control-group" aria-labelledby="xy-axis-title">
-                    <span id="xy-axis-title" class="axis-title">XY 轴</span>
-                    <div class="xy-pad" aria-label="XY 轴点动控制">
-                      <button type="button" data-control="y-plus" aria-label="Y 轴正向"><i data-lucide="chevron-up"></i><span>Y+</span></button>
-                      <button type="button" data-control="x-minus" aria-label="X 轴负向"><i data-lucide="chevron-left"></i><span>X−</span></button>
-                      <button class="axis-home" type="button" data-control="home" aria-label="XY 轴归位"><i data-lucide="crosshair"></i><small>原点</small></button>
-                      <button type="button" data-control="x-plus" aria-label="X 轴正向"><span>X+</span><i data-lucide="chevron-right"></i></button>
-                      <button type="button" data-control="y-minus" aria-label="Y 轴负向"><span>Y−</span><i data-lucide="chevron-down"></i></button>
-                    </div>
-                  </section>
-                  <section class="axis-control-group z-axis-group" aria-labelledby="z-axis-title">
-                    <span id="z-axis-title" class="axis-title">Z 轴</span>
-                    <div class="z-pad" aria-label="Z 轴点动控制">
-                      <button type="button" data-control="z-plus"><i data-lucide="chevron-up"></i><span>Z+</span></button>
-                      <div class="z-heated-bed" aria-label="热床">热床</div>
-                      <button type="button" data-control="z-minus"><span>Z−</span><i data-lucide="chevron-down"></i></button>
-                    </div>
-                  </section>
-                </div>
-                <div class="control-actions">
-                  <button type="button" data-control="load-head"><i data-lucide="package-plus"></i><span>加载执行头</span></button>
-                  <button class="danger-action" type="button" data-control="unload-head"><i data-lucide="package-minus"></i><span>取出执行头</span></button>
-                </div>
-              </div>
-            </div>
-            <p class="control-status" data-control-status role="status">控制待命</p>
-          </section>
           <section class="dashboard-panel tasks-panel">
             <header class="panel-titlebar">
               <h2>打印任务</h2>
@@ -147,16 +140,28 @@
             </header>
             <div class="tasks-content">
               <div class="task-view-panel active-print-view" data-task-view-panel="tasks">
-                <article class="active-print-task">
+                <article class="active-print-task" data-print-task data-print-state="printing">
                   <img src="model-placeholder.svg" alt="螺旋花器模型预览">
-                  <div class="active-print-details">
-                    <span class="task-state printing">正在打印</span>
-                    <h3>螺旋花器.3mf</h3>
-                    <small>预计剩余 2 小时 37 分</small>
+                  <div class="active-print-status-row">
+                    <span class="task-state printing" data-task-state aria-live="polite">正在打印</span>
+                    <div class="active-print-actions" role="group" aria-label="螺旋花器打印控制">
+                      <button class="task-control-button" type="button" data-print-action="start" aria-label="暂停螺旋花器打印" disabled><i data-lucide="pause" aria-hidden="true"></i><span>暂停</span></button>
+                      <button class="task-control-button" type="button" data-print-action="pause" aria-label="停止螺旋花器打印"><i data-lucide="square" aria-hidden="true"></i><span>停止</span></button>
+                    </div>
                   </div>
-                  <strong class="active-print-percent">43%</strong>
-                  <div class="active-print-progress" role="progressbar" aria-label="螺旋花器打印进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="43">
-                    <i style="width: 43%"></i>
+                  <div class="active-print-details">
+                    <small>当前任务</small>
+                    <h3>螺旋花器.3mf</h3>
+                  </div>
+                  <div class="active-print-progress-summary">
+                    <div class="active-print-progress-heading">
+                      <span>打印进度</span>
+                      <strong class="active-print-percent">43%</strong>
+                    </div>
+                    <div class="active-print-progress" role="progressbar" aria-label="螺旋花器打印进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="43">
+                      <i style="width: 43%"></i>
+                    </div>
+                    <small class="active-print-remaining"><i data-lucide="clock-3" aria-hidden="true"></i>预计剩余 2 小时 37 分</small>
                   </div>
                 </article>
               </div>
@@ -192,6 +197,173 @@
               </div>
             </div>
           </section>
+          <section class="dashboard-panel motion-panel">
+            <header class="panel-titlebar">
+              <h2>设备控制</h2>
+              <span class="control-ready"><i aria-hidden="true"></i>设备就绪</span>
+            </header>
+            <div class="motion-content">
+              <header class="summary-section-heading">
+                <span id="head-temperature-title">执行头温度</span>
+                <small>当前 / 目标</small>
+              </header>
+              <div class="jog-toolbar">
+                <span>移动距离</span>
+                <div class="jog-step-options" role="group" aria-label="移动距离展示">
+                  <button type="button">0.1</button>
+                  <button type="button">1</button>
+                  <button class="is-active" type="button">10 mm</button>
+                </div>
+              </div>
+              <div class="device-control-summary">
+                <section class="head-temperature-summary" aria-labelledby="head-temperature-title">
+                  <div class="head-temperature-strip" role="list" aria-label="八个执行头温度">
+                    <div class="head-temperature-item is-heating" role="listitem" aria-label="执行头 1，当前 218°C，目标 220°C">
+                      <span class="head-icon" style="--head-color: #064a87; --head-number-color: #fff" aria-hidden="true"><svg viewBox="0 0 30.05 44.16"><use href="#pzv-head"></use></svg><span>1</span></span><strong>218°</strong><small>220°</small>
+                    </div>
+                    <div class="head-temperature-item" role="listitem" aria-label="执行头 2，当前 32°C，未设置目标温度">
+                      <span class="head-icon" style="--head-color: #e52222; --head-number-color: #fff" aria-hidden="true"><svg viewBox="0 0 30.05 44.16"><use href="#pzv-head"></use></svg><span>2</span></span><strong>32°</strong><small>—</small>
+                    </div>
+                    <div class="head-temperature-item" role="listitem" aria-label="执行头 3，当前 31°C，未设置目标温度">
+                      <span class="head-icon" style="--head-color: #ffc400; --head-number-color: #20242a" aria-hidden="true"><svg viewBox="0 0 30.05 44.16"><use href="#pzv-head"></use></svg><span>3</span></span><strong>31°</strong><small>—</small>
+                    </div>
+                    <div class="head-temperature-item" role="listitem" aria-label="执行头 4，当前 32°C，未设置目标温度">
+                      <span class="head-icon" style="--head-color: #49a66b; --head-number-color: #17202a" aria-hidden="true"><svg viewBox="0 0 30.05 44.16"><use href="#pzv-head"></use></svg><span>4</span></span><strong>32°</strong><small>—</small>
+                    </div>
+                    <div class="head-temperature-item" role="listitem" aria-label="执行头 5，当前 32°C，未设置目标温度">
+                      <span class="head-icon" style="--head-color: #fff; --head-number-color: #20242a" aria-hidden="true"><svg viewBox="0 0 30.05 44.16"><use href="#pzv-head"></use></svg><span>5</span></span><strong>32°</strong><small>—</small>
+                    </div>
+                    <div class="head-temperature-item" role="listitem" aria-label="执行头 6，当前 32°C，未设置目标温度">
+                      <span class="head-icon" style="--head-color: #111; --head-number-color: #fff" aria-hidden="true"><svg viewBox="0 0 30.05 44.16"><use href="#pzv-head"></use></svg><span>6</span></span><strong>32°</strong><small>—</small>
+                    </div>
+                    <div class="head-temperature-item" role="listitem" aria-label="执行头 7，当前 32°C，未设置目标温度">
+                      <span class="head-icon" style="--head-color: #ff8a00; --head-number-color: #20242a" aria-hidden="true"><svg viewBox="0 0 30.05 44.16"><use href="#pzv-head"></use></svg><span>7</span></span><strong>32°</strong><small>—</small>
+                    </div>
+                    <div class="head-temperature-item" role="listitem" aria-label="执行头 8，当前 32°C，未设置目标温度">
+                      <span class="head-icon" style="--head-color: #a9adaf; --head-number-color: #20242a" aria-hidden="true"><svg viewBox="0 0 30.05 44.16"><use href="#pzv-head"></use></svg><span>8</span></span><strong>32°</strong><small>—</small>
+                    </div>
+                  </div>
+                </section>
+                <dl class="device-parameters">
+                  <div class="stat-extra fan-stat-extra">
+                    <dt><i data-lucide="fan"></i>风扇状态</dt>
+                    <dd>
+                      <button class="stat-popup-trigger fan-summary-trigger" type="button" data-popup-trigger="fan" aria-expanded="false" aria-label="风扇状态，部件 80%，辅助 60%，机箱 40%">
+                        <span class="fan-summary" aria-hidden="true">
+                          <span class="fan-summary-item"><small>部件</small><strong data-fan-summary="part">80%</strong><i style="--fan-level: 80%"></i></span>
+                          <span class="fan-summary-item"><small>辅助</small><strong data-fan-summary="aux">60%</strong><i style="--fan-level: 60%"></i></span>
+                          <span class="fan-summary-item"><small>机箱</small><strong data-fan-summary="case">40%</strong><i style="--fan-level: 40%"></i></span>
+                        </span>
+                        <i data-lucide="chevron-right" aria-hidden="true"></i>
+                      </button>
+                    </dd>
+                  </div>
+                  <div class="stat-extra">
+                    <dt><i data-lucide="gauge"></i>打印速度</dt>
+                    <dd><button class="stat-popup-trigger" type="button" data-popup-trigger="speed" aria-expanded="false" aria-label="打印速度，当前 100%"><strong>100%</strong><i data-lucide="chevron-right" aria-hidden="true"></i></button></dd>
+                  </div>
+                  <div class="stat-extra">
+                    <dt><i data-lucide="lightbulb"></i>照明</dt>
+                    <dd><button class="stat-popup-trigger light-popup-trigger" type="button" data-popup-trigger="light" aria-expanded="false" aria-label="照明设置，RGB 灯和照明灯均开启"><span class="light-status-dots" aria-hidden="true"><i class="rgb-status-dot"></i><i class="white-status-dot"></i></span><strong data-light-summary>2 路开启</strong><i data-lucide="chevron-right" aria-hidden="true"></i></button></dd>
+                  </div>
+                </dl>
+              </div>
+              <div class="jog-controls">
+                <div class="jog-layout">
+                  <section class="axis-control-group" aria-labelledby="xy-axis-title">
+                    <span id="xy-axis-title" class="axis-title">XY 轴</span>
+                    <div class="xy-pad" aria-label="XY 轴点动控制">
+                      <button type="button" data-control="y-plus" aria-label="Y 轴正向"><i data-lucide="chevron-up"></i><span>Y+</span></button>
+                      <button type="button" data-control="x-minus" aria-label="X 轴负向"><i data-lucide="chevron-left"></i><span>X−</span></button>
+                      <button class="axis-home" type="button" data-control="home" aria-label="XY 轴归位"><i data-lucide="crosshair"></i><small>原点</small></button>
+                      <button type="button" data-control="x-plus" aria-label="X 轴正向"><span>X+</span><i data-lucide="chevron-right"></i></button>
+                      <button type="button" data-control="y-minus" aria-label="Y 轴负向"><span>Y−</span><i data-lucide="chevron-down"></i></button>
+                    </div>
+                  </section>
+                  <section class="axis-control-group z-axis-group" aria-labelledby="z-axis-title">
+                    <span id="z-axis-title" class="axis-title">Z 轴</span>
+                    <div class="z-pad" aria-label="Z 轴点动控制">
+                      <button type="button" data-control="z-plus"><i data-lucide="chevron-up"></i><span>Z+</span></button>
+                      <div class="z-heated-bed" aria-label="热床">热床</div>
+                      <button type="button" data-control="z-minus"><span>Z−</span><i data-lucide="chevron-down"></i></button>
+                    </div>
+                  </section>
+                </div>
+                <div class="control-actions">
+                  <button type="button" data-control="load-head"><span>加载执行头</span></button>
+                  <button class="danger-action" type="button" data-control="unload-head"><span>取出执行头</span></button>
+                </div>
+              </div>
+            </div>
+            <div class="control-popup" data-popup="fan" role="dialog" aria-label="风扇调整" hidden>
+              <header class="control-popup-header">
+                <strong>风扇调整</strong>
+                <button type="button" data-close-popup="fan" aria-label="关闭风扇调整" title="关闭"><i data-lucide="x" aria-hidden="true"></i></button>
+              </header>
+              <div class="fan-list">
+                <div class="fan-item">
+                  <span>部件风扇</span>
+                  <div class="fan-control">
+                    <input type="range" min="0" max="100" step="5" value="80" data-fan="part" aria-label="部件风扇速度">
+                    <output data-fan-output="part">80%</output>
+                  </div>
+                </div>
+                <div class="fan-item">
+                  <span>辅助风扇</span>
+                  <div class="fan-control">
+                    <input type="range" min="0" max="100" step="5" value="60" data-fan="aux" aria-label="辅助风扇速度">
+                    <output data-fan-output="aux">60%</output>
+                  </div>
+                </div>
+                <div class="fan-item">
+                  <span>机箱风扇</span>
+                  <div class="fan-control">
+                    <input type="range" min="0" max="100" step="5" value="40" data-fan="case" aria-label="机箱风扇速度">
+                    <output data-fan-output="case">40%</output>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="control-popup" data-popup="speed" role="dialog" aria-label="打印速度" hidden>
+              <header class="control-popup-header">
+                <strong>打印速度</strong>
+                <button type="button" data-close-popup="speed" aria-label="关闭打印速度" title="关闭"><i data-lucide="x" aria-hidden="true"></i></button>
+              </header>
+              <div class="speed-body">
+                <div class="speed-modes" role="group" aria-label="速度预设">
+                  <button class="speed-mode" type="button" data-speed="166" aria-pressed="false"><span>狂暴模式</span><strong>166%</strong></button>
+                  <button class="speed-mode" type="button" data-speed="124" aria-pressed="false"><span>运动模式</span><strong>124%</strong></button>
+                  <button class="speed-mode is-active" type="button" data-speed="100" aria-pressed="true"><span>标准模式</span><strong>100%</strong></button>
+                  <button class="speed-mode" type="button" data-speed="50" aria-pressed="false"><span>静音模式</span><strong>50%</strong></button>
+                </div>
+                <div class="speed-custom">
+                  <span>速度</span>
+                  <div class="speed-input-wrap">
+                    <input type="number" min="1" max="400" value="100" data-speed-input aria-label="打印速度百分比">
+                    <span class="speed-unit">%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="control-popup light-popup" data-popup="light" role="dialog" aria-label="照明控制" hidden>
+              <header class="control-popup-header">
+                <strong>照明控制</strong>
+                <button type="button" data-close-popup="light" aria-label="关闭照明控制" title="关闭"><i data-lucide="x" aria-hidden="true"></i></button>
+              </header>
+              <div class="light-control-list">
+                <div class="light-control-item">
+                  <span class="light-control-icon rgb-light-icon" aria-hidden="true"><i data-lucide="palette"></i></span>
+                  <span class="light-control-copy"><strong>RGB 灯</strong><small>氛围灯光</small></span>
+                  <button class="light-switch" type="button" role="switch" aria-checked="true" data-light="rgb" aria-label="RGB 灯"><span>开启</span><i aria-hidden="true"></i></button>
+                </div>
+                <div class="light-control-item">
+                  <span class="light-control-icon white-light-icon" aria-hidden="true"><i data-lucide="sun"></i></span>
+                  <span class="light-control-copy"><strong>照明灯</strong><small>工作区域照明</small></span>
+                  <button class="light-switch" type="button" role="switch" aria-checked="true" data-light="work" aria-label="照明灯"><span>开启</span><i aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </section>
           <section class="dashboard-panel material-panel">
             <header class="panel-titlebar">
               <h2>耗材</h2>
@@ -199,21 +371,20 @@
             </header>
             <div class="material-content">
               <div class="material-head-section">
-                <span class="material-section-label">执行头位置</span>
-                <div class="material-head-grid" role="group" aria-label="执行头位置">
-                  <button class="material-head" type="button" data-material-head="执行头 1" data-material-type="PLA Matte" data-color-name="深蓝" data-color-value="#064a87" aria-pressed="false"><i style="--head-color: #064a87" aria-hidden="true"></i><span><strong>执行头 1</strong><small>PLA Matte · 深蓝</small></span></button>
-                  <button class="material-head" type="button" data-material-head="执行头 2" data-material-type="PLA Basic" data-color-name="红色" data-color-value="#e52222" aria-pressed="false"><i style="--head-color: #e52222" aria-hidden="true"></i><span><strong>执行头 2</strong><small>PLA Basic · 红色</small></span></button>
-                  <button class="material-head" type="button" data-material-head="执行头 3" data-material-type="PLA Matte" data-color-name="黄色" data-color-value="#ffc400" aria-pressed="false"><i style="--head-color: #ffc400" aria-hidden="true"></i><span><strong>执行头 3</strong><small>PLA Matte · 黄色</small></span></button>
-                  <button class="material-head" type="button" data-material-head="执行头 4" data-material-type="PETG" data-color-name="绿色" data-color-value="#49a66b" aria-pressed="false"><i style="--head-color: #49a66b" aria-hidden="true"></i><span><strong>执行头 4</strong><small>PETG · 绿色</small></span></button>
-                  <button class="material-head" type="button" data-material-head="执行头 5" data-material-type="PLA Basic" data-color-name="白色" data-color-value="#ffffff" aria-pressed="false"><i style="--head-color: #ffffff" aria-hidden="true"></i><span><strong>执行头 5</strong><small>PLA Basic · 白色</small></span></button>
-                  <button class="material-head" type="button" data-material-head="执行头 6" data-material-type="ABS" data-color-name="黑色" data-color-value="#111111" aria-pressed="false"><i style="--head-color: #111111" aria-hidden="true"></i><span><strong>执行头 6</strong><small>ABS · 黑色</small></span></button>
-                  <button class="material-head" type="button" data-material-head="执行头 7" data-material-type="PLA Silk" data-color-name="橙色" data-color-value="#ff8a00" aria-pressed="false"><i style="--head-color: #ff8a00" aria-hidden="true"></i><span><strong>执行头 7</strong><small>PLA Silk · 橙色</small></span></button>
-                  <button class="material-head" type="button" data-material-head="执行头 8" data-material-type="TPU" data-color-name="灰色" data-color-value="#a9adaf" aria-pressed="false"><i style="--head-color: #a9adaf" aria-hidden="true"></i><span><strong>执行头 8</strong><small>TPU · 灰色</small></span></button>
+                <div class="material-head-grid" role="group" aria-label="耗材位置">
+                  <button class="material-head" type="button" data-material-head="耗材 1" data-material-type="PLA Matte" data-color-name="深蓝" data-color-value="#064a87" aria-pressed="false" style="grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto; justify-items: center; align-content: center; gap: 5px; padding: 12px 8px; text-align: center;"><i style="--head-color: #064a87" aria-hidden="true"></i><span style="width: 100%; align-items: center; gap: 2px;"><strong>耗材 1</strong><small>PLA Matte · 深蓝</small></span></button>
+                  <button class="material-head" type="button" data-material-head="耗材 2" data-material-type="PLA Basic" data-color-name="红色" data-color-value="#e52222" aria-pressed="false" style="grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto; justify-items: center; align-content: center; gap: 5px; padding: 12px 8px; text-align: center;"><i style="--head-color: #e52222" aria-hidden="true"></i><span style="width: 100%; align-items: center; gap: 2px;"><strong>耗材 2</strong><small>PLA Basic · 红色</small></span></button>
+                  <button class="material-head" type="button" data-material-head="耗材 3" data-material-type="PLA Matte" data-color-name="黄色" data-color-value="#ffc400" aria-pressed="false" style="grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto; justify-items: center; align-content: center; gap: 5px; padding: 12px 8px; text-align: center;"><i style="--head-color: #ffc400" aria-hidden="true"></i><span style="width: 100%; align-items: center; gap: 2px;"><strong>耗材 3</strong><small>PLA Matte · 黄色</small></span></button>
+                  <button class="material-head" type="button" data-material-head="耗材 4" data-material-type="PETG" data-color-name="绿色" data-color-value="#49a66b" aria-pressed="false" style="grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto; justify-items: center; align-content: center; gap: 5px; padding: 12px 8px; text-align: center;"><i style="--head-color: #49a66b" aria-hidden="true"></i><span style="width: 100%; align-items: center; gap: 2px;"><strong>耗材 4</strong><small>PETG · 绿色</small></span></button>
+                  <button class="material-head" type="button" data-material-head="耗材 5" data-material-type="PLA Basic" data-color-name="白色" data-color-value="#ffffff" aria-pressed="false" style="grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto; justify-items: center; align-content: center; gap: 5px; padding: 12px 8px; text-align: center;"><i style="--head-color: #ffffff" aria-hidden="true"></i><span style="width: 100%; align-items: center; gap: 2px;"><strong>耗材 5</strong><small>PLA Basic · 白色</small></span></button>
+                  <button class="material-head" type="button" data-material-head="耗材 6" data-material-type="ABS" data-color-name="黑色" data-color-value="#111111" aria-pressed="false" style="grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto; justify-items: center; align-content: center; gap: 5px; padding: 12px 8px; text-align: center;"><i style="--head-color: #111111" aria-hidden="true"></i><span style="width: 100%; align-items: center; gap: 2px;"><strong>耗材 6</strong><small>ABS · 黑色</small></span></button>
+                  <button class="material-head" type="button" data-material-head="耗材 7" data-material-type="PLA Silk" data-color-name="橙色" data-color-value="#ff8a00" aria-pressed="false" style="grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto; justify-items: center; align-content: center; gap: 5px; padding: 12px 8px; text-align: center;"><i style="--head-color: #ff8a00" aria-hidden="true"></i><span style="width: 100%; align-items: center; gap: 2px;"><strong>耗材 7</strong><small>PLA Silk · 橙色</small></span></button>
+                  <button class="material-head" type="button" data-material-head="耗材 8" data-material-type="TPU" data-color-name="灰色" data-color-value="#a9adaf" aria-pressed="false" style="grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto; justify-items: center; align-content: center; gap: 5px; padding: 12px 8px; text-align: center;"><i style="--head-color: #a9adaf" aria-hidden="true"></i><span style="width: 100%; align-items: center; gap: 2px;"><strong>耗材 8</strong><small>TPU · 灰色</small></span></button>
                 </div>
               </div>
               <div class="material-details" role="dialog" aria-modal="false" aria-labelledby="material-dialog-title" hidden>
                 <header class="material-dialog-header">
-                  <strong id="material-dialog-title"><span data-selected-head>执行头 1</span>耗材设置</strong>
+                  <strong id="material-dialog-title"><span data-selected-head>耗材 1</span>耗材设置</strong>
                   <button type="button" data-close-material aria-label="关闭耗材设置" title="关闭"><i data-lucide="x" aria-hidden="true"></i></button>
                 </header>
                 <div class="material-detail-body">
@@ -250,14 +421,412 @@
                       <button class="is-active" type="button" style="--swatch: #064a87"><i aria-hidden="true"></i><span>深蓝</span></button>
                       <button type="button" style="--swatch: #6657b5"><i aria-hidden="true"></i><span>紫色</span></button>
                     </div>
+                    <button class="custom-color-trigger" type="button" data-color-wheel-trigger aria-expanded="false" aria-controls="custom-color-picker">
+                      <i data-lucide="palette" aria-hidden="true"></i>
+                      <span><strong>自定义颜色</strong><small>使用色轮选择颜色</small></span>
+                      <i data-lucide="chevron-right" aria-hidden="true"></i>
+                    </button>
+                    <div id="custom-color-picker" class="color-wheel-picker" aria-label="自定义颜色选择" hidden>
+                      <div class="color-wheel-preview" aria-hidden="true">
+                        <span class="color-wheel"><i></i></span>
+                        <span class="color-lightness"><i></i></span>
+                      </div>
+                      <div class="color-wheel-values" aria-label="当前自定义颜色值">
+                        <span><small>HEX</small><strong>#064A87</strong></span>
+                        <span><small>R</small><strong>6</strong></span>
+                        <span><small>G</small><strong>74</strong></span>
+                        <span><small>B</small><strong>135</strong></span>
+                      </div>
+                    </div>
                   </section>
                 </div>
               </div>
             </div>
           </section>
-        </div>
-        </div>
-      </section>
+        </section>
+        <section class="models-page" data-page="models" aria-label="我的模型" hidden>
+          <header class="models-page-header">
+            <div><span class="page-kicker">模型库</span><h2>我的模型</h2></div>
+          </header>
+          <div class="models-toolbar">
+            <div class="model-search"><i data-lucide="search" aria-hidden="true"></i><input type="search" placeholder="搜索我的模型" aria-label="搜索我的模型"></div>
+            <div class="model-chips" role="group" aria-label="模型筛选">
+              <button class="model-chip is-active" type="button" data-model-filter="all" aria-pressed="true">全部</button>
+              <button class="model-chip" type="button" data-model-filter="favorite" aria-pressed="false"><i data-lucide="heart" aria-hidden="true"></i>已收藏</button>
+            </div>
+          </div>
+          <div class="model-grid" aria-label="我的模型">
+            <article class="model-card" data-model-card data-model-title="螺旋花器.3mf" data-model-author="Kai" data-model-format="3MF" data-model-size="98 × 98 × 180 mm" data-model-estimate="约 5 小时 28 分钟 · 128 g" data-model-status="正在打印" data-model-description="流畅的螺旋曲面花器，适合使用哑光 PLA 打印。">
+              <button class="model-card__open" type="button" data-model-open><img class="model-card__image" src="model-placeholder.svg" alt="螺旋花器模型预览"><span class="model-card__summary"><strong>螺旋花器.3mf</strong><span>作者 · Kai</span></span></button><button class="favorite-button" type="button" data-favorite aria-label="收藏螺旋花器" aria-pressed="true"><i data-lucide="heart" aria-hidden="true"></i></button>
+            </article>
+            <article class="model-card" data-model-card data-model-title="桌面收纳托盘.stl" data-model-author="Lin" data-model-format="STL" data-model-size="210 × 140 × 32 mm" data-model-estimate="约 3 小时 12 分钟 · 86 g" data-model-status="可打印" data-model-description="模块化桌面收纳托盘，可用于整理文具与小型工具。">
+              <button class="model-card__open" type="button" data-model-open><img class="model-card__image" src="model-placeholder.svg" alt="桌面收纳托盘模型预览"><span class="model-card__summary"><strong>桌面收纳托盘.stl</strong><span>作者 · Lin</span></span></button><button class="favorite-button" type="button" data-favorite aria-label="收藏桌面收纳托盘" aria-pressed="false"><i data-lucide="heart" aria-hidden="true"></i></button>
+            </article>
+            <article class="model-card" data-model-card data-model-title="机械齿轮组.3mf" data-model-author="Mori" data-model-format="3MF" data-model-size="160 × 120 × 24 mm" data-model-estimate="约 2 小时 46 分钟 · 74 g" data-model-status="待切片" data-model-description="可活动的机械齿轮组合，适合作为结构演示模型。">
+              <button class="model-card__open" type="button" data-model-open><img class="model-card__image" src="model-placeholder.svg" alt="机械齿轮组模型预览"><span class="model-card__summary"><strong>机械齿轮组.3mf</strong><span>作者 · Mori</span></span></button><button class="favorite-button" type="button" data-favorite aria-label="收藏机械齿轮组" aria-pressed="false"><i data-lucide="heart" aria-hidden="true"></i></button>
+            </article>
+            <article class="model-card" data-model-card data-model-title="极简台灯.stl" data-model-author="Alex" data-model-format="STL" data-model-size="145 × 145 × 260 mm" data-model-estimate="约 6 小时 18 分钟 · 164 g" data-model-status="可打印" data-model-description="由灯罩与底座组成的极简台灯，支持免支撑打印。">
+              <button class="model-card__open" type="button" data-model-open><img class="model-card__image" src="model-placeholder.svg" alt="极简台灯模型预览"><span class="model-card__summary"><strong>极简台灯.stl</strong><span>作者 · Alex</span></span></button><button class="favorite-button" type="button" data-favorite aria-label="收藏极简台灯" aria-pressed="true"><i data-lucide="heart" aria-hidden="true"></i></button>
+            </article>
+          </div>
+        </section>
+        <section class="models-page" data-page="market" aria-label="模型商城" hidden>
+          <header class="models-page-header"><div><span class="page-kicker">发现灵感</span><h2>模型商城</h2></div></header>
+          <div class="models-toolbar models-toolbar--market">
+            <div class="model-search"><i data-lucide="search" aria-hidden="true"></i><input type="search" placeholder="搜索模型..." aria-label="搜索商城模型"></div>
+            <div class="model-chips" role="group" aria-label="商城分类"><button class="model-chip is-active" type="button">精选</button><button class="model-chip" type="button">家居</button><button class="model-chip" type="button">玩具</button><button class="model-chip" type="button">工具</button></div>
+          </div>
+          <div class="model-grid market-grid" aria-label="商城模型">
+            <article class="model-card market-item" data-model-card data-model-title="折纸氛围灯" data-model-author="XK Official" data-model-format="3MF" data-model-size="180 × 180 × 245 mm" data-model-estimate="约 7 小时 20 分钟 · 196 g" data-model-status="¥12 · 2.4k 下载" data-model-description="以折纸几何为灵感的氛围灯罩，光影柔和且无需支撑。"><button class="model-card__open" type="button" data-model-open><img class="model-card__image" src="model-placeholder.svg" alt="折纸氛围灯预览"><span class="model-card__summary"><strong>折纸氛围灯</strong><span>作者 · XK Official</span><small>¥12 · 2.4k 下载</small></span></button><button class="favorite-button" type="button" data-favorite aria-label="收藏折纸氛围灯" aria-pressed="false"><i data-lucide="heart"></i></button></article>
+            <article class="model-card market-item" data-model-card data-model-title="桌面机械臂" data-model-author="Maker Lab" data-model-format="STL" data-model-size="220 × 160 × 310 mm" data-model-estimate="约 11 小时 · 340 g" data-model-status="免费 · 8.7k 下载" data-model-description="多关节桌面机械臂模型，零件分组清晰，适合教学展示。"><button class="model-card__open" type="button" data-model-open><img class="model-card__image" src="model-placeholder.svg" alt="桌面机械臂预览"><span class="model-card__summary"><strong>桌面机械臂</strong><span>作者 · Maker Lab</span><small>免费 · 8.7k 下载</small></span></button><button class="favorite-button" type="button" data-favorite aria-label="收藏桌面机械臂" aria-pressed="false"><i data-lucide="heart"></i></button></article>
+            <article class="model-card market-item" data-model-card data-model-title="几何花盆套装" data-model-author="Nora Design" data-model-format="3MF" data-model-size="120 × 120 × 135 mm" data-model-estimate="约 4 小时 35 分钟 · 112 g" data-model-status="¥8 · 5.1k 下载" data-model-description="三款几何纹理花盆，包含匹配托盘与排水结构。"><button class="model-card__open" type="button" data-model-open><img class="model-card__image" src="model-placeholder.svg" alt="几何花盆套装预览"><span class="model-card__summary"><strong>几何花盆套装</strong><span>作者 · Nora Design</span><small>¥8 · 5.1k 下载</small></span></button><button class="favorite-button" type="button" data-favorite aria-label="收藏几何花盆套装" aria-pressed="true"><i data-lucide="heart"></i></button></article>
+            <article class="model-card market-item" data-model-card data-model-title="迷你工具架" data-model-author="Workshop 17" data-model-format="STL" data-model-size="240 × 90 × 160 mm" data-model-estimate="约 5 小时 10 分钟 · 152 g" data-model-status="免费 · 3.6k 下载" data-model-description="紧凑型洞洞板工具架，模块可自由组合与扩展。"><button class="model-card__open" type="button" data-model-open><img class="model-card__image" src="model-placeholder.svg" alt="迷你工具架预览"><span class="model-card__summary"><strong>迷你工具架</strong><span>作者 · Workshop 17</span><small>免费 · 3.6k 下载</small></span></button><button class="favorite-button" type="button" data-favorite aria-label="收藏迷你工具架" aria-pressed="false"><i data-lucide="heart"></i></button></article>
+          </div>
+        </section>
+        <section class="models-page model-detail-page" data-page="model-detail" data-parent-nav="models" aria-label="模型详情" hidden>
+          <header class="models-page-header model-detail-header"><button class="model-detail-back" type="button" data-model-detail-back aria-label="返回模型列表"><i data-lucide="arrow-left" aria-hidden="true"></i></button><div><span class="page-kicker">模型库</span><h2>模型详情</h2></div></header>
+          <div class="model-detail-layout">
+            <div class="model-detail-page__image-wrap"><img class="model-detail-page__image" src="model-placeholder.svg" alt="模型预览" data-model-detail-image></div>
+            <div class="model-detail-copy"><article class="model-detail-page__hero"><div class="model-detail-page__hero-copy"><h1 data-model-detail-title></h1><p data-model-detail-author></p></div><button class="btn btn-primary model-detail-page__print-button" type="button" data-model-detail-print><i data-lucide="printer" aria-hidden="true"></i><span>开始打印</span></button></article><article class="model-detail-page__content"><h3>简介</h3><p data-model-detail-description></p><dl class="model-detail-page__facts"><div><dt>文件格式</dt><dd data-model-detail-format></dd></div><div><dt>模型尺寸</dt><dd data-model-detail-size></dd></div><div><dt>打印估算</dt><dd data-model-detail-estimate></dd></div><div><dt>当前状态</dt><dd data-model-detail-status></dd></div></dl></article></div>
+          </div>
+        </section>
+        <section class="profile-page" data-page="profile" aria-label="我的" hidden>
+          <header class="profile-page-header">
+            <h2>我的</h2>
+          </header>
+          <div class="profile-grid">
+            <div class="profile-main">
+              <section class="profile-panel profile-card" aria-label="用户信息">
+                <div class="profile-avatar" aria-hidden="true">AX</div>
+                <div class="profile-info">
+                  <h1>Alex Chen</h1>
+                  <span class="profile-badge">Maker Pro</span>
+                  <span class="profile-id">用户 ID：XK-2048-7731</span>
+                </div>
+              </section>
+              <section class="profile-menu" aria-label="快捷入口">
+                <h2 class="profile-menu-title">快捷入口</h2>
+                <div class="profile-menu-grid">
+                  <button class="profile-menu-row" type="button" data-nav="favorites">
+                    <span class="profile-menu-icon"><i data-lucide="heart" aria-hidden="true"></i></span>
+                    <span class="profile-menu-label">我的收藏</span>
+                    <i class="profile-menu-arrow" data-lucide="chevron-right" aria-hidden="true"></i>
+                  </button>
+                  <button class="profile-menu-row" type="button" data-nav="print-history">
+                    <span class="profile-menu-icon"><i data-lucide="history" aria-hidden="true"></i></span>
+                    <span class="profile-menu-label">打印历史</span>
+                    <i class="profile-menu-arrow" data-lucide="chevron-right" aria-hidden="true"></i>
+                  </button>
+                  <button class="profile-menu-row" type="button" data-nav="account-security">
+                    <span class="profile-menu-icon"><i data-lucide="shield-check" aria-hidden="true"></i></span>
+                    <span class="profile-menu-label">用户与安全</span>
+                    <i class="profile-menu-arrow" data-lucide="chevron-right" aria-hidden="true"></i>
+                  </button>
+                  <button class="profile-menu-row" type="button" data-nav="help-feedback">
+                    <span class="profile-menu-icon"><i data-lucide="message-circle-question" aria-hidden="true"></i></span>
+                    <span class="profile-menu-label">帮助与反馈</span>
+                    <i class="profile-menu-arrow" data-lucide="chevron-right" aria-hidden="true"></i>
+                  </button>
+                  <button class="profile-menu-row" type="button" data-nav="settings">
+                    <span class="profile-menu-icon"><i data-lucide="settings" aria-hidden="true"></i></span>
+                    <span class="profile-menu-label">设置</span>
+                    <i class="profile-menu-arrow" data-lucide="chevron-right" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </section>
+              <section class="profile-panel profile-metrics" aria-label="使用统计">
+                <div class="profile-metric">
+                  <strong>128</strong>
+                  <span>打印</span>
+                </div>
+                <div class="profile-metric">
+                  <strong>486h</strong>
+                  <span>打印时长</span>
+                </div>
+                <div class="profile-metric">
+                  <strong>23</strong>
+                  <span>模型</span>
+                </div>
+              </section>
+              <div class="profile-detail-grid">
+                <section class="profile-panel profile-printer" aria-label="当前打印机">
+                  <header class="profile-panel-heading">
+                    <h2>当前打印机</h2>
+                    <i data-lucide="printer" aria-hidden="true"></i>
+                  </header>
+                  <strong>XK1 Carbon</strong>
+                  <span class="profile-status">在线</span>
+                </section>
+                <section class="profile-panel profile-material" aria-label="总耗材">
+                  <header class="profile-panel-heading">
+                    <h2>总耗材</h2>
+                    <i data-lucide="package" aria-hidden="true"></i>
+                  </header>
+                  <strong>2.8 kg</strong>
+                </section>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="subpage-page library-page" data-page="favorites" data-parent-nav="profile" aria-label="我的收藏" hidden>
+          <header class="subpage-header">
+            <button class="subpage-back" type="button" data-nav="profile" aria-label="返回我的"><i data-lucide="arrow-left" aria-hidden="true"></i></button>
+            <h2>我的收藏</h2>
+          </header>
+          <div class="subpage-workspace">
+            <nav class="subpage-nav subpage-panel" aria-label="个人内容">
+              <span class="subpage-nav__eyebrow">个人内容</span>
+              <button class="subpage-nav__item is-active" type="button" aria-current="page">我的收藏</button>
+              <button class="subpage-nav__item" type="button" data-nav="print-history">打印历史</button>
+            </nav>
+            <div class="subpage-content">
+              <section class="subpage-panel library-section" aria-labelledby="favorites-title">
+                <header class="subpage-section-heading"><div><span class="subpage-section-kicker">模型收藏</span><h3 id="favorites-title">已收藏的模型</h3></div><span class="library-count">3 个模型</span></header>
+                <div class="favorite-model-grid">
+                  <article class="favorite-model-card"><img src="model-placeholder.svg" alt="螺旋花器模型预览"><div><strong>螺旋花器.3mf</strong><span>作者 · Kai</span><small>3MF · 98 × 98 × 180 mm</small></div><i data-lucide="heart" aria-label="已收藏"></i></article>
+                  <article class="favorite-model-card"><img src="model-placeholder.svg" alt="折纸氛围灯模型预览"><div><strong>折纸氛围灯</strong><span>作者 · XK Official</span><small>3MF · 约 7 小时 20 分钟</small></div><i data-lucide="heart" aria-label="已收藏"></i></article>
+                  <article class="favorite-model-card"><img src="model-placeholder.svg" alt="极简台灯模型预览"><div><strong>极简台灯.stl</strong><span>作者 · Alex</span><small>STL · 145 × 145 × 260 mm</small></div><i data-lucide="heart" aria-label="已收藏"></i></article>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+        <section class="subpage-page library-page" data-page="print-history" data-parent-nav="profile" aria-label="打印历史" hidden>
+          <header class="subpage-header">
+            <button class="subpage-back" type="button" data-nav="profile" aria-label="返回我的"><i data-lucide="arrow-left" aria-hidden="true"></i></button>
+            <h2>打印历史</h2>
+          </header>
+          <div class="subpage-workspace">
+            <nav class="subpage-nav subpage-panel" aria-label="个人内容">
+              <span class="subpage-nav__eyebrow">个人内容</span>
+              <button class="subpage-nav__item" type="button" data-nav="favorites">我的收藏</button>
+              <button class="subpage-nav__item is-active" type="button" aria-current="page">打印历史</button>
+            </nav>
+            <div class="subpage-content">
+              <section class="subpage-panel library-section" aria-labelledby="print-history-title">
+                <header class="subpage-section-heading"><div><span class="subpage-section-kicker">最近记录</span><h3 id="print-history-title">打印任务</h3></div><span class="library-count">共 128 次</span></header>
+                <div class="print-history-list">
+                  <article class="print-history-row"><img src="model-placeholder.svg" alt="螺旋花器模型预览"><div class="print-history-main"><strong>螺旋花器.3mf</strong><span>XK1 Carbon · PLA Matte</span></div><span class="history-status is-success"><i data-lucide="circle-check" aria-hidden="true"></i>已完成</span><div class="print-history-meta"><strong>5 小时 31 分</strong><time datetime="2026-08-04T18:42">昨天 18:42</time></div></article>
+                  <article class="print-history-row"><img src="model-placeholder.svg" alt="桌面收纳托盘模型预览"><div class="print-history-main"><strong>桌面收纳托盘.stl</strong><span>XK1 Carbon · PLA Basic</span></div><span class="history-status is-success"><i data-lucide="circle-check" aria-hidden="true"></i>已完成</span><div class="print-history-meta"><strong>3 小时 08 分</strong><time datetime="2026-08-02T10:16">8 月 2 日 10:16</time></div></article>
+                  <article class="print-history-row"><img src="model-placeholder.svg" alt="机械齿轮组模型预览"><div class="print-history-main"><strong>机械齿轮组.3mf</strong><span>XK1 Mini · PETG</span></div><span class="history-status is-failed"><i data-lucide="circle-x" aria-hidden="true"></i>打印失败</span><div class="print-history-meta"><strong>1 小时 24 分</strong><time datetime="2026-07-29T21:05">7 月 29 日 21:05</time></div></article>
+                  <article class="print-history-row"><img src="model-placeholder.svg" alt="极简台灯模型预览"><div class="print-history-main"><strong>极简台灯.stl</strong><span>XK1 Carbon · PLA Matte</span></div><span class="history-status is-success"><i data-lucide="circle-check" aria-hidden="true"></i>已完成</span><div class="print-history-meta"><strong>6 小时 22 分</strong><time datetime="2026-07-26T14:30">7 月 26 日 14:30</time></div></article>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+        <section class="subpage-page account-security-page" data-page="account-security" data-parent-nav="profile" aria-label="用户与安全" hidden>
+          <header class="subpage-header">
+            <button class="subpage-back" type="button" data-nav="profile" aria-label="返回我的">
+              <i data-lucide="arrow-left" aria-hidden="true"></i>
+            </button>
+            <h2>用户与安全</h2>
+          </header>
+          <div class="subpage-workspace">
+            <nav class="subpage-nav subpage-panel" aria-label="用户与安全子页面">
+              <span class="subpage-nav__eyebrow">用户与安全</span>
+              <button class="subpage-nav__item is-active" type="button">账户概览</button>
+              <button class="subpage-nav__item" type="button" data-nav="change-password">修改密码</button>
+              <button class="subpage-nav__item subpage-nav__item--danger" type="button">注销账户</button>
+            </nav>
+            <div class="subpage-content">
+              <section class="subpage-panel account-info-card" aria-labelledby="account-info-title">
+                <header class="subpage-section-heading">
+                  <div>
+                    <span class="subpage-section-kicker">账户</span>
+                    <h3 id="account-info-title">账号信息</h3>
+                  </div>
+                  <i data-lucide="user-round" aria-hidden="true"></i>
+                </header>
+                <div class="account-info-body">
+                  <span>已绑定手机号</span>
+                  <strong>138****5678</strong>
+                </div>
+              </section>
+              <section class="subpage-panel account-actions-card" aria-labelledby="account-actions-title">
+                <header class="subpage-section-heading">
+                  <div>
+                    <span class="subpage-section-kicker">安全管理</span>
+                    <h3 id="account-actions-title">安全操作</h3>
+                  </div>
+                  <i data-lucide="shield-check" aria-hidden="true"></i>
+                </header>
+                <div class="account-action-list">
+                  <button class="account-action-row" type="button" data-nav="change-password">
+                    <span>修改密码</span>
+                    <i data-lucide="chevron-right" aria-hidden="true"></i>
+                  </button>
+                  <button class="account-action-row account-action-row--danger" type="button">
+                    <span>注销账户</span>
+                    <i data-lucide="chevron-right" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+        <section class="subpage-page change-password-page" data-page="change-password" data-parent-nav="profile" aria-label="修改密码" hidden>
+          <header class="subpage-header">
+            <button class="subpage-back" type="button" data-nav="account-security" aria-label="返回用户与安全">
+              <i data-lucide="arrow-left" aria-hidden="true"></i>
+            </button>
+            <h2>修改密码</h2>
+          </header>
+          <div class="subpage-workspace">
+            <nav class="subpage-nav subpage-panel" aria-label="用户与安全子页面">
+              <span class="subpage-nav__eyebrow">用户与安全</span>
+              <button class="subpage-nav__item" type="button" data-nav="account-security">账户概览</button>
+              <button class="subpage-nav__item is-active" type="button" aria-current="page">修改密码</button>
+              <button class="subpage-nav__item subpage-nav__item--danger" type="button">注销账户</button>
+            </nav>
+            <div class="subpage-content">
+              <section class="subpage-panel password-form-card" aria-labelledby="change-password-title">
+                <header class="subpage-section-heading">
+                  <div>
+                    <span class="subpage-section-kicker">安全管理</span>
+                    <h3 id="change-password-title">设置新密码</h3>
+                  </div>
+                  <i data-lucide="key-round" aria-hidden="true"></i>
+                </header>
+                <form class="account-form password-form" onsubmit="return false;">
+                  <label class="account-field">
+                    <span>手机号</span>
+                    <span class="account-input-wrap">
+                      <input type="tel" placeholder="请输入手机号" autocomplete="tel">
+                    </span>
+                  </label>
+                  <label class="account-field">
+                    <span>验证码</span>
+                    <span class="verification-row">
+                      <span class="account-input-wrap">
+                        <input type="text" inputmode="numeric" placeholder="请输入验证码" autocomplete="one-time-code">
+                      </span>
+                      <button class="verification-button" type="button">获取验证码</button>
+                    </span>
+                  </label>
+                  <label class="account-field">
+                    <span>新密码</span>
+                    <span class="account-input-wrap">
+                      <input type="password" autocomplete="new-password">
+                    </span>
+                    <small>建议使用 8–20 位字母、数字或符号组合</small>
+                  </label>
+                  <button class="btn btn-primary account-submit" type="button">完成</button>
+                </form>
+              </section>
+            </div>
+          </div>
+        </section>
+        <section class="subpage-page help-feedback-page" data-page="help-feedback" data-parent-nav="profile" aria-label="帮助与反馈" hidden>
+          <header class="subpage-header">
+            <button class="subpage-back" type="button" data-nav="profile" aria-label="返回我的">
+              <i data-lucide="arrow-left" aria-hidden="true"></i>
+            </button>
+            <h2>帮助与反馈</h2>
+          </header>
+          <div class="subpage-workspace">
+            <nav class="subpage-nav subpage-panel" aria-label="帮助与反馈子页面">
+              <span class="subpage-nav__eyebrow">帮助与反馈</span>
+              <button class="subpage-nav__item is-active" type="button" aria-current="page">常见问题</button>
+              <button class="subpage-nav__item" type="button" data-nav="contact">联系我们</button>
+            </nav>
+            <div class="subpage-content">
+              <section class="subpage-panel help-hero" aria-labelledby="help-hero-title">
+                <span class="help-hero__icon"><i data-lucide="life-buoy" aria-hidden="true"></i></span>
+                <div>
+                  <h3 id="help-hero-title">遇到什么问题？</h3>
+                  <p>搜索常见问题，或向我们提交反馈</p>
+                </div>
+              </section>
+              <label class="help-search" aria-label="搜索常见问题">
+                <i data-lucide="search" aria-hidden="true"></i>
+                <input type="search" placeholder="搜索设备、打印或账号问题">
+              </label>
+              <section class="subpage-panel help-faq" aria-labelledby="help-faq-title">
+                <header class="help-section-heading">
+                  <h3 id="help-faq-title">常见问题</h3>
+                  <span>6 个问题</span>
+                </header>
+                <details class="help-faq-item"><summary><span>打印机一直显示离线怎么办？</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary><div class="help-faq-answer"><p>请检查设备电源、网络连接和控制台中的设备状态。</p></div></details>
+                <details class="help-faq-item"><summary><span>模型打印时出现翘边如何处理？</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary><div class="help-faq-answer"><p>可检查热床状态、首层设置和模型与热床的贴合情况。</p></div></details>
+                <details class="help-faq-item"><summary><span>耗材无法正常进料怎么办？</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary><div class="help-faq-answer"><p>请检查耗材是否卡住，并确认进料路径和喷嘴状态。</p></div></details>
+                <details class="help-faq-item"><summary><span>摄像头画面无法加载是什么原因？</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary><div class="help-faq-answer"><p>请检查网络连接及摄像头访问权限。</p></div></details>
+                <details class="help-faq-item"><summary><span>固件升级失败后会影响使用吗？</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary><div class="help-faq-answer"><p>请保持设备在线并根据设备提示重新检查升级状态。</p></div></details>
+                <details class="help-faq-item"><summary><span>收不到登录验证码怎么办？</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary><div class="help-faq-answer"><p>请确认手机号和网络状态，稍后重新获取验证码。</p></div></details>
+              </section>
+              <section class="subpage-panel help-feedback-card" aria-label="提交反馈">
+                <span class="help-feedback-card__icon"><i data-lucide="message-square-plus" aria-hidden="true"></i></span>
+                <div><h3>没有解决你的问题？</h3><p>告诉我们遇到的情况，我们会尽快帮助你</p></div>
+                <button class="btn btn-primary" type="button" data-nav="contact">提交反馈</button>
+              </section>
+              <p class="settings-detail-note"><i data-lucide="clock-3" aria-hidden="true"></i>在线支持时间：工作日 09:00–18:00</p>
+            </div>
+          </div>
+        </section>
+        <section class="subpage-page contact-page" data-page="contact" data-parent-nav="profile" aria-label="联系我们" hidden>
+          <header class="subpage-header">
+            <button class="subpage-back" type="button" data-nav="help-feedback" aria-label="返回帮助与反馈"><i data-lucide="arrow-left" aria-hidden="true"></i></button>
+            <h2>联系我们</h2>
+          </header>
+          <div class="subpage-workspace">
+            <nav class="subpage-nav subpage-panel" aria-label="帮助与反馈子页面">
+              <span class="subpage-nav__eyebrow">帮助与反馈</span>
+              <button class="subpage-nav__item" type="button" data-nav="help-feedback">常见问题</button>
+              <button class="subpage-nav__item is-active" type="button" aria-current="page">联系我们</button>
+            </nav>
+            <div class="subpage-content">
+              <section class="subpage-panel contact-brand-card"><strong>Axiloop 客户支持</strong><p>工作日 09:00–18:00</p></section>
+              <section class="subpage-panel" aria-label="联系渠道">
+                <div class="contact-row"><span><small>电话</small><strong>400-820-8888</strong></span></div>
+                <div class="contact-row"><span><small>邮箱</small><strong>support@axiloop.com</strong></span></div>
+                <div class="contact-row"><span><small>地址</small><strong>中国上海市浦东新区张江路 88 号</strong></span></div>
+              </section>
+              <p class="settings-detail-note"><i data-lucide="info" aria-hidden="true"></i>以上信息为产品原型模拟数据</p>
+            </div>
+          </div>
+        </section>
+        <section class="subpage-page settings-page" data-page="settings" data-parent-nav="profile" aria-label="设置" hidden>
+          <header class="subpage-header"><button class="subpage-back" type="button" data-nav="profile" aria-label="返回我的"><i data-lucide="arrow-left" aria-hidden="true"></i></button><h2>设置</h2></header>
+          <div class="subpage-workspace">
+            <nav class="subpage-nav subpage-panel" aria-label="设置子页面">
+              <span class="subpage-nav__eyebrow">设置</span>
+              <button class="subpage-nav__item is-active" type="button" data-nav="settings">设置概览</button>
+              <button class="subpage-nav__item" type="button" data-nav="language">语言</button>
+              <button class="subpage-nav__item" type="button" data-nav="theme">主题</button>
+              <button class="subpage-nav__item" type="button" data-nav="app-cache">应用缓存</button>
+              <button class="subpage-nav__item" type="button" data-nav="device-calibration">设备校准</button>
+              <button class="subpage-nav__item" type="button" data-nav="about-device">关于本机</button>
+              <button class="subpage-nav__item" type="button" data-nav="about-app">关于应用</button>
+            </nav>
+            <div class="subpage-content settings-content">
+              <section class="subpage-panel settings-group" aria-labelledby="general-settings-title"><header class="subpage-section-heading"><div><span class="subpage-section-kicker">偏好</span><h3 id="general-settings-title">通用设置</h3></div><i data-lucide="sliders-horizontal" aria-hidden="true"></i></header><div class="settings-list">
+                <button class="settings-row" type="button" data-nav="language"><span class="settings-row__leading"><i data-lucide="languages" aria-hidden="true"></i><span class="settings-row__label">语言</span></span><span class="settings-row__meta"><span class="settings-row__value">简体中文</span><i data-lucide="chevron-right" aria-hidden="true"></i></span></button>
+                <button class="settings-row" type="button" data-nav="theme"><span class="settings-row__leading"><i data-lucide="sun-moon" aria-hidden="true"></i><span class="settings-row__label">主题</span></span><span class="settings-row__meta"><span class="settings-row__value">跟随系统</span><i data-lucide="chevron-right" aria-hidden="true"></i></span></button>
+                <button class="settings-row" type="button" data-nav="app-cache"><span class="settings-row__leading"><i data-lucide="database" aria-hidden="true"></i><span class="settings-row__label">应用缓存</span></span><span class="settings-row__meta"><span class="settings-row__value">128 MB</span><i data-lucide="chevron-right" aria-hidden="true"></i></span></button>
+              </div></section>
+              <section class="subpage-panel settings-group" aria-labelledby="device-settings-title"><header class="subpage-section-heading"><div><span class="subpage-section-kicker">设备管理</span><h3 id="device-settings-title">设备设置</h3></div><i data-lucide="printer" aria-hidden="true"></i></header><div class="settings-list">
+                <button class="settings-row" type="button" data-nav="device-calibration"><span class="settings-row__leading"><i data-lucide="scan-line" aria-hidden="true"></i><span class="settings-row__label">设备校准</span></span><span class="settings-row__meta"><i data-lucide="chevron-right" aria-hidden="true"></i></span></button>
+                <button class="settings-row" type="button" data-nav="about-device"><span class="settings-row__leading"><i data-lucide="monitor-cog" aria-hidden="true"></i><span class="settings-row__label">关于本机</span></span><span class="settings-row__meta"><i data-lucide="chevron-right" aria-hidden="true"></i></span></button>
+              </div></section>
+              <section class="subpage-panel settings-group" aria-labelledby="app-settings-title"><header class="subpage-section-heading"><div><span class="subpage-section-kicker">应用管理</span><h3 id="app-settings-title">应用设置</h3></div><i data-lucide="settings-2" aria-hidden="true"></i></header><div class="settings-list">
+                <div class="settings-row settings-row--static"><span class="settings-row__leading"><i data-lucide="bell" aria-hidden="true"></i><span class="settings-row__label">推送通知权限</span></span><span class="settings-row__meta"><span class="settings-status"><i aria-hidden="true"></i>已开启</span></span></div>
+                <button class="settings-row" type="button" data-nav="about-app"><span class="settings-row__leading"><i data-lucide="badge-info" aria-hidden="true"></i><span class="settings-row__label">关于应用</span></span><span class="settings-row__meta"><span class="settings-row__value">v1.0.0</span><i data-lucide="chevron-right" aria-hidden="true"></i></span></button>
+                <button class="settings-row settings-row--danger" type="button"><span class="settings-row__leading"><i data-lucide="log-out" aria-hidden="true"></i><span class="settings-row__label">退出登录</span></span><span class="settings-row__meta"><i data-lucide="chevron-right" aria-hidden="true"></i></span></button>
+              </div></section>
+            </div>
+          </div>
+        </section>
+        <section class="subpage-page settings-detail-page" data-page="language" data-parent-nav="profile" aria-label="语言" hidden><header class="subpage-header"><button class="subpage-back" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="arrow-left"></i></button><h2>语言</h2></header><div class="subpage-workspace"><nav class="subpage-nav subpage-panel" aria-label="设置子页面"><span class="subpage-nav__eyebrow">设置</span><button class="subpage-nav__item" data-nav="settings" type="button">设置概览</button><button class="subpage-nav__item is-active" type="button">语言</button><button class="subpage-nav__item" data-nav="theme" type="button">主题</button><button class="subpage-nav__item" data-nav="app-cache" type="button">应用缓存</button><button class="subpage-nav__item" data-nav="device-calibration" type="button">设备校准</button><button class="subpage-nav__item" data-nav="about-device" type="button">关于本机</button><button class="subpage-nav__item" data-nav="about-app" type="button">关于应用</button></nav><div class="subpage-content"><section class="subpage-panel settings-group"><div class="settings-list"><button class="settings-choice is-selected" type="button"><span><strong>简体中文</strong></span></button><button class="settings-choice" type="button"><span><strong>繁體中文</strong></span></button><button class="settings-choice" type="button"><span><strong>English</strong></span></button><button class="settings-choice" type="button"><span><strong>日本語</strong></span></button><button class="settings-choice" type="button"><span><strong>한국어</strong></span></button></div></section><p class="settings-detail-note">切换语言后，应用内文字将使用所选语言显示</p></div></div></section>
+        <section class="subpage-page" data-page="theme" data-parent-nav="profile" aria-label="主题" hidden><header class="subpage-header"><button class="subpage-back" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="arrow-left"></i></button><h2>主题</h2></header><div class="subpage-workspace"><nav class="subpage-nav subpage-panel"><span class="subpage-nav__eyebrow">设置</span><button class="subpage-nav__item" data-nav="settings" type="button">设置概览</button><button class="subpage-nav__item" data-nav="language" type="button">语言</button><button class="subpage-nav__item is-active" type="button">主题</button><button class="subpage-nav__item" data-nav="app-cache" type="button">应用缓存</button><button class="subpage-nav__item" data-nav="device-calibration" type="button">设备校准</button><button class="subpage-nav__item" data-nav="about-device" type="button">关于本机</button><button class="subpage-nav__item" data-nav="about-app" type="button">关于应用</button></nav><div class="subpage-content"><section class="subpage-panel theme-choice-grid"><button class="theme-choice is-selected" type="button"><strong>跟随系统</strong><small>自动适配系统外观</small></button><button class="theme-choice" type="button"><strong>深色</strong><small>适合暗光环境</small></button><button class="theme-choice" type="button"><strong>亮色</strong><small>清晰明亮的外观</small></button></section></div></div></section>
+        <section class="subpage-page" data-page="app-cache" data-parent-nav="profile" aria-label="应用缓存" hidden><header class="subpage-header"><button class="subpage-back" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="arrow-left"></i></button><h2>应用缓存</h2></header><div class="subpage-workspace"><nav class="subpage-nav subpage-panel"><span class="subpage-nav__eyebrow">设置</span><button class="subpage-nav__item" data-nav="settings" type="button">设置概览</button><button class="subpage-nav__item" data-nav="language" type="button">语言</button><button class="subpage-nav__item" data-nav="theme" type="button">主题</button><button class="subpage-nav__item is-active" type="button">应用缓存</button><button class="subpage-nav__item" data-nav="device-calibration" type="button">设备校准</button><button class="subpage-nav__item" data-nav="about-device" type="button">关于本机</button><button class="subpage-nav__item" data-nav="about-app" type="button">关于应用</button></nav><div class="subpage-content"><section class="subpage-panel cache-overview"><span>当前缓存</span><strong>128 MB</strong><p>缓存数据可帮助应用更快加载预览内容</p></section><section class="subpage-panel"><div class="cache-detail-row"><span>图片与缩略图</span><strong>68.4 MB</strong></div><div class="cache-detail-row"><span>模型预览数据</span><strong>42.1 MB</strong></div><div class="cache-detail-row"><span>日志与临时文件</span><strong>17.5 MB</strong></div></section><button class="btn btn-secondary cache-clear-button" type="button">清理缓存</button><p class="settings-detail-note"><i data-lucide="info"></i>清理缓存不会删除账号信息、打印记录或已下载模型。</p><p class="cache-clear-hint">建议定期清理以释放设备存储空间</p></div></div></section>
+        <section class="subpage-page" data-page="device-calibration" data-parent-nav="profile" aria-label="设备校准" hidden><header class="subpage-header"><button class="subpage-back" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="arrow-left"></i></button><h2>设备校准</h2></header><div class="subpage-workspace"><nav class="subpage-nav subpage-panel"><span class="subpage-nav__eyebrow">设置</span><button class="subpage-nav__item" data-nav="settings" type="button">设置概览</button><button class="subpage-nav__item" data-nav="language" type="button">语言</button><button class="subpage-nav__item" data-nav="theme" type="button">主题</button><button class="subpage-nav__item" data-nav="app-cache" type="button">应用缓存</button><button class="subpage-nav__item is-active" type="button">设备校准</button><button class="subpage-nav__item" data-nav="about-device" type="button">关于本机</button><button class="subpage-nav__item" data-nav="about-app" type="button">关于应用</button></nav><div class="subpage-content"><section class="subpage-panel device-identity-card"><strong>XK1 Carbon</strong><span>在线</span></section><section class="subpage-panel"><label class="calibration-option"><span class="calibration-option__copy"><strong>高精度喷嘴校准</strong><small>提升喷嘴定位与挤出精度</small></span><span class="setting-switch"><input type="checkbox" checked disabled><span class="setting-switch__track"></span></span></label><label class="calibration-option"><span class="calibration-option__copy"><strong>震动补偿校准</strong><small>减少高速打印产生的振纹</small></span><span class="setting-switch"><input type="checkbox" disabled><span class="setting-switch__track"></span></span></label><label class="calibration-option"><span class="calibration-option__copy"><strong>热床校准</strong><small>检测并补偿热床平整度</small></span><span class="setting-switch"><input type="checkbox" checked disabled><span class="setting-switch__track"></span></span></label></section><p class="settings-detail-note"><i data-lucide="info"></i>开启的项目将在下次执行设备校准时自动运行。</p></div></div></section>
+        <section class="subpage-page" data-page="about-device" data-parent-nav="profile" aria-label="关于本机" hidden><header class="subpage-header"><button class="subpage-back" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="arrow-left"></i></button><h2>关于本机</h2></header><div class="subpage-workspace"><nav class="subpage-nav subpage-panel"><span class="subpage-nav__eyebrow">设置</span><button class="subpage-nav__item" data-nav="settings" type="button">设置概览</button><button class="subpage-nav__item" data-nav="language" type="button">语言</button><button class="subpage-nav__item" data-nav="theme" type="button">主题</button><button class="subpage-nav__item" data-nav="app-cache" type="button">应用缓存</button><button class="subpage-nav__item" data-nav="device-calibration" type="button">设备校准</button><button class="subpage-nav__item is-active" type="button">关于本机</button><button class="subpage-nav__item" data-nav="about-app" type="button">关于应用</button></nav><div class="subpage-content"><section class="subpage-panel device-identity-card"><strong>XK1 Carbon</strong><span>在线</span></section><section class="subpage-panel"><div class="device-info-row"><span class="device-info-row__label">设备名称</span><strong>XK1 Carbon</strong></div><div class="device-info-row"><span class="device-info-row__label">设备型号</span><strong class="device-info-row__mono">XK-X1C-2026</strong></div><div class="device-info-row"><span class="device-info-row__label">设备序列号</span><strong class="device-info-row__mono">XK1C-2607-A8F3</strong></div><button class="device-info-row device-info-row--link" type="button" data-nav="software-version"><span class="device-info-row__label">软件版本</span><span class="device-info-row__value">v1.4.2 ›</span></button></section></div></div></section>
+        <section class="subpage-page" data-page="software-version" data-parent-nav="profile" aria-label="软件版本" hidden><header class="subpage-header"><button class="subpage-back" type="button" data-nav="about-device" aria-label="返回关于本机"><i data-lucide="arrow-left"></i></button><h2>软件版本</h2></header><div class="subpage-workspace"><nav class="subpage-nav subpage-panel"><span class="subpage-nav__eyebrow">关于本机</span><button class="subpage-nav__item" data-nav="about-device" type="button">设备信息</button><button class="subpage-nav__item is-active" type="button">软件版本</button></nav><div class="subpage-content"><section class="subpage-panel software-version-card"><span>当前版本</span><strong>v1.4.2</strong><p>当前已是最新版本</p></section><div class="software-update-actions"><button class="btn btn-primary software-update-button" type="button">检查更新</button></div></div></div></section>
+        <section class="subpage-page" data-page="about-app" data-parent-nav="profile" aria-label="关于应用" hidden><header class="subpage-header"><button class="subpage-back" type="button" data-nav="settings" aria-label="返回设置"><i data-lucide="arrow-left"></i></button><h2>关于应用</h2></header><div class="subpage-workspace"><nav class="subpage-nav subpage-panel"><span class="subpage-nav__eyebrow">设置</span><button class="subpage-nav__item" data-nav="settings" type="button">设置概览</button><button class="subpage-nav__item" data-nav="language" type="button">语言</button><button class="subpage-nav__item" data-nav="theme" type="button">主题</button><button class="subpage-nav__item" data-nav="app-cache" type="button">应用缓存</button><button class="subpage-nav__item" data-nav="device-calibration" type="button">设备校准</button><button class="subpage-nav__item" data-nav="about-device" type="button">关于本机</button><button class="subpage-nav__item is-active" type="button">关于应用</button></nav><div class="subpage-content"><section class="subpage-panel about-app-hero"><strong>Axiloop</strong><span>让创意稳定成型</span><small>v1.0.0</small></section><section class="subpage-panel settings-group"><div class="settings-list"><button class="settings-row" data-nav="terms" type="button"><span class="settings-row__label">服务条款</span><span class="settings-row__meta"><i data-lucide="chevron-right"></i></span></button><button class="settings-row" data-nav="privacy" type="button"><span class="settings-row__label">隐私政策</span><span class="settings-row__meta"><i data-lucide="chevron-right"></i></span></button><button class="settings-row" data-nav="contact" type="button"><span class="settings-row__label">联系我们</span><span class="settings-row__meta"><i data-lucide="chevron-right"></i></span></button><button class="settings-row" data-nav="device-compatibility" type="button"><span class="settings-row__label">设备版本兼容</span><span class="settings-row__meta"><i data-lucide="chevron-right"></i></span></button></div></section><p class="about-app-copyright">© 2026 Axiloop. All rights reserved.</p></div></div></section>
+        <section class="subpage-page" data-page="terms" data-parent-nav="profile" aria-label="Axiloop 服务条款" hidden><header class="subpage-header"><button class="subpage-back" type="button" data-nav="about-app" aria-label="返回关于应用"><i data-lucide="arrow-left"></i></button><h2>Axiloop 服务条款</h2></header><div class="subpage-workspace"><nav class="subpage-nav subpage-panel"><span class="subpage-nav__eyebrow">关于应用</span><button class="subpage-nav__item is-active" type="button">服务条款</button><button class="subpage-nav__item" data-nav="privacy" type="button">隐私政策</button><button class="subpage-nav__item" data-nav="contact" type="button">联系我们</button><button class="subpage-nav__item" data-nav="device-compatibility" type="button">设备版本兼容</button></nav><article class="subpage-panel legal-document"><div class="legal-document__meta"><span>Axiloop 服务条款</span><span>更新日期：2026 年 7 月 28 日</span></div><p>欢迎使用 Axiloop。以下条款说明服务范围、账号使用与设备内容相关约定。</p><section><h3>一、服务内容</h3><p>我们提供设备连接、打印管理和相关应用服务。</p></section><section><h3>二、账号与使用规范</h3><p>请妥善保管账号信息，并以合法、合理的方式使用服务。</p></section><section><h3>三、设备与内容</h3><p>你应确保连接设备及提交内容具备合法使用权限。</p></section><section><h3>四、服务变更</h3><p>服务可能因产品升级、维护或规则调整而发生变更。</p></section><section><h3>五、联系我们</h3><p>如对条款有疑问，可通过应用内联系方式与我们沟通。</p></section></article></div></section>
+        <section class="subpage-page" data-page="privacy" data-parent-nav="profile" aria-label="隐私政策" hidden><header class="subpage-header"><button class="subpage-back" type="button" data-nav="about-app" aria-label="返回关于应用"><i data-lucide="arrow-left"></i></button><h2>隐私政策</h2></header><div class="subpage-workspace"><nav class="subpage-nav subpage-panel"><span class="subpage-nav__eyebrow">关于应用</span><button class="subpage-nav__item" data-nav="terms" type="button">服务条款</button><button class="subpage-nav__item is-active" type="button">隐私政策</button><button class="subpage-nav__item" data-nav="contact" type="button">联系我们</button><button class="subpage-nav__item" data-nav="device-compatibility" type="button">设备版本兼容</button></nav><article class="subpage-panel legal-document"><div class="legal-document__meta"><span>隐私政策</span><span>生效日期：2026 年 7 月 28 日</span></div><p>本政策说明 Axiloop 如何处理与你的账号、设备及应用使用相关的信息。</p><section><h3>一、信息收集</h3><p>我们根据服务需要收集账号资料、设备状态及必要的使用信息。</p></section><section><h3>二、信息使用</h3><p>相关信息用于提供服务、保障安全并改善产品体验。</p></section><section><h3>三、信息存储与保护</h3><p>我们采取合理措施保护信息，保存期限以服务和法规要求为准。</p></section><section><h3>四、你的权利</h3><p>你可以依法查询、更正或申请删除相关个人信息。</p></section><section><h3>五、政策更新</h3><p>政策更新后将在产品中展示最新版本及生效日期。</p></section></article></div></section>
+        <section class="subpage-page" data-page="device-compatibility" data-parent-nav="profile" aria-label="设备版本兼容" hidden><header class="subpage-header"><button class="subpage-back" type="button" data-nav="about-app" aria-label="返回关于应用"><i data-lucide="arrow-left"></i></button><h2>设备版本兼容</h2></header><div class="subpage-workspace"><nav class="subpage-nav subpage-panel"><span class="subpage-nav__eyebrow">关于应用</span><button class="subpage-nav__item" data-nav="terms" type="button">服务条款</button><button class="subpage-nav__item" data-nav="privacy" type="button">隐私政策</button><button class="subpage-nav__item" data-nav="contact" type="button">联系我们</button><button class="subpage-nav__item is-active" type="button">设备版本兼容</button></nav><div class="subpage-content"><section class="subpage-panel compatibility-device-card"><div class="compatibility-device-card__copy"><span>兼容设备</span><strong>Axiloop MC 8</strong><small>最低版本要求</small><b>1.0.0</b></div></section><section class="subpage-panel firmware-guide"><h3>固件升级指引</h3><ol><li>在设备屏幕进入“设备设置”</li><li>进入“关于本机”</li><li>进入“设备固件”</li></ol></section></div></div></section>
+      </div>
     </main>
   </div>
 </body>
