@@ -225,6 +225,66 @@
   margin-left: auto;
 }
 
+.fan-stat-extra {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.fan-summary-trigger {
+  gap: 5px;
+  padding: 0;
+}
+
+.fan-summary {
+  min-width: 0;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.fan-summary-item {
+  min-width: 0;
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  padding: 1px 2px;
+  border-right: 1px solid #e1e6ea;
+}
+
+.fan-summary-item:last-child {
+  border-right: 0;
+}
+
+.fan-summary-item small {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fan-summary-item strong {
+  overflow: visible;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.1;
+}
+
+.fan-summary-item > i {
+  display: none;
+}
+
+.fan-summary-trigger:hover .fan-summary-item strong {
+  color: var(--blue-dark);
+}
+
+.fan-summary-trigger > svg {
+  width: 13px;
+  height: 13px;
+}
+
 .light-popup-trigger strong {
   font-size: 11px;
 }

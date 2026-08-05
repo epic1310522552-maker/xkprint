@@ -189,16 +189,28 @@
   });
 
   const fanStatsTrigger = document.querySelector('[data-popup-trigger="fan"]');
+  const fanLabels = { part: '部件', aux: '辅助', case: '机箱' };
+  const fanValues = {};
+
+  const syncFanSummary = (fan, value) => {
+    fanValues[fan] = value;
+    const summary = document.querySelector(`[data-fan-summary="${fan}"]`);
+    if (summary) {
+      summary.textContent = `${value}%`;
+      summary.nextElementSibling?.style.setProperty('--fan-level', `${value}%`);
+    }
+    if (fanStatsTrigger) {
+      fanStatsTrigger.setAttribute('aria-label', `风扇状态，${Object.entries(fanLabels).map(([key, label]) => `${label} ${fanValues[key]}%`).join('，')}`);
+    }
+  };
 
   document.querySelectorAll('[data-fan]').forEach((slider) => {
     const output = document.querySelector(`[data-fan-output="${slider.dataset.fan}"]`);
+    syncFanSummary(slider.dataset.fan, slider.value);
     if (!output) return;
     slider.addEventListener('input', () => {
       output.textContent = `${slider.value}%`;
-      if (slider.dataset.fan === 'part' && fanStatsTrigger) {
-        fanStatsTrigger.querySelector('strong').textContent = `${slider.value}%`;
-        fanStatsTrigger.setAttribute('aria-label', `部件风扇，当前 ${slider.value}%`);
-      }
+      syncFanSummary(slider.dataset.fan, slider.value);
     });
   });
 
