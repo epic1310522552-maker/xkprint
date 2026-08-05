@@ -177,6 +177,14 @@
     }
   };
 
+  const repositionOpenPopup = () => {
+    if (!openPopupName) return;
+    const trigger = popupTriggers.find((item) => item.dataset.popupTrigger === openPopupName);
+    if (trigger) setPopup(openPopupName, trigger);
+  };
+
+  window.addEventListener('resize', repositionOpenPopup);
+
   popupTriggers.forEach((trigger) => {
     trigger.addEventListener('click', () => {
       const name = trigger.dataset.popupTrigger;
