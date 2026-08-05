@@ -212,6 +212,10 @@
     gap: 12px;
   }
 
+  .device-workspace.is-sidebar-collapsed {
+    grid-template-columns: 68px minmax(0, 1fr);
+  }
+
   .device-sidebar {
     top: 76px;
   }
@@ -219,6 +223,33 @@
   .device-dashboard {
     grid-template-columns: minmax(0, 1fr);
     gap: 12px;
+  }
+  .profile-page {
+    gap: 16px;
+    padding: 0 0 20px;
+  }
+
+  .profile-grid {
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 12px;
+  }
+
+  .profile-main {
+    gap: 12px;
+  }
+
+  .profile-detail-grid {
+    gap: 12px;
+  }
+
+  .profile-card {
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .profile-avatar {
+    width: 68px;
+    height: 68px;
   }
 
   .active-print-task {
@@ -295,6 +326,10 @@
   @media (max-height: 799px) {
     .material-details {
       left: 248px;
+    }
+
+    .device-workspace.is-sidebar-collapsed .material-details {
+      left: 96px;
     }
   }
 }
